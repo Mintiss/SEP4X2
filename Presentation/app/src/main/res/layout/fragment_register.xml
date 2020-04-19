@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent">
+
+    <EditText
+        android:id="@+id/register_email"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:hint="@string/login_email"
+        android:layout_gravity="center_horizontal"
+        android:inputType="textEmailAddress"/>
+
+    <EditText
+        android:id="@+id/register_username"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:hint="@string/register_username"
+        android:layout_gravity="center_horizontal"
+        android:inputType="textAutoCorrect"/>
+    <EditText
+        android:id="@+id/register_password"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:hint="@string/login_password"
+        android:layout_gravity="center_horizontal"
+        android:inputType="textPassword"/>
+
+    <EditText
+        android:id="@+id/register_passwordConfirm"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center_horizontal"
+        android:hint="@string/register_passwordConfirm"
+        android:inputType="textPassword"/>
+
+    <Button
+        android:id="@+id/register_registerButton"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:text="@string/register_registerButton"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center_horizontal"/>
+
+
+
+    <Button
+        android:id="@+id/register_backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/backButton"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center_horizontal"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</LinearLayout>
