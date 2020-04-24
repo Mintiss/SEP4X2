@@ -1,4 +1,4 @@
-package sep4x2.android;
+package sep4x2.android.ui.gallery;
 
 public class CarbonEmissionPerDayHours {
 
