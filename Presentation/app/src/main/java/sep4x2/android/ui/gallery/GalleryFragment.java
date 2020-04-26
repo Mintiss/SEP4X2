@@ -36,8 +36,8 @@ public class GalleryFragment extends Fragment  implements AdapterView.OnItemSele
     BarChart barChart;
     ArrayList<BarEntry> barEntries;
     ArrayList<String> labelsname;
-    ArrayList<CarbonEmissionPerDayHours> carbonEmissionPerDayHoursArrayList = new ArrayList<>();
-    ArrayList<CarbonEmissionPerDayHours> carbonEmissionPerWeekHoursArrayList = new ArrayList<>();
+    ArrayList<CO2Model> CO2ModelArrayList = new ArrayList<>();
+    ArrayList<CO2Model> carbonEmissionPerWeekHoursArrayList = new ArrayList<>();
     //For the drop down
     private Spinner spinner;
     private static final String[] paths = {"Daily","Weekly"};
@@ -60,6 +60,7 @@ public class GalleryFragment extends Fragment  implements AdapterView.OnItemSele
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
 
+                //BarChart
                 barChart = root.findViewById(R.id.CO2BarChart);
 
                 //DropDown
@@ -71,16 +72,8 @@ public class GalleryFragment extends Fragment  implements AdapterView.OnItemSele
                 spinner.setAdapter(adapter);
                 spinner.setOnItemSelectedListener(listener);
 
-
-
-
-
         }
         });
-
-
-
-
 
         return root;
     }
@@ -93,24 +86,24 @@ public class GalleryFragment extends Fragment  implements AdapterView.OnItemSele
         fillDaysAndCO2valuess2();
 
         if(num == 1) {
-            for (int i = 0; i < carbonEmissionPerDayHoursArrayList.size(); i++) {
-                String hour = carbonEmissionPerDayHoursArrayList.get(i).getHours();
-                int co2 = carbonEmissionPerDayHoursArrayList.get(i).getCo2metric();
+            for (int i = 0; i < CO2ModelArrayList.size(); i++) {
+                String hour = CO2ModelArrayList.get(i).getHours();
+                double co2 = CO2ModelArrayList.get(i).getCo2metric();
 
-                barEntries.add(new BarEntry(i, co2));
+                barEntries.add(new BarEntry(i, (float)co2));
                 labelsname.add(hour);
             }
         } else {
             for (int i = 0; i < carbonEmissionPerWeekHoursArrayList.size(); i++) {
                 String day = carbonEmissionPerWeekHoursArrayList.get(i).getHours();
-                int co2 = carbonEmissionPerWeekHoursArrayList.get(i).getCo2metric();
+                double co2 = carbonEmissionPerWeekHoursArrayList.get(i).getCo2metric();
 
-                barEntries.add(new BarEntry(i, co2));
+                barEntries.add(new BarEntry(i, (float) co2));
                 labelsname.add(day);
             }
         }
 
-        BarDataSet barDataSet = new BarDataSet(barEntries,"Daily CO2 in metric");
+        BarDataSet barDataSet = new BarDataSet(barEntries,"Daily CO2 in ppm");
         barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
 
         Description description = new Description();
@@ -141,22 +134,22 @@ public class GalleryFragment extends Fragment  implements AdapterView.OnItemSele
 
     private void fillHoursAndCO2valuess()
     {
-        carbonEmissionPerDayHoursArrayList.clear();
-        carbonEmissionPerDayHoursArrayList.add(new CarbonEmissionPerDayHours("1pm",5));
-        carbonEmissionPerDayHoursArrayList.add(new CarbonEmissionPerDayHours("9am",12));
-        carbonEmissionPerDayHoursArrayList.add(new CarbonEmissionPerDayHours("10am",15));
-        carbonEmissionPerDayHoursArrayList.add(new CarbonEmissionPerDayHours("11am",19));
-        carbonEmissionPerDayHoursArrayList.add(new CarbonEmissionPerDayHours("1pm",23));
+        CO2ModelArrayList.clear();
+        CO2ModelArrayList.add(new CO2Model("1pm",5.0));
+        CO2ModelArrayList.add(new CO2Model("9am",12.0));
+        CO2ModelArrayList.add(new CO2Model("10am",15.0));
+        CO2ModelArrayList.add(new CO2Model("11am",19.12));
+        CO2ModelArrayList.add(new CO2Model("1pm",23.5));
     }
 
     private void fillDaysAndCO2valuess2()
     {
         carbonEmissionPerWeekHoursArrayList.clear();
-        carbonEmissionPerWeekHoursArrayList.add(new CarbonEmissionPerDayHours("Monday",2));
-        carbonEmissionPerWeekHoursArrayList.add(new CarbonEmissionPerDayHours("Tuesday",4));
-        carbonEmissionPerWeekHoursArrayList.add(new CarbonEmissionPerDayHours("Wednesday",5));
-        carbonEmissionPerWeekHoursArrayList.add(new CarbonEmissionPerDayHours("Thursday",6));
-        carbonEmissionPerWeekHoursArrayList.add(new CarbonEmissionPerDayHours("Friday",3));
+        carbonEmissionPerWeekHoursArrayList.add(new CO2Model("Monday",2.5));
+        carbonEmissionPerWeekHoursArrayList.add(new CO2Model("Tuesday",4.1));
+        carbonEmissionPerWeekHoursArrayList.add(new CO2Model("Wednesday",5.0));
+        carbonEmissionPerWeekHoursArrayList.add(new CO2Model("Thursday",6.0));
+        carbonEmissionPerWeekHoursArrayList.add(new CO2Model("Friday",3.9));
     }
 
 

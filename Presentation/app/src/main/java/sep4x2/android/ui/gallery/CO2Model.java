@@ -1,11 +1,11 @@
 package sep4x2.android.ui.gallery;
 
-public class CarbonEmissionPerDayHours {
+public class CO2Model {
 
     String hours;
-    int co2metric;
+    double co2metric;
 
-    public CarbonEmissionPerDayHours(String hours, int co2metric) {
+    public CO2Model(String hours, double co2metric) {
         this.hours = hours;
         this.co2metric = co2metric;
     }
@@ -18,11 +18,11 @@ public class CarbonEmissionPerDayHours {
         this.hours = hours;
     }
 
-    public int getCo2metric() {
+    public double getCo2metric() {
         return co2metric;
     }
 
-    public void setCo2metric(int co2metric) {
+    public void setCo2metric(double co2metric) {
         this.co2metric = co2metric;
     }
 }
