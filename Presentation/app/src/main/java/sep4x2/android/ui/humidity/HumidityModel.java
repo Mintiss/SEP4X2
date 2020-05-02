@@ -1,4 +1,4 @@
-package sep4x2.android.ui.tools;
+package sep4x2.android.ui.humidity;
 
 public class HumidityModel {
 

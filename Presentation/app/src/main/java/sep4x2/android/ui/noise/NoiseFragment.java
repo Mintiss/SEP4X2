@@ -1,4 +1,4 @@
-package sep4x2.android.ui.gallery;
+package sep4x2.android.ui.noise;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,14 +9,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.github.mikephil.charting.charts.BarChart;
-
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -29,85 +28,83 @@ import java.util.ArrayList;
 
 import sep4x2.android.R;
 
-public class GalleryFragment extends Fragment  implements AdapterView.OnItemSelectedListener{
 
 
-    //For the BarChart
+public class NoiseFragment extends Fragment implements  AdapterView.OnItemSelectedListener
+{
+
+    //Barchart
     BarChart barChart;
     ArrayList<BarEntry> barEntries;
     ArrayList<String> labelsname;
-    ArrayList<CO2Model> CO2ModelArrayList = new ArrayList<>();
-    ArrayList<CO2Model> carbonEmissionPerWeekHoursArrayList = new ArrayList<>();
+    ArrayList<NoiseModel> NoiseModelArrayList = new ArrayList<>();
+    ArrayList<NoiseModel> TimeArrayList = new ArrayList<>();
     //For the drop down
     private Spinner spinner;
     private static final String[] paths = {"Daily","Weekly"};
     public String string;
     public int nr;
 
-    private GalleryViewModel galleryViewModel;
-
-
+    private NoiseViewModel noiseViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        galleryViewModel =
-                ViewModelProviders.of(this).get(GalleryViewModel.class);
-       final View root = inflater.inflate(R.layout.fragment_gallery, container, false);
-        final TextView textView = root.findViewById(R.id.text_gallery);
+        noiseViewModel =
+                ViewModelProviders.of(this).get(NoiseViewModel.class);
+        final View root = inflater.inflate(R.layout.fragment_noise, container, false);
+        final TextView textView = root.findViewById(R.id.text_send);
         final AdapterView.OnItemSelectedListener listener = this;
-        galleryViewModel.getText().observe(this, new Observer<String>() {
+        noiseViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
-
-                //BarChart
-                barChart = root.findViewById(R.id.CO2BarChart);
-
-                //DropDown
-                spinner = root.findViewById(R.id.spinnerCO2);
-                ArrayAdapter<String>adapter = new ArrayAdapter<String>(getActivity(),
-                        android.R.layout.simple_spinner_item,paths);
-
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinner.setAdapter(adapter);
-                spinner.setOnItemSelectedListener(listener);
-
-        }
+            }
         });
 
+        //Barchart
+        barChart = root.findViewById(R.id.NoiseBarChart);
+
+        //spinner
+
+        spinner = root.findViewById(R.id.spinnerNoise);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_spinner_item,paths);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(listener);
         return root;
     }
-
     private void SetBarchart(int num) {
         barEntries =new ArrayList<>();
         labelsname = new ArrayList<>();
 
-        fillHoursAndCO2valuess();
-        fillDaysAndCO2valuess2();
+        fillHoursAndHumidityvaluess();
+        fillDaysAndHumidityvaluess2();
 
         if(num == 1) {
-            for (int i = 0; i < CO2ModelArrayList.size(); i++) {
-                String hour = CO2ModelArrayList.get(i).getHours();
-                double co2 = CO2ModelArrayList.get(i).getCo2metric();
+            for (int i = 0; i < NoiseModelArrayList.size(); i++) {
+                String hour = NoiseModelArrayList.get(i).getTime();
+                double co2 = NoiseModelArrayList.get(i).getNoise();
 
                 barEntries.add(new BarEntry(i, (float)co2));
                 labelsname.add(hour);
             }
         } else {
-            for (int i = 0; i < carbonEmissionPerWeekHoursArrayList.size(); i++) {
-                String day = carbonEmissionPerWeekHoursArrayList.get(i).getHours();
-                double co2 = carbonEmissionPerWeekHoursArrayList.get(i).getCo2metric();
+            for (int i = 0; i < TimeArrayList.size(); i++) {
+                String day = TimeArrayList.get(i).getTime();
+                double co2 = TimeArrayList.get(i).getNoise();
 
                 barEntries.add(new BarEntry(i, (float) co2));
                 labelsname.add(day);
             }
         }
 
-        BarDataSet barDataSet = new BarDataSet(barEntries,"Daily CO2 in ppm");
+        BarDataSet barDataSet = new BarDataSet(barEntries,"Noise in dBs");
         barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
 
         Description description = new Description();
-        description.setText("Hours");
+        description.setText("Humidity");
         barChart.setDescription(description);
 
         BarData barData = new BarData(barDataSet);
@@ -132,24 +129,25 @@ public class GalleryFragment extends Fragment  implements AdapterView.OnItemSele
         barChart.invalidate();
     }
 
-    private void fillHoursAndCO2valuess()
+
+    private void fillHoursAndHumidityvaluess()
     {
-        CO2ModelArrayList.clear();
-        CO2ModelArrayList.add(new CO2Model("1pm",5.0));
-        CO2ModelArrayList.add(new CO2Model("9am",12.0));
-        CO2ModelArrayList.add(new CO2Model("10am",15.0));
-        CO2ModelArrayList.add(new CO2Model("11am",19.12));
-        CO2ModelArrayList.add(new CO2Model("1pm",23.5));
+        NoiseModelArrayList.clear();
+        NoiseModelArrayList.add(new NoiseModel(13.5,"1pm"));
+        NoiseModelArrayList.add(new NoiseModel(12.0,"9am"));
+        NoiseModelArrayList.add(new NoiseModel(44.5,"10am"));
+        NoiseModelArrayList.add(new NoiseModel(45.0,"11am"));
+        NoiseModelArrayList.add(new NoiseModel(76.5,"1pm"));
     }
 
-    private void fillDaysAndCO2valuess2()
+    private void fillDaysAndHumidityvaluess2()
     {
-        carbonEmissionPerWeekHoursArrayList.clear();
-        carbonEmissionPerWeekHoursArrayList.add(new CO2Model("Monday",2.5));
-        carbonEmissionPerWeekHoursArrayList.add(new CO2Model("Tuesday",4.1));
-        carbonEmissionPerWeekHoursArrayList.add(new CO2Model("Wednesday",5.0));
-        carbonEmissionPerWeekHoursArrayList.add(new CO2Model("Thursday",6.0));
-        carbonEmissionPerWeekHoursArrayList.add(new CO2Model("Friday",3.9));
+        TimeArrayList.clear();
+        TimeArrayList.add(new NoiseModel(5.5,"Monday"));
+        TimeArrayList.add(new NoiseModel(4.1,"Tuesday"));
+        TimeArrayList.add(new NoiseModel(5.0,"Wednesday"));
+        TimeArrayList.add(new NoiseModel(56.0,"Thursday"));
+        TimeArrayList.add(new NoiseModel(3.9,"Friday"));
     }
 
 
@@ -168,11 +166,8 @@ public class GalleryFragment extends Fragment  implements AdapterView.OnItemSele
 
         }
     }
-
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-        SetBarchart(0);
+
     }
-
-
 }

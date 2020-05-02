@@ -1,16 +1,16 @@
-package sep4x2.android.ui.gallery;
+package sep4x2.android.ui.profile;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class GalleryViewModel extends ViewModel {
+public class ProfileViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public GalleryViewModel() {
+    public ProfileViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is the CO2 fragment");
+        mText.setValue("This is share fragment");
     }
 
     public LiveData<String> getText() {

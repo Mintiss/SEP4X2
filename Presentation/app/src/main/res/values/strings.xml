@@ -23,4 +23,23 @@
     <string name="backButton">Back</string>
     <string name="register_passwordConfirm">Confirm Password</string>
     <string name="register_registerButton">Register</string>
+    <string name="register_first_name">First Name</string>
+    <string name="register_last_name">Last Name</string>
+    <string name="register_product_id">Product ID</string>
+    <string name="menu_co2">CO2</string>
+    <string name="menu_temperature">Temperature</string>
+    <string name="menu_humidity">Humidity</string>
+    <string name="menu_profile">Profile</string>
+    <string name="menu_noise">Noise</string>
+    <string name="profile_name">Name</string>
+    <string name="profile_last_name">Surname</string>
+    <string name="example_name">Example Name</string>
+    <string name="example_last_name">Example Last Name</string>
+    <string name="example_email">example@email.com</string>
+    <string name="example_product_id">123456789</string>
+    <string name="profile_change_password">Change Password</string>
+    <string name="profile_delete_account">Delete Account</string>
+    <string name="change_password_old_password">Old Password</string>
+    <string name="change_password_new_password">New Password</string>
+    <string name="change_password_confirm_new_password">Confirm New Password</string>
 </resources>

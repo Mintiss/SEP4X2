@@ -1,4 +1,4 @@
-package sep4x2.android.ui.send;
+package sep4x2.android.ui.noise;
 
 public class NoiseModel {
 

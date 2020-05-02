@@ -1,4 +1,4 @@
-package sep4x2.android.ui.slideshow;
+package sep4x2.android.ui.temperature;
 
 public class TemperatureModel {
 

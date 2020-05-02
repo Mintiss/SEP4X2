@@ -38,32 +38,46 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="sep4x2.android.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_change_password"
+        android:name="sep4x2.android.ui.change_password.ChangePasswordFragment"
+        android:label="@string/profile_change_password"
+        tools:layout="@layout/fragment_change_password" >
+        <action
+            android:id="@+id/action_nav_change_password_to_nav_profile"
+            app:destination="@id/nav_profile" />
+    </fragment>
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="sep4x2.android.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_co2"
+        android:name="sep4x2.android.ui.co2.Co2Fragment"
+        android:label="@string/menu_co2"
+        tools:layout="@layout/fragment_co2" />
 
     <fragment
-        android:id="@+id/nav_tools"
-        android:name="sep4x2.android.ui.tools.ToolsFragment"
-        android:label="@string/menu_tools"
-        tools:layout="@layout/fragment_tools" />
+        android:id="@+id/nav_temperature"
+        android:name="sep4x2.android.ui.temperature.TemperatureFragment"
+        android:label="@string/menu_temperature"
+        tools:layout="@layout/fragment_temperature" />
 
     <fragment
-        android:id="@+id/nav_share"
-        android:name="sep4x2.android.ui.share.ShareFragment"
-        android:label="@string/menu_share"
-        tools:layout="@layout/fragment_share" />
+        android:id="@+id/nav_humidity"
+        android:name="sep4x2.android.ui.humidity.HumidityFragment"
+        android:label="@string/menu_humidity"
+        tools:layout="@layout/fragment_humidity" />
 
     <fragment
-        android:id="@+id/nav_send"
-        android:name="sep4x2.android.ui.send.SendFragment"
-        android:label="@string/menu_send"
-        tools:layout="@layout/fragment_send" />
+        android:id="@+id/nav_profile"
+        android:name="sep4x2.android.ui.profile.ProfileFragment"
+        android:label="@string/menu_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_nav_profile_to_nav_change_password"
+            app:destination="@+id/nav_change_password" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_noise"
+        android:name="sep4x2.android.ui.noise.NoiseFragment"
+        android:label="@string/menu_noise"
+        tools:layout="@layout/fragment_noise" />
 </navigation>

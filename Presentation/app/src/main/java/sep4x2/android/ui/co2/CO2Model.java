@@ -1,4 +1,4 @@
-package sep4x2.android.ui.gallery;
+package sep4x2.android.ui.co2;
 
 public class CO2Model {
 

@@ -1,4 +1,4 @@
-package sep4x2.android.ui.slideshow;
+package sep4x2.android.ui.humidity;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -28,30 +28,30 @@ import java.util.ArrayList;
 
 import sep4x2.android.R;
 
-public class SlideshowFragment extends Fragment implements AdapterView.OnItemSelectedListener{
+public class HumidityFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
     //Barchart
     BarChart barChart;
     ArrayList<BarEntry> barEntries;
     ArrayList<String> labelsname;
-    ArrayList<TemperatureModel> temperatureModelArrayList = new ArrayList<>();
-    ArrayList<TemperatureModel> TimeArrayList = new ArrayList<>();
+    ArrayList<HumidityModel> humidityModelArrayList = new ArrayList<>();
+    ArrayList<HumidityModel> TimeArrayList = new ArrayList<>();
     //For the drop down
     private Spinner spinner;
     private static final String[] paths = {"Daily","Weekly"};
     public String string;
     public int nr;
 
-    private SlideshowViewModel slideshowViewModel;
+    private HumidityViewModel humidityViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        slideshowViewModel =
-                ViewModelProviders.of(this).get(SlideshowViewModel.class);
-       final View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
-        final TextView textView = root.findViewById(R.id.text_slideshow);
+        humidityViewModel =
+                ViewModelProviders.of(this).get(HumidityViewModel.class);
+       final View root = inflater.inflate(R.layout.fragment_humidity, container, false);
+        final TextView textView = root.findViewById(R.id.text_tools);
         final AdapterView.OnItemSelectedListener listener = this;
-        slideshowViewModel.getText().observe(this, new Observer<String>() {
+        humidityViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
@@ -59,11 +59,11 @@ public class SlideshowFragment extends Fragment implements AdapterView.OnItemSel
         });
 
         //Barchart
-        barChart = root.findViewById(R.id.TemperatureBarChart);
+        barChart = root.findViewById(R.id.HumidityBarChart);
 
         //spinner
 
-        spinner = root.findViewById(R.id.spinnerTemperature);
+        spinner = root.findViewById(R.id.spinnerHumidity);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_spinner_item,paths);
 
@@ -77,13 +77,13 @@ public class SlideshowFragment extends Fragment implements AdapterView.OnItemSel
         barEntries =new ArrayList<>();
         labelsname = new ArrayList<>();
 
-        fillHoursAndTemperaturevaluess();
-        fillDaysAndTemperaturevaluess2();
+        fillHoursAndHumidityvaluess();
+        fillDaysAndHumidityvaluess2();
 
         if(num == 1) {
-            for (int i = 0; i < temperatureModelArrayList.size(); i++) {
-                String hour = temperatureModelArrayList.get(i).getTime();
-                double co2 = temperatureModelArrayList.get(i).getTemperature();
+            for (int i = 0; i < humidityModelArrayList.size(); i++) {
+                String hour = humidityModelArrayList.get(i).getTime();
+                double co2 = humidityModelArrayList.get(i).getHumindity();
 
                 barEntries.add(new BarEntry(i, (float)co2));
                 labelsname.add(hour);
@@ -91,18 +91,18 @@ public class SlideshowFragment extends Fragment implements AdapterView.OnItemSel
         } else {
             for (int i = 0; i < TimeArrayList.size(); i++) {
                 String day = TimeArrayList.get(i).getTime();
-                double co2 = TimeArrayList.get(i).getTemperature();
+                double co2 = TimeArrayList.get(i).getHumindity();
 
                 barEntries.add(new BarEntry(i, (float) co2));
                 labelsname.add(day);
             }
         }
 
-        BarDataSet barDataSet = new BarDataSet(barEntries,"Temperature in Celsius");
+        BarDataSet barDataSet = new BarDataSet(barEntries,"Humidity in percentage");
         barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
 
         Description description = new Description();
-        description.setText("Temperature");
+        description.setText("Humidity");
         barChart.setDescription(description);
 
         BarData barData = new BarData(barDataSet);
@@ -128,24 +128,24 @@ public class SlideshowFragment extends Fragment implements AdapterView.OnItemSel
     }
 
 
-    private void fillHoursAndTemperaturevaluess()
+    private void fillHoursAndHumidityvaluess()
     {
-        temperatureModelArrayList.clear();
-        temperatureModelArrayList.add(new TemperatureModel("1pm",24.5));
-        temperatureModelArrayList.add(new TemperatureModel("9am",24.70));
-        temperatureModelArrayList.add(new TemperatureModel("10am",25.5));
-        temperatureModelArrayList.add(new TemperatureModel("11am",26.0));
-        temperatureModelArrayList.add(new TemperatureModel("1pm",27.5));
+        humidityModelArrayList.clear();
+        humidityModelArrayList.add(new HumidityModel("1pm",65.5));
+        humidityModelArrayList.add(new HumidityModel("9am",12.0));
+        humidityModelArrayList.add(new HumidityModel("10am",34.5));
+        humidityModelArrayList.add(new HumidityModel("11am",45.0));
+        humidityModelArrayList.add(new HumidityModel("1pm",23.5));
     }
 
-    private void fillDaysAndTemperaturevaluess2()
+    private void fillDaysAndHumidityvaluess2()
     {
         TimeArrayList.clear();
-        TimeArrayList.add(new TemperatureModel("Monday",22.5));
-        TimeArrayList.add(new TemperatureModel("Tuesday",25.1));
-        TimeArrayList.add(new TemperatureModel("Wednesday",13.0));
-        TimeArrayList.add(new TemperatureModel("Thursday",22.0));
-        TimeArrayList.add(new TemperatureModel("Friday",22.9));
+        TimeArrayList.add(new HumidityModel("Monday",13.5));
+        TimeArrayList.add(new HumidityModel("Tuesday",25.1));
+        TimeArrayList.add(new HumidityModel("Wednesday",35.0));
+        TimeArrayList.add(new HumidityModel("Thursday",12.0));
+        TimeArrayList.add(new HumidityModel("Friday",41.9));
     }
 
 
