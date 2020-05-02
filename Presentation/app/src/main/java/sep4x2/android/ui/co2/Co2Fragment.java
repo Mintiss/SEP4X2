@@ -1,4 +1,4 @@
-package sep4x2.android.ui.tools;
+package sep4x2.android.ui.co2;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,13 +9,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.BarChart;
+
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -28,48 +29,52 @@ import java.util.ArrayList;
 
 import sep4x2.android.R;
 
-public class ToolsFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class Co2Fragment extends Fragment  implements AdapterView.OnItemSelectedListener{
 
-    //Barchart
+
+    //For the BarChart
     BarChart barChart;
     ArrayList<BarEntry> barEntries;
     ArrayList<String> labelsname;
-    ArrayList<HumidityModel> humidityModelArrayList = new ArrayList<>();
-    ArrayList<HumidityModel> TimeArrayList = new ArrayList<>();
+    ArrayList<CO2Model> CO2ModelArrayList = new ArrayList<>();
+    ArrayList<CO2Model> carbonEmissionPerWeekHoursArrayList = new ArrayList<>();
     //For the drop down
     private Spinner spinner;
     private static final String[] paths = {"Daily","Weekly"};
     public String string;
     public int nr;
 
-    private ToolsViewModel toolsViewModel;
+    private Co2ViewModel co2ViewModel;
+
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        toolsViewModel =
-                ViewModelProviders.of(this).get(ToolsViewModel.class);
-       final View root = inflater.inflate(R.layout.fragment_tools, container, false);
-        final TextView textView = root.findViewById(R.id.text_tools);
+        co2ViewModel =
+                ViewModelProviders.of(this).get(Co2ViewModel.class);
+       final View root = inflater.inflate(R.layout.fragment_co2, container, false);
+        final TextView textView = root.findViewById(R.id.text_gallery);
         final AdapterView.OnItemSelectedListener listener = this;
-        toolsViewModel.getText().observe(this, new Observer<String>() {
+        co2ViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
-            }
+
+                //BarChart
+                barChart = root.findViewById(R.id.CO2BarChart);
+
+                //DropDown
+                spinner = root.findViewById(R.id.spinnerCO2);
+                ArrayAdapter<String>adapter = new ArrayAdapter<String>(getActivity(),
+                        android.R.layout.simple_spinner_item,paths);
+
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner.setAdapter(adapter);
+                spinner.setOnItemSelectedListener(listener);
+
+        }
         });
 
-        //Barchart
-        barChart = root.findViewById(R.id.HumidityBarChart);
-
-        //spinner
-
-        spinner = root.findViewById(R.id.spinnerHumidity);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_spinner_item,paths);
-
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(listener);
         return root;
     }
 
@@ -77,32 +82,32 @@ public class ToolsFragment extends Fragment implements AdapterView.OnItemSelecte
         barEntries =new ArrayList<>();
         labelsname = new ArrayList<>();
 
-        fillHoursAndHumidityvaluess();
-        fillDaysAndHumidityvaluess2();
+        fillHoursAndCO2valuess();
+        fillDaysAndCO2valuess2();
 
         if(num == 1) {
-            for (int i = 0; i < humidityModelArrayList.size(); i++) {
-                String hour = humidityModelArrayList.get(i).getTime();
-                double co2 = humidityModelArrayList.get(i).getHumindity();
+            for (int i = 0; i < CO2ModelArrayList.size(); i++) {
+                String hour = CO2ModelArrayList.get(i).getHours();
+                double co2 = CO2ModelArrayList.get(i).getCo2metric();
 
                 barEntries.add(new BarEntry(i, (float)co2));
                 labelsname.add(hour);
             }
         } else {
-            for (int i = 0; i < TimeArrayList.size(); i++) {
-                String day = TimeArrayList.get(i).getTime();
-                double co2 = TimeArrayList.get(i).getHumindity();
+            for (int i = 0; i < carbonEmissionPerWeekHoursArrayList.size(); i++) {
+                String day = carbonEmissionPerWeekHoursArrayList.get(i).getHours();
+                double co2 = carbonEmissionPerWeekHoursArrayList.get(i).getCo2metric();
 
                 barEntries.add(new BarEntry(i, (float) co2));
                 labelsname.add(day);
             }
         }
 
-        BarDataSet barDataSet = new BarDataSet(barEntries,"Humidity in percentage");
+        BarDataSet barDataSet = new BarDataSet(barEntries,"Daily CO2 in ppm");
         barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
 
         Description description = new Description();
-        description.setText("Humidity");
+        description.setText("Hours");
         barChart.setDescription(description);
 
         BarData barData = new BarData(barDataSet);
@@ -127,25 +132,24 @@ public class ToolsFragment extends Fragment implements AdapterView.OnItemSelecte
         barChart.invalidate();
     }
 
-
-    private void fillHoursAndHumidityvaluess()
+    private void fillHoursAndCO2valuess()
     {
-        humidityModelArrayList.clear();
-        humidityModelArrayList.add(new HumidityModel("1pm",65.5));
-        humidityModelArrayList.add(new HumidityModel("9am",12.0));
-        humidityModelArrayList.add(new HumidityModel("10am",34.5));
-        humidityModelArrayList.add(new HumidityModel("11am",45.0));
-        humidityModelArrayList.add(new HumidityModel("1pm",23.5));
+        CO2ModelArrayList.clear();
+        CO2ModelArrayList.add(new CO2Model("1pm",5.0));
+        CO2ModelArrayList.add(new CO2Model("9am",12.0));
+        CO2ModelArrayList.add(new CO2Model("10am",15.0));
+        CO2ModelArrayList.add(new CO2Model("11am",19.12));
+        CO2ModelArrayList.add(new CO2Model("1pm",23.5));
     }
 
-    private void fillDaysAndHumidityvaluess2()
+    private void fillDaysAndCO2valuess2()
     {
-        TimeArrayList.clear();
-        TimeArrayList.add(new HumidityModel("Monday",13.5));
-        TimeArrayList.add(new HumidityModel("Tuesday",25.1));
-        TimeArrayList.add(new HumidityModel("Wednesday",35.0));
-        TimeArrayList.add(new HumidityModel("Thursday",12.0));
-        TimeArrayList.add(new HumidityModel("Friday",41.9));
+        carbonEmissionPerWeekHoursArrayList.clear();
+        carbonEmissionPerWeekHoursArrayList.add(new CO2Model("Monday",2.5));
+        carbonEmissionPerWeekHoursArrayList.add(new CO2Model("Tuesday",4.1));
+        carbonEmissionPerWeekHoursArrayList.add(new CO2Model("Wednesday",5.0));
+        carbonEmissionPerWeekHoursArrayList.add(new CO2Model("Thursday",6.0));
+        carbonEmissionPerWeekHoursArrayList.add(new CO2Model("Friday",3.9));
     }
 
 
@@ -169,4 +173,6 @@ public class ToolsFragment extends Fragment implements AdapterView.OnItemSelecte
     public void onNothingSelected(AdapterView<?> parent) {
         SetBarchart(0);
     }
+
+
 }
