@@ -22,7 +22,7 @@ public class TemperatureViewModel extends ViewModel {
         return mText;
     }
 
-    LiveData<TemperatureModel> getTemperature()
+    public LiveData<TemperatureData> repositoryGetTemperature()
     {
         return repository.getTemperature();
     }
@@ -31,5 +31,6 @@ public class TemperatureViewModel extends ViewModel {
     {
         repository.updateTemperature();
     }
+
 
 }

@@ -4,6 +4,10 @@ public class HumidityModel {
 
     String time;
     double humindity;
+    HumidityRepository humidityRepository;
+
+    public HumidityModel() {
+    }
 
     public String getTime() {
         return time;
