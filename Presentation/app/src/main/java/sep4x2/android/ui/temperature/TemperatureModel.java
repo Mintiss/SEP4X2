@@ -6,8 +6,7 @@ public class TemperatureModel {
 
     double temperature;
 
-    public TemperatureModel(double temperature) {
-    }
+
 
     public String getTime() {
         return time;

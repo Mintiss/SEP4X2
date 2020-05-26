@@ -38,10 +38,10 @@ public class TemperatureRepository {
     public void updateTemperature()
     {
         SensorAPI sensorAPI =ServiceGenerator.getSensorAPI();
-        Call<MetricsResponse> call = sensorAPI.getAllMetrics();
-        call.enqueue(new Callback<MetricsResponse>() {
+        Call<SensorResponse> call = sensorAPI.getAllMetrics();
+        call.enqueue(new Callback<SensorResponse>() {
             @Override
-            public void onResponse(Call<MetricsResponse> call, Response<MetricsResponse> response) {
+            public void onResponse(Call<SensorResponse> call, Response<SensorResponse> response) {
                 if(response.code() == 200)
                 {
                    temperature.setValue(response.body().getTemperature());
@@ -49,7 +49,7 @@ public class TemperatureRepository {
             }
 
             @Override
-            public void onFailure(Call<MetricsResponse> call, Throwable t) {
+            public void onFailure(Call<SensorResponse> call, Throwable t) {
                 Log.i("Retrofit","Something went wrong");
             }
         });

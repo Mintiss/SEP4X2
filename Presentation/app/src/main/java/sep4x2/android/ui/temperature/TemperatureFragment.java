@@ -81,6 +81,7 @@ public class TemperatureFragment extends Fragment implements AdapterView.OnItemS
         fillDaysAndTemperaturevaluess2();
 
         if(num == 1) {
+            //instead of getTime it has to be changed to getHours in the hours case
             for (int i = 0; i < temperatureModelArrayList.size(); i++) {
                 String hour = temperatureModelArrayList.get(i).getTime();
                 double co2 = temperatureModelArrayList.get(i).getTemperature();
