@@ -2,6 +2,8 @@ package sep4x2.android.ui.network;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Path;
+
 import static sep4x2.android.ui.network.NetworkConfig.BASE_URL;
 
 public class ServiceGenerator {
@@ -13,5 +15,15 @@ public class ServiceGenerator {
 
     private static SensorAPI sensorAPI = retrofit.create(SensorAPI.class);
 
-    public  static SensorAPI getAllMetrics() {return  sensorAPI;}
+    private static  UserAPI userAPI = retrofit.create(UserAPI.class);
+
+    //API for sensors
+    //name will be changed after we have more than one api inside the sensor api
+    public  static SensorAPI getSensorAPI() {return  sensorAPI;}
+
+    //API for User
+    public static UserAPI getUserAPI() {return userAPI;}
+
+
+
 }

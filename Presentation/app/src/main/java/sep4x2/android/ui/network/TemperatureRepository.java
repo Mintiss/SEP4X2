@@ -8,14 +8,20 @@ import androidx.lifecycle.MutableLiveData;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import sep4x2.android.ui.login.LoginModel;
 import sep4x2.android.ui.temperature.TemperatureModel;
 
 public class TemperatureRepository {
 
     private static TemperatureRepository instance;
     private MutableLiveData<TemperatureModel> temperature;
+    private MutableLiveData<LoginModel> login;
 
-   private TemperatureRepository() {temperature = new MutableLiveData<>();}
+   private TemperatureRepository()
+   {
+       temperature = new MutableLiveData<>();
+       login = new MutableLiveData<>();
+   }
 
     public static synchronized TemperatureRepository getInstance() {
         if (instance == null) {
@@ -25,10 +31,13 @@ public class TemperatureRepository {
     }
 
     public LiveData<TemperatureModel> getTemperature() {return temperature;}
+    public LiveData<LoginModel> getLogin() {return login;}
 
+
+    //Getting the temperature
     public void updateTemperature()
     {
-        SensorAPI sensorAPI =ServiceGenerator.getAllMetrics();
+        SensorAPI sensorAPI =ServiceGenerator.getSensorAPI();
         Call<MetricsResponse> call = sensorAPI.getAllMetrics();
         call.enqueue(new Callback<MetricsResponse>() {
             @Override
@@ -45,5 +54,30 @@ public class TemperatureRepository {
             }
         });
     }
+
+    //getting the login information
+    public void login(String email, String password)
+    {
+        UserAPI userAPI = ServiceGenerator.getUserAPI();
+        Call<LoginResponse> call = userAPI.getLoginInformation(email, password);
+        call.enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                if(response.code() ==200)
+                {
+                    login.setValue(response.body().getLoginInformation());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                Log.i("Retrofit", "Something went wrong :(");
+            }
+        });
+    }
+
+
+
+
 
 }
