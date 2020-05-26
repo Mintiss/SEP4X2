@@ -85,8 +85,9 @@ public class TemperatureFragment extends Fragment implements AdapterView.OnItemS
                 String hour = temperatureModelArrayList.get(i).getTime();
                 double co2 = temperatureModelArrayList.get(i).getTemperature();
 
-                barEntries.add(new BarEntry(i, (float)co2));
                 labelsname.add(hour);
+                barEntries.add(new BarEntry(i, (float)co2));
+
             }
         } else {
             for (int i = 0; i < TimeArrayList.size(); i++) {
