@@ -1,23 +1,30 @@
 package sep4x2.android.ui.network;
 
-import sep4x2.android.ui.temperature.TemperatureModel;
+import sep4x2.android.ui.temperature.TemperatureData;
 
-class SensorResponse {
+public class SensorResponse {
 
-   private int metricsID;
-   private double humidity;
-   private double temperature;
-   private double noise;
-   private double co2;
-   private String time;
+   int metricsId;
+   int roomId;
+   double temperature;
+   double humidity;
+   double co2;
+   double noise;
+   String updateTime;
 
-   public TemperatureModel getTemperature()
+   public SensorData getSensorData()
    {
-       return new TemperatureModel(time,temperature);
+      return new SensorData(metricsId, roomId, temperature, humidity, co2, noise, updateTime);
    }
    public double getTemperatureValue()
    {
       return temperature;
    }
+
+   public TemperatureData getTemperatureData()
+   {
+      return new TemperatureData(temperature, updateTime);
+   }
+
 
 }

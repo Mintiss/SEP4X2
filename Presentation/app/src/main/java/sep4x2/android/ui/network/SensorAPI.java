@@ -5,8 +5,8 @@ import retrofit2.http.GET;
 
 public interface SensorAPI {
 
-    @GET("api/metrics")
-    Call<SensorResponse> getAllMetrics();
+    @GET("v2/5ece8e703000006d00ea1312")
+    Call<SensorResponse> getSensorData();
 
 
 }
