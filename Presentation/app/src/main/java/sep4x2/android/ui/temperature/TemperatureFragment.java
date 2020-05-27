@@ -140,6 +140,24 @@ public class TemperatureFragment extends Fragment implements AdapterView.OnItemS
         temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
         temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
         temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
     }
 
     private void fillDaysAndTemperaturevaluess2()

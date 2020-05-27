@@ -15,13 +15,10 @@ public class SensorResponse {
    private double co2;
    private double noise;
    private String lastUpdated;
-   private int hour = 1;
-
-   int multiplier;
 
    public SensorResponse(){
       metricsID = new Random().nextInt(10000);
-      temperature = new Random().nextInt(50) * multiplier;
+      temperature = new Random().nextInt(50);
       humidity = new Random().nextInt(100);
       co2 = new Random().nextInt(5000);
       noise = new Random().nextInt(200);
@@ -38,11 +35,7 @@ public class SensorResponse {
    }
 
    public MutableLiveData<TemperatureData> getTemperature() {
-      if((new Random().nextInt(2)) == 1)
-         multiplier = -1;
-      else
-         multiplier = 1;
-      temperature = new Random().nextInt(50) * multiplier;
+      temperature = (new Random().nextInt(10)+15);
       MutableLiveData<TemperatureData> temperatureDataLiveData;
       temperatureDataLiveData = new MutableLiveData<TemperatureData>();
       temperatureDataLiveData.setValue(new TemperatureData(temperature, lastUpdated));
@@ -85,11 +78,4 @@ public class SensorResponse {
       this.lastUpdated = lastUpdated;
    }
 
-   public int getMultiplier() {
-      return multiplier;
-   }
-
-   public void setMultiplier(int multiplier) {
-      this.multiplier = multiplier;
-   }
 }
