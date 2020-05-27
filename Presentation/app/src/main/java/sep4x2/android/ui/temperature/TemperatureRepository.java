@@ -1,62 +1,48 @@
 package sep4x2.android.ui.temperature;
 
+import android.app.Application;
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import sep4x2.android.ui.local_database.Entity.SensorData;
+import sep4x2.android.ui.local_database.LocalDatabase;
+import sep4x2.android.ui.local_database.SensorDao;
 import sep4x2.android.ui.network.SensorAPI;
-import sep4x2.android.ui.network.SensorData;
-import sep4x2.android.ui.network.SensorResponse;
 import sep4x2.android.ui.network.ServiceGenerator;
 
 public class TemperatureRepository {
 
-    private static TemperatureRepository instance;
-    private MutableLiveData<TemperatureData> temperature;
-    private MutableLiveData<SensorData> sensorData;
+    private SensorDao sensorDao;
+    private MutableLiveData<List<SensorData>> temperatureData;
 
-   private TemperatureRepository()
+    private static TemperatureRepository instance;
+
+
+
+   private TemperatureRepository(Application application)
    {
-       sensorData = new MutableLiveData<>();
-       temperature = new MutableLiveData<>();
+       LocalDatabase database = LocalDatabase.getInstance(application);
+       sensorDao = database.sensorDao();
+       temperatureData = new MutableLiveData<>();
+       temperatureData.setValue(sensorDao.getTemperature().getValue());
    }
 
-    public static synchronized TemperatureRepository getInstance() {
+    public static synchronized TemperatureRepository getInstance(Application application) {
         if (instance == null) {
-            instance = new TemperatureRepository();
+            instance = new TemperatureRepository(application);
         }
         return instance;
     }
 
-    public MutableLiveData<SensorData> getSensorData() {
-        return sensorData;
+
+    public MutableLiveData<List<SensorData>> getTemperatureData() {
+        return temperatureData;
     }
-
-    public void updateTemperature() {
-        SensorAPI sensorAPI = ServiceGenerator.getSensorAPI();
-        Call<SensorResponse> call = sensorAPI.getSensorData();
-        call.enqueue(new Callback<SensorResponse>() {
-            @Override
-            public void onResponse(Call<SensorResponse> call, Response<SensorResponse> response) {
-                if (response.code() == 200) {
-                    sensorData.setValue(response.body().getSensorData());
-                    Log.i("asshole",""+response.body().getSensorData().getMetricsId() );
-                }
-            }
-
-            @Override
-            public void onFailure(Call<SensorResponse> call, Throwable t) {
-                Log.i("ass", "fuck");
-            }
-        });
-    }
-
-
-
-
-
-
 }

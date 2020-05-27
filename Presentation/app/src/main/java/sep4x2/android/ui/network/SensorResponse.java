@@ -1,4 +1,4 @@
-package sep4x2.android.ui.network;
+/*package sep4x2.android.ui.network;
 
 import sep4x2.android.ui.temperature.TemperatureData;
 
@@ -28,3 +28,4 @@ public class SensorResponse {
 
 
 }
+*/

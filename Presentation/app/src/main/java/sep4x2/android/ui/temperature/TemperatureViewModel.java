@@ -1,37 +1,37 @@
 package sep4x2.android.ui.temperature;
 
+import android.app.Application;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.util.List;
+
+import sep4x2.android.ui.local_database.Entity.SensorData;
+
 public class TemperatureViewModel extends ViewModel {
 
-    sep4x2.android.ui.temperature.SensorDataRepository repository;
+    TemperatureRepository repository;
 
     private MutableLiveData<String> mText;
 
-    public TemperatureViewModel() {
+    public TemperatureViewModel(Application application) {
         mText = new MutableLiveData<>();
         mText.setValue("This is the temperature fragment");
-        repository = sep4x2.android.ui.temperature.SensorDataRepository.getInstance();
+        repository = TemperatureRepository.getInstance(application);
     }
+
+
+    public LiveData<List<SensorData>> getTemperatureData() {
+        return repository.getTemperatureData();
+    }
+
 
     public LiveData<String> getText() {
         return mText;
     }
 
-    public LiveData<TemperatureData> repositoryGetTemperature()
-    {
-        MutableLiveData<TemperatureData> temperatureData;
-        temperatureData = new MutableLiveData<>();
-        temperatureData.setValue(new TemperatureData(repository.getSensorData().getValue().getTemperature(), repository.getSensorData().getValue().getUpdateTime()));
-        return temperatureData;
-    }
-
-    public void TemperatureUpdate()
-    {
-        repository.updateTemperature();
-    }
-
+   
 
 }

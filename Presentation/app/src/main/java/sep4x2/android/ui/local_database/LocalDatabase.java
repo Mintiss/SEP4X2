@@ -6,14 +6,14 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import sep4x2.android.ui.local_database.Entity.SensorStorage;
+import sep4x2.android.ui.local_database.Entity.SensorData;
 
-@Database(entities = {SensorStorage.class}, version = 2)
+@Database(entities = {SensorData.class}, version = 2)
 public abstract class LocalDatabase extends RoomDatabase{
 
     private static LocalDatabase instance;
 
-    public abstract TemperatureDao temperatureDao();
+    public abstract SensorDao sensorDao();
 
     public static synchronized  LocalDatabase getInstance(Context context)
     {

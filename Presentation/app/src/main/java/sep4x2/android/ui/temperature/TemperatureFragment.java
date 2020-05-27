@@ -35,7 +35,7 @@ public class TemperatureFragment extends Fragment implements AdapterView.OnItemS
     BarChart barChart;
     ArrayList<BarEntry> barEntries;
     ArrayList<String> labelsname;
-    ArrayList<LiveData<TemperatureData>> temperatureModelArrayList = new ArrayList<>();
+
     ArrayList<TemperatureModel> TimeArrayList = new ArrayList<>();
     //For the drop down
     private Spinner spinner;
@@ -44,6 +44,7 @@ public class TemperatureFragment extends Fragment implements AdapterView.OnItemS
     public int nr;
 
     private TemperatureViewModel temperatureViewModel;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -83,14 +84,12 @@ public class TemperatureFragment extends Fragment implements AdapterView.OnItemS
 
         if(num == 1) {
             //instead of getTime it has to be changed to getHours in the hours case
-            for (int i = 0; i < temperatureModelArrayList.size(); i++) {
-                String hour = temperatureModelArrayList.get(i).getValue().getTime();
-                double co2 = temperatureModelArrayList.get(i).getValue().getTemperature();
 
-                labelsname.add(hour);
-                barEntries.add(new BarEntry(i, (float)co2));
 
-            }
+                labelsname.add((temperatureViewModel.getTemperatureData().getValue().get(0).getUpdateTime()));
+                barEntries.add(new BarEntry(0,(float)temperatureViewModel.getTemperatureData().getValue().get(0).getTemperature()));
+
+
         } else {
             for (int i = 0; i < TimeArrayList.size(); i++) {
                 String day = TimeArrayList.get(i).getTime();
@@ -133,31 +132,7 @@ public class TemperatureFragment extends Fragment implements AdapterView.OnItemS
 
     private void fillHoursAndTemperaturevaluess()
     {
-        temperatureModelArrayList.clear();
-        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
-        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
-        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
-        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
-        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
-        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
-        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
-        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
-        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
-        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
-        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
-        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
-        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
-        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
-        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
-        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
-        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
-        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
-        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
-        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
-        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
-        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
-        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
-        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+
     }
 
     private void fillDaysAndTemperaturevaluess2()
