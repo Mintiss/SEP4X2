@@ -15,5 +15,9 @@ class SensorResponse {
    {
        return new TemperatureModel(time,temperature);
    }
+   public double getTemperatureValue()
+   {
+      return temperature;
+   }
 
 }

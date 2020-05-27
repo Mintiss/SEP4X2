@@ -1,5 +1,7 @@
 package sep4x2.android.ui.network;
 
+import android.app.Application;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -8,6 +10,9 @@ import androidx.lifecycle.MutableLiveData;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import sep4x2.android.ui.local_database.Entity.SensorStorage;
+import sep4x2.android.ui.local_database.LocalDatabase;
+import sep4x2.android.ui.local_database.TemperatureDao;
 import sep4x2.android.ui.login.LoginModel;
 import sep4x2.android.ui.temperature.TemperatureModel;
 
@@ -16,22 +21,57 @@ public class TemperatureRepository {
     private static TemperatureRepository instance;
     private MutableLiveData<TemperatureModel> temperature;
     private MutableLiveData<LoginModel> login;
+    //database
+    private TemperatureDao temperatureDao;
+    private LiveData<SensorStorage> temperaturevalue;
 
-   private TemperatureRepository()
+   private TemperatureRepository(Application application)
    {
+
+       //AdatBazis
+       LocalDatabase database = LocalDatabase.getInstance(application);
+       temperatureDao = database.temperatureDao();
+       temperaturevalue = temperatureDao.getTemperature();
+
+       //
        temperature = new MutableLiveData<>();
        login = new MutableLiveData<>();
    }
 
-    public static synchronized TemperatureRepository getInstance() {
+    public static synchronized TemperatureRepository getInstance(Application application) {
         if (instance == null) {
-            instance = new TemperatureRepository();
+            instance = new TemperatureRepository(application);
         }
         return instance;
     }
 
+
+    //-----------------------------------------------------------------------------------------
+    //database thingy
+
+    public LiveData<SensorStorage> getTemperaturevalue() {return temperaturevalue;}
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public LiveData<TemperatureModel> getTemperature() {return temperature;}
     public LiveData<LoginModel> getLogin() {return login;}
+
+
 
 
     //Getting the temperature
@@ -45,6 +85,7 @@ public class TemperatureRepository {
                 if(response.code() == 200)
                 {
                    temperature.setValue(response.body().getTemperature());
+
                 }
             }
 
@@ -75,8 +116,6 @@ public class TemperatureRepository {
             }
         });
     }
-
-
 
 
 

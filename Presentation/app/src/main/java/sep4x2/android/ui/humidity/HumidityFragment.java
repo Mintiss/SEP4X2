@@ -136,6 +136,27 @@ public class HumidityFragment extends Fragment implements AdapterView.OnItemSele
         humidityModelArrayList.add(new HumidityModel("10am",34.5));
         humidityModelArrayList.add(new HumidityModel("11am",45.0));
         humidityModelArrayList.add(new HumidityModel("1pm",23.5));
+        humidityModelArrayList.add(new HumidityModel("1pm",65.5));
+        humidityModelArrayList.add(new HumidityModel("9am",12.0));
+        humidityModelArrayList.add(new HumidityModel("10am",34.5));
+        humidityModelArrayList.add(new HumidityModel("11am",45.0));
+        humidityModelArrayList.add(new HumidityModel("1pm",23.5));
+        humidityModelArrayList.add(new HumidityModel("1pm",65.5));
+        humidityModelArrayList.add(new HumidityModel("9am",12.0));
+        humidityModelArrayList.add(new HumidityModel("10am",34.5));
+        humidityModelArrayList.add(new HumidityModel("11am",45.0));
+        humidityModelArrayList.add(new HumidityModel("1pm",23.5));
+        humidityModelArrayList.add(new HumidityModel("1pm",65.5));
+        humidityModelArrayList.add(new HumidityModel("9am",12.0));
+        humidityModelArrayList.add(new HumidityModel("10am",34.5));
+        humidityModelArrayList.add(new HumidityModel("11am",45.0));
+        humidityModelArrayList.add(new HumidityModel("1pm",23.5));
+        humidityModelArrayList.add(new HumidityModel("1pm",65.5));
+        humidityModelArrayList.add(new HumidityModel("9am",12.0));
+        humidityModelArrayList.add(new HumidityModel("10am",34.5));
+        humidityModelArrayList.add(new HumidityModel("11am",45.0));
+
+
     }
 
     private void fillDaysAndHumidityvaluess2()
