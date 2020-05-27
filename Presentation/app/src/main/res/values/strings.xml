@@ -42,4 +42,8 @@
     <string name="change_password_old_password">Old Password</string>
     <string name="change_password_new_password">New Password</string>
     <string name="change_password_confirm_new_password">Confirm New Password</string>
+    <string name="home_temperature">Temperature:</string>
+    <string name="home_humidity">Humidity:</string>
+    <string name="home_CO2">CO2:</string>
+    <string name="home_Noise">Noise:</string>
 </resources>

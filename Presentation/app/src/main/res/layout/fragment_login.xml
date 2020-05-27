@@ -4,6 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent">
 
+
     <EditText
         android:id="@+id/login_email"
         android:layout_width="350dp"
