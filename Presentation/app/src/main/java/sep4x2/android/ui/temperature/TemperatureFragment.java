@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -34,7 +35,7 @@ public class TemperatureFragment extends Fragment implements AdapterView.OnItemS
     BarChart barChart;
     ArrayList<BarEntry> barEntries;
     ArrayList<String> labelsname;
-    ArrayList<TemperatureModel> temperatureModelArrayList = new ArrayList<>();
+    ArrayList<LiveData<TemperatureData>> temperatureModelArrayList = new ArrayList<>();
     ArrayList<TemperatureModel> TimeArrayList = new ArrayList<>();
     //For the drop down
     private Spinner spinner;
@@ -83,8 +84,8 @@ public class TemperatureFragment extends Fragment implements AdapterView.OnItemS
         if(num == 1) {
             //instead of getTime it has to be changed to getHours in the hours case
             for (int i = 0; i < temperatureModelArrayList.size(); i++) {
-                String hour = temperatureModelArrayList.get(i).getTime();
-                double co2 = temperatureModelArrayList.get(i).getTemperature();
+                String hour = temperatureModelArrayList.get(i).getValue().getTime();
+                double co2 = temperatureModelArrayList.get(i).getValue().getTemperature();
 
                 labelsname.add(hour);
                 barEntries.add(new BarEntry(i, (float)co2));
@@ -133,11 +134,30 @@ public class TemperatureFragment extends Fragment implements AdapterView.OnItemS
     private void fillHoursAndTemperaturevaluess()
     {
         temperatureModelArrayList.clear();
-        temperatureModelArrayList.add(new TemperatureModel("1pm",24.5));
-        temperatureModelArrayList.add(new TemperatureModel("9am",24.70));
-        temperatureModelArrayList.add(new TemperatureModel("10am",25.5));
-        temperatureModelArrayList.add(new TemperatureModel("11am",26.0));
-        temperatureModelArrayList.add(new TemperatureModel("1pm",27.5));
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
+        temperatureModelArrayList.add(temperatureViewModel.repositoryGetTemperature());
     }
 
     private void fillDaysAndTemperaturevaluess2()
