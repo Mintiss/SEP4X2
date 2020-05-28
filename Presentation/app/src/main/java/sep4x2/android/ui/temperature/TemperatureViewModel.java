@@ -19,19 +19,19 @@ public class TemperatureViewModel extends ViewModel {
     public TemperatureViewModel(Application application) {
         mText = new MutableLiveData<>();
         mText.setValue("This is the temperature fragment");
-        repository = TemperatureRepository.getInstance(application);
+       // repository = TemperatureRepository.getInstance(application);
     }
 
 
-    public LiveData<List<SensorData>> getTemperatureData() {
+   /* public LiveData<List<SensorData>> getTemperatureData() {
         return repository.getTemperatureData();
-    }
+    } */
 
 
     public LiveData<String> getText() {
         return mText;
     }
 
-   
+
 
 }

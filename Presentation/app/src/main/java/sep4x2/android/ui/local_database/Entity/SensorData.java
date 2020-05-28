@@ -3,12 +3,12 @@ package sep4x2.android.ui.local_database.Entity;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "Sensor_storage_table")
+//@Entity(tableName = "Sensor_storage_table")
 public class SensorData {
 
-    @PrimaryKey(autoGenerate = true)
+  //  @PrimaryKey(autoGenerate = true)
     private int id;
-    private int metricsId;
+   /* private int metricsId;
     private int roomId;
     private double temperature;
     private double humidity;
@@ -57,5 +57,5 @@ public class SensorData {
     public SensorData getSensorData()
     {
         return new SensorData(metricsId, roomId, temperature, humidity, co2, noise, updateTime);
-    }
+    } */
 }

@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        for(;;) {
+    /*    for(;;) {
             try {
                 sensorDataRepository.updateSensorData();
                 Thread.sleep(3000);
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
-
+ */
     }
 
 

@@ -26,23 +26,23 @@ public class TemperatureRepository {
 
 
 
-   private TemperatureRepository(Application application)
+/*   private TemperatureRepository(Application application)
    {
        LocalDatabase database = LocalDatabase.getInstance(application);
        sensorDao = database.sensorDao();
        temperatureData = new MutableLiveData<>();
        temperatureData.setValue(sensorDao.getTemperature().getValue());
-   }
+   } */
 
-    public static synchronized TemperatureRepository getInstance(Application application) {
+  /*  public static synchronized TemperatureRepository getInstance(Application application) {
         if (instance == null) {
             instance = new TemperatureRepository(application);
         }
         return instance;
-    }
+    } */
 
 
-    public MutableLiveData<List<SensorData>> getTemperatureData() {
+  /*  public MutableLiveData<List<SensorData>> getTemperatureData() {
         return temperatureData;
-    }
+    } */
 }

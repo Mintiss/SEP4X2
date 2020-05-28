@@ -8,10 +8,10 @@ import androidx.room.RoomDatabase;
 
 import sep4x2.android.ui.local_database.Entity.SensorData;
 
-@Database(entities = {SensorData.class}, version = 2)
+//@Database(entities = {SensorData.class}, version = 2)
 public abstract class LocalDatabase extends RoomDatabase{
 
-    private static LocalDatabase instance;
+  /*  private static LocalDatabase instance;
 
     public abstract SensorDao sensorDao();
 
@@ -26,5 +26,5 @@ public abstract class LocalDatabase extends RoomDatabase{
         }
         return instance;
     }
-
+*/
 }

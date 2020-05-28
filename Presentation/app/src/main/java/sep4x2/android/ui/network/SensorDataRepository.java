@@ -26,8 +26,8 @@ public class SensorDataRepository {
 
     private SensorDataRepository(Application application)
     {
-        LocalDatabase database = LocalDatabase.getInstance(application);
-        sensorDao = database.sensorDao();
+       // LocalDatabase database = LocalDatabase.getInstance(application);
+        //sensorDao = database.sensorDao();
 
         sensorData = new MutableLiveData<>();
 
@@ -47,7 +47,7 @@ public class SensorDataRepository {
 
 
 
-    public void updateSensorData() {
+   /* public void updateSensorData() {
         SensorAPI sensorAPI = ServiceGenerator.getSensorAPI();
         Call<SensorData> call = sensorAPI.getSensorData();
         call.enqueue(new Callback<SensorData>() {
@@ -65,7 +65,7 @@ public class SensorDataRepository {
                 Log.i("ass", "fuck");
             }
         });
-    }
+    } */
 
 
 
