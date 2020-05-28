@@ -8,7 +8,7 @@ import static sep4x2.android.ui.network.NetworkConfig.BASE_URL;
 
 public class ServiceGenerator {
     private static Retrofit.Builder retrofitBuilder = new Retrofit.Builder()
-            .baseUrl("http://www.mocky.io")
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create());
 
     private static Retrofit retrofit = retrofitBuilder.build();
