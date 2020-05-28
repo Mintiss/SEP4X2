@@ -34,8 +34,10 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.EntryXComparator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import sep4x2.android.R;
 import sep4x2.android.ui.humidity.HumidityModel;
@@ -53,6 +55,7 @@ public class NoiseFragment extends Fragment {
 
     //LineChart
     ArrayList<Entry> yValues = new ArrayList<>();
+
     ArrayList<Entry> yNumber = new ArrayList<>();
 
     //Barchart
@@ -73,6 +76,10 @@ public class NoiseFragment extends Fragment {
 
        setLinechart(0);
 
+
+
+
+
         //Barchart------------------------------------------------------------------------------------------------------------------------------------------------------------
         barChart = root.findViewById(R.id.barchart);
 
@@ -88,10 +95,12 @@ public class NoiseFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked == true) {
+
                     barChart.animate().alpha(1).setDuration(200);
                     lineChart.animate().alpha(0).setDuration(200);
 
                 } else {
+
                     barChart.animate().alpha(0).setDuration(200);
                     lineChart.animate().alpha(1).setDuration(200);
                 }
@@ -130,6 +139,9 @@ private void setLinechart(int number)
     FillHourEbumy();
     fillDayEnum();
 
+    Collections.sort(yValues, new EntryXComparator());
+    Collections.sort(yNumber, new EntryXComparator());
+
     lineChart.setDragEnabled(true);
     lineChart.setScaleEnabled(false);
 
@@ -153,10 +165,7 @@ private void setLinechart(int number)
         LineData data = new LineData(dataSets);
         lineChart.setData(data);
 
-
-
-
-
+    lineChart.invalidate();
 
 
 
