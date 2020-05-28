@@ -115,7 +115,7 @@ public class TemperatureFragment extends Fragment implements AdapterView.OnItemS
         //Set the XAxis Format
 
         XAxis xAxis = barChart.getXAxis();
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(labelsname));
+        //xAxis.setValueFormatter(new IndexAxisValueFormatter(labelsname));
 
         //Set the positions of the labels(hours)
 
