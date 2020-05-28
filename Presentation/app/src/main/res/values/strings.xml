@@ -42,4 +42,7 @@
     <string name="change_password_old_password">Old Password</string>
     <string name="change_password_new_password">New Password</string>
     <string name="change_password_confirm_new_password">Confirm New Password</string>
+    <string name="profile_log_out">Log Out</string>
+    <string name="profile_enter_your_password">Enter your password</string>
+    <string name="profile_confirm">Confirm</string>
 </resources>

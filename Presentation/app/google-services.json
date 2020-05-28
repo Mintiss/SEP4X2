@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "493097354947",
+    "firebase_url": "https://sep4x2-android.firebaseio.com",
+    "project_id": "sep4x2-android",
+    "storage_bucket": "sep4x2-android.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:493097354947:android:64aab04b218dce6f3ac476",
+        "android_client_info": {
+          "package_name": "sep4x2.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "493097354947-2uoc1929cklg1oe4vp6qv9030vaiee9l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "sep4x2.android",
+            "certificate_hash": "d18e7d9a8da0fdf6452f669c8ae00148b328ca5a"
+          }
+        },
+        {
+          "client_id": "493097354947-n5g8vpne3hlanq2io0va7fc3cmt76l5j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7dFnyNWsmnkRu7EqOCfFrLq1o4MB0E3o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "493097354947-n5g8vpne3hlanq2io0va7fc3cmt76l5j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

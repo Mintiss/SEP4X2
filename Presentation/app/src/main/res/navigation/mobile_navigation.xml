@@ -73,6 +73,9 @@
         <action
             android:id="@+id/action_nav_profile_to_nav_change_password"
             app:destination="@+id/nav_change_password" />
+        <action
+            android:id="@+id/action_nav_profile_to_nav_login"
+            app:destination="@id/nav_login" />
     </fragment>
 
     <fragment

@@ -6,7 +6,9 @@
 
     <EditText
         android:id="@+id/register_email"
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:hint="@string/login_email"
@@ -15,7 +17,9 @@
 
     <EditText
         android:id="@+id/register_first_name"
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:hint="@string/register_first_name"
@@ -24,7 +28,9 @@
 
     <EditText
         android:id="@+id/register_last_name"
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:hint="@string/register_last_name"
@@ -33,7 +39,9 @@
 
     <EditText
         android:id="@+id/register_product_id"
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:hint="@string/register_product_id"
@@ -42,7 +50,9 @@
 
     <EditText
         android:id="@+id/register_password"
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:hint="@string/login_password"
@@ -51,7 +61,9 @@
 
     <EditText
         android:id="@+id/register_passwordConfirm"
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:layout_gravity="center_horizontal"
@@ -60,7 +72,9 @@
 
     <Button
         android:id="@+id/register_registerButton"
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_height="wrap_content"
         android:text="@string/register_registerButton"
         android:layout_marginTop="40dp"

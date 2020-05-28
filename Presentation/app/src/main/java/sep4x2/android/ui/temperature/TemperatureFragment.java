@@ -48,7 +48,7 @@ public class TemperatureFragment extends Fragment implements AdapterView.OnItemS
                              ViewGroup container, Bundle savedInstanceState) {
         temperatureViewModel =
                 ViewModelProviders.of(this).get(TemperatureViewModel.class);
-       final View root = inflater.inflate(R.layout.fragment_temperature, container, false);
+        final View root = inflater.inflate(R.layout.fragment_temperature, container, false);
         final TextView textView = root.findViewById(R.id.text_slideshow);
         final AdapterView.OnItemSelectedListener listener = this;
         temperatureViewModel.getText().observe(this, new Observer<String>() {
