@@ -1,31 +1,53 @@
-/*package sep4x2.android.ui.network;
-
-import sep4x2.android.ui.temperature.TemperatureData;
+package sep4x2.android.ui.network;
 
 public class SensorResponse {
 
-   int metricsId;
-   int roomId;
+   int metricsID;
+   int roomID;
    double temperature;
    double humidity;
-   double co2;
+   double cO2;
    double noise;
-   String updateTime;
 
-   public SensorData getSensorData()
-   {
-      return new SensorData(metricsId, roomId, temperature, humidity, co2, noise, updateTime);
-   }
-   public double getTemperatureValue()
-   {
-      return temperature;
-   }
+    public int getMetricsID() {
+        return metricsID;
+    }
 
-   public TemperatureData getTemperatureData()
-   {
-      return new TemperatureData(temperature, updateTime);
-   }
+    public int getRoomID() {
+        return roomID;
+    }
 
+    public double getTemperature() {
+        return temperature;
+    }
+
+    public double getHumidity() {
+        return humidity;
+    }
+
+    public double getCo2() {
+        return cO2;
+    }
+
+    public double getNoise() {
+        return noise;
+    }
+
+    public String getUpdateTime() {
+        return lastUpdated;
+    }
+
+    String lastUpdated;
+
+
+    public SensorResponse(int metricsId, int roomID, double temperature, double humidity, double cO2, double noise, String lastUpdated) {
+        this.metricsID = metricsId;
+        this.roomID = roomID;
+        this.temperature = temperature;
+        this.humidity = humidity;
+        this.cO2 = cO2;
+        this.noise = noise;
+        this.lastUpdated = lastUpdated;
+    }
 
 }
-*/

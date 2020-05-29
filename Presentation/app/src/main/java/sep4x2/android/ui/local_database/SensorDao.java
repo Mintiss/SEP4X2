@@ -9,6 +9,7 @@ import androidx.room.Query;
 
 import java.util.List;
 
+import sep4x2.android.ui.local_database.Entity.TemperatureData;
 import sep4x2.android.ui.local_database.Entity.SensorData;
 
 @Dao
@@ -16,13 +17,12 @@ public interface SensorDao {
 
 
     @Insert
-    void insert(MutableLiveData<SensorData> sensorData);
+    void insert(SensorData sensorData);
 
 
-    @Query("SELECT DISTINCT temperature, updateTime FROM Sensor_storage_table")
-   LiveData<List<SensorData>> getTemperature();
+    @Query("SELECT * FROM Sensor_storage_table")
+    List<SensorData> getAllTemperature();
 
-
-
-
+    @Query("DELETE FROM Sensor_storage_table")
+    public void nukeTable();
 }

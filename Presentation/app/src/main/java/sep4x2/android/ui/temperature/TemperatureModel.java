@@ -1,18 +1,23 @@
 package sep4x2.android.ui.temperature;
 
+import androidx.lifecycle.LiveData;
+
+import org.joda.time.DateTime;
+
+import java.util.List;
+
+import sep4x2.android.ui.local_database.Entity.TemperatureData;
+
 public class TemperatureModel {
 
-    String time;
-
+    DateTime time;
     double temperature;
 
-
-
-    public String getTime() {
+    public DateTime getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(DateTime time) {
         this.time = time;
     }
 
@@ -24,8 +29,9 @@ public class TemperatureModel {
         this.temperature = temperature;
     }
 
-    public TemperatureModel(String time, double temperature) {
-        this.time = time;
-        this.temperature = temperature;
+    public TemperatureModel(TemperatureData temperatureDataLiveData) {
+        temperature=temperatureDataLiveData.getTemperature();
+        time=DateTime.parse(temperatureDataLiveData.getUpdateTime());
     }
+
 }
