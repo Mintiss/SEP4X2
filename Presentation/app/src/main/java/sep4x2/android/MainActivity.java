@@ -23,12 +23,14 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import sep4x2.android.ui.network.SensorDataRepository;
+
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private NavController navController;
-
+    private SensorDataRepository sensorDataRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +54,16 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+    /*    for(;;) {
+            try {
+                sensorDataRepository.updateSensorData();
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
-
+        }
+ */
     }
 
 
