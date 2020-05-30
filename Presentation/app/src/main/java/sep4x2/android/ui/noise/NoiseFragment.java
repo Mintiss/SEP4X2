@@ -77,7 +77,7 @@ public class NoiseFragment extends Fragment {
         final TextView textView = root.findViewById(R.id.text_send);
 
         //LineChart-------------------------------------------------------------------------------------------------------------------------------------------------
-        lineChart = root.findViewById(R.id.LineChart);
+        lineChart = root.findViewById(R.id.LineChartNoise);
 
         FillHourEbumy();
         fillDayEnum();
@@ -89,7 +89,7 @@ public class NoiseFragment extends Fragment {
 
 
         //Barchart------------------------------------------------------------------------------------------------------------------------------------------------------------
-        barChart = root.findViewById(R.id.barchart);
+        barChart = root.findViewById(R.id.barchartNoise);
 
         fillHoursAndHumidityvaluess();
         fillDaysAndHumidityvaluess2();
@@ -102,7 +102,7 @@ public class NoiseFragment extends Fragment {
         noiseData = noiseViewModel.getNoiseData();
 
         //Switch----------------------------------------------------------------------------------------------------------
-        aSwitch = root.findViewById(R.id.switch2);
+        aSwitch = root.findViewById(R.id.switchNoise);
 
 
         aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -124,18 +124,18 @@ public class NoiseFragment extends Fragment {
 
         //RadioGroup-----------------------------------------------------------------------------------------------------------------
 
-        radioGroup = (RadioGroup) root.findViewById(R.id.radioGroup);
+        radioGroup = (RadioGroup) root.findViewById(R.id.radioGroupNoise);
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
-                    case R.id.dayradioButton:
+                    case R.id.dayradioButtonNoise:
                         Toast.makeText(getContext(), "day", Toast.LENGTH_SHORT).show();
                         SetBarchart(0);
                         setLinechart(0);
                         break;
-                    case R.id.hourradioButton:
+                    case R.id.hourradioButtonNoise2:
                         Toast.makeText(getContext(), "hour", Toast.LENGTH_SHORT).show();
                         setLinechart(1);
                         SetBarchart(1);

@@ -20,7 +20,7 @@
 
 
     <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/LineChart"
+        android:id="@+id/LineChartNoise"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -28,7 +28,7 @@
         app:layout_constraintStart_toStartOf="parent"></com.github.mikephil.charting.charts.LineChart>
 
     <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/barchart"
+        android:id="@+id/barchartNoise"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -37,7 +37,7 @@
         tools:visibility="gone"></com.github.mikephil.charting.charts.BarChart>
 
     <Switch
-        android:id="@+id/switch2"
+        android:id="@+id/switchNoise"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="237dp"
@@ -52,7 +52,7 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <RadioGroup
-        android:id="@+id/radioGroup"
+        android:id="@+id/radioGroupNoise"
         android:layout_width="350dp"
         android:layout_height="251dp"
         android:layout_marginTop="98dp"
@@ -64,7 +64,7 @@
 
 
         <RadioButton
-            android:id="@+id/dayradioButton"
+            android:id="@+id/dayradioButtonNoise"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
@@ -72,7 +72,7 @@
          />
 
         <RadioButton
-            android:id="@+id/hourradioButton"
+            android:id="@+id/hourradioButtonNoise2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 

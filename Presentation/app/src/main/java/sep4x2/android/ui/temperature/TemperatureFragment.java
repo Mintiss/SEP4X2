@@ -9,9 +9,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
@@ -35,86 +37,133 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.EntryXComparator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import sep4x2.android.R;
+import sep4x2.android.ui.humidity.HumidityModel;
 import sep4x2.android.ui.local_database.Entity.SensorData;
 import sep4x2.android.ui.local_database.Entity.TemperatureData;
 
-public class TemperatureFragment extends Fragment implements AdapterView.OnItemSelectedListener, CompoundButton.OnCheckedChangeListener {
+public class TemperatureFragment extends Fragment  {
 
-    //Barchart
-    BarChart barChart;
+    private LineChart lineChart;
+    private BarChart barChart;
+    private Switch aSwitch;
+    private RadioGroup radioGroup;
+
     ArrayList<BarEntry> barEntries;
     ArrayList<String> labelsname;
 
-    //Linechart
+    //LineChart
     ArrayList<Entry> yValues = new ArrayList<>();
+    ArrayList<Entry> yNumber = new ArrayList<>();
 
-    ArrayList<TemperatureModel> TimeArrayList = new ArrayList<>();
-
-    //For the drop down
-    private Spinner spinner;
-    private static final String[] paths = {"Today","Weekly"};
-    public String string;
-    public int nr;
-
-    private TemperatureViewModel temperatureViewModel;
-    private LineChart lineChart;
-    private Switch aSwitch;
-
-
-    //FROM DB
-    private List<SensorData>temperatureList;
+    //Barchart
+    ArrayList<HumidityModel> humidityModelArrayList = new ArrayList<>();
+    ArrayList<HumidityModel> humidityModelArrayList2 = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        temperatureViewModel = new ViewModelProvider(this).get(TemperatureViewModel.class);
 
         final View root = inflater.inflate(R.layout.fragment_temperature, container, false);
 
-        final AdapterView.OnItemSelectedListener listener = this;
 
+//LineChart-------------------------------------------------------------------------------------------------------------------------------------------------
+        lineChart = root.findViewById(R.id.LineCharttemp);
 
-        temperatureList=temperatureViewModel.getTemperatureData();
+        FillHourEbumy();
+        fillDayEnum();
 
-        //Switch
-        aSwitch = root.findViewById(R.id.char_switch);
+        Collections.sort(yValues, new EntryXComparator());
+        Collections.sort(yNumber, new EntryXComparator());
+
+        setLinechart(0);
+
+        //Barchart------------------------------------------------------------------------------------------------------------------------------------------------------------
+        barChart = root.findViewById(R.id.barcharttemp);
+
+        fillHoursAndHumidityvaluess();
+        fillDaysAndHumidityvaluess2();
+
+        SetBarchart(0);
+
+        barChart.animate().alpha(0).setDuration(0);
+
+        //Switch----------------------------------------------------------------------------------------------------------
+        aSwitch = root.findViewById(R.id.switchTemp);
+
 
         aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked == true) {
 
-                if(aSwitch.isChecked())
-                {
-                   // aSwitch.setVisibility(isVisible(1));
-                    //barChart.setVisibility(isVisible(0);
-                }else {
+                    barChart.animate().alpha(1).setDuration(200);
+                    lineChart.animate().alpha(0).setDuration(200);
 
+                } else {
+
+                    barChart.animate().alpha(0).setDuration(200);
+                    lineChart.animate().alpha(1).setDuration(200);
                 }
-
             }
         });
 
-        
-        //LineChart
-        lineChart = (LineChart) root.findViewById(R.id.temperatureLinewchart);
 
-        yValues.add(new Entry(0,(float) 22.5));
-        yValues.add(new Entry(0,(float) 25.1));
-        yValues.add(new Entry(0,(float) 13.0));
-        yValues.add(new Entry(0,(float) 22.0));
-        yValues.add(new Entry(0,(float) 22.9));
+        //RadioGroup-----------------------------------------------------------------------------------------------------------------
+
+        radioGroup = (RadioGroup) root.findViewById(R.id.radioGroupTemp);
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.dayradioButtonTemp:
+                        Toast.makeText(getContext(), "day", Toast.LENGTH_SHORT).show();
+                        SetBarchart(0);
+                        setLinechart(0);
+                        break;
+                    case R.id.hourradioButtonTemp2:
+                        Toast.makeText(getContext(), "hour", Toast.LENGTH_SHORT).show();
+                        setLinechart(1);
+                        SetBarchart(1);
+                        break;
+                }
+            }
+        });
+
+
+
+        return root;
+    }
+
+
+
+    private void setLinechart(int number) {
+
+
+
 
         lineChart.setDragEnabled(true);
         lineChart.setScaleEnabled(false);
 
-        LineDataSet set1 = new LineDataSet(yValues,"Data set1");
+        LineDataSet set1;
+        LineDataSet set2;
 
-        set1.setFillAlpha(50);
+        if (number == 1) {
+            set1 = new LineDataSet(yValues, "Data hours");
+
+
+        } else {
+            set1 = new LineDataSet(yNumber, "Data day");
+
+        }
+        set1.setFillAlpha(250);
 
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(set1);
@@ -122,54 +171,35 @@ public class TemperatureFragment extends Fragment implements AdapterView.OnItemS
         LineData data = new LineData(dataSets);
         lineChart.setData(data);
 
-        //Barchart
-        barChart = root.findViewById(R.id.TemperatureBarChart);
+        lineChart.invalidate();
 
-        //spinner
 
-        spinner = root.findViewById(R.id.spinnerTemperature);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_spinner_item,paths);
-
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(listener);
-
-        temperatureList = temperatureViewModel.getTemperatureData();
-        Log.i("TEST FOR TEMP ON CEATE STUFF",temperatureList.toString());
-
-        return root;
     }
 
-
     private void SetBarchart(int num) {
-        barEntries =new ArrayList<>();
+        barEntries = new ArrayList<>();
         labelsname = new ArrayList<>();
 
-        if(num == 1) {
-            //instead of getTime it has to be changed to getHours in the hours case
-             //   labelsname.add((temperatureViewModel.getTemperatureData().getValue().get(0).getUpdateTime()));
-               // barEntries.add(new BarEntry(0,(float)temperatureViewModel.getTemperatureData().getValue().get(0).getTemperature()));
 
-            for (int i = 0; i < temperatureList.size(); i++) {
-                labelsname.add(temperatureList.get(i).getUpdateTime());
-                barEntries.add(new BarEntry(0, (int) temperatureList.get(i).getTemperature()));
-            }
-        } else {
-            for (int i = 0; i < temperatureList.size(); i++) {
-                String day = "Today";
-                double co2 =  temperatureList.get(i).getTemperature();
+        if (num == 1){
+           // barEntries.add(new BarEntry(0, (float) noiseData.get(0).getNoise()));
+            //labelsname.add(noiseData.get(0).getUpdateTime());
+        }
+        else {
+            for (int i = 0; i < humidityModelArrayList2.size(); i++) {
+                String day = humidityModelArrayList2.get(i).getTime();
+                double co2 = humidityModelArrayList2.get(i).getHumindity();
 
                 barEntries.add(new BarEntry(i, (float) co2));
                 labelsname.add(day);
             }
         }
 
-        BarDataSet barDataSet = new BarDataSet(barEntries,"Temperature in Celsius");
+        BarDataSet barDataSet = new BarDataSet(barEntries, "Humidity in percentage");
         barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
 
         Description description = new Description();
-        description.setText("Temperature");
+        description.setText("Humidity");
         barChart.setDescription(description);
 
         BarData barData = new BarData(barDataSet);
@@ -194,29 +224,83 @@ public class TemperatureFragment extends Fragment implements AdapterView.OnItemS
         barChart.invalidate();
     }
 
-    public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
 
-        switch (position) {
-            case 0:
-                SetBarchart(1);
+    private void fillHoursAndHumidityvaluess() {
+        humidityModelArrayList.clear();
+        humidityModelArrayList.add(new HumidityModel("1pm", 65.5));
+        humidityModelArrayList.add(new HumidityModel("9am", 12.0));
+        humidityModelArrayList.add(new HumidityModel("10am", 34.5));
+        humidityModelArrayList.add(new HumidityModel("11am", 45.0));
+        humidityModelArrayList.add(new HumidityModel("1pm", 23.5));
+        humidityModelArrayList.add(new HumidityModel("1pm", 65.5));
+        humidityModelArrayList.add(new HumidityModel("9am", 12.0));
+        humidityModelArrayList.add(new HumidityModel("10am", 34.5));
+        humidityModelArrayList.add(new HumidityModel("11am", 45.0));
+        humidityModelArrayList.add(new HumidityModel("1pm", 23.5));
+        humidityModelArrayList.add(new HumidityModel("1pm", 65.5));
+        humidityModelArrayList.add(new HumidityModel("9am", 12.0));
+        humidityModelArrayList.add(new HumidityModel("10am", 34.5));
+        humidityModelArrayList.add(new HumidityModel("11am", 45.0));
+        humidityModelArrayList.add(new HumidityModel("1pm", 23.5));
+        humidityModelArrayList.add(new HumidityModel("1pm", 65.5));
+        humidityModelArrayList.add(new HumidityModel("9am", 12.0));
+        humidityModelArrayList.add(new HumidityModel("10am", 34.5));
+        humidityModelArrayList.add(new HumidityModel("11am", 45.0));
+        humidityModelArrayList.add(new HumidityModel("1pm", 23.5));
+        humidityModelArrayList.add(new HumidityModel("1pm", 65.5));
+        humidityModelArrayList.add(new HumidityModel("9am", 12.0));
+        humidityModelArrayList.add(new HumidityModel("10am", 34.5));
+        humidityModelArrayList.add(new HumidityModel("11am", 45.0));
 
-                break;
-            case 1:
-                SetBarchart(0);
 
-                break;
-
-        }
     }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-        SetBarchart(0);
+    private void fillDaysAndHumidityvaluess2() {
+        humidityModelArrayList2.clear();
+        humidityModelArrayList2.add(new HumidityModel("monday", 16.5));
+        humidityModelArrayList2.add(new HumidityModel("tuesday", 25.0));
+        humidityModelArrayList2.add(new HumidityModel("wednesday", 34.5));
+        humidityModelArrayList2.add(new HumidityModel("thursday", 6.0));
+        humidityModelArrayList2.add(new HumidityModel("friday", 34));
+        humidityModelArrayList2.add(new HumidityModel("saturday", 12));
+        humidityModelArrayList2.add(new HumidityModel("sunday", 12.0));
     }
 
-
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
+    private void FillHourEbumy() {
+        yValues.add(new Entry(0, 60f));
+        yValues.add(new Entry(1, 20f));
+        yValues.add(new Entry(2, 75f));
+        yValues.add(new Entry(3, 12f));
+        yValues.add(new Entry(4, 22.9f));
+        yValues.add(new Entry(5, 60f));
+        yValues.add(new Entry(6, 20f));
+        yValues.add(new Entry(7, 75f));
+        yValues.add(new Entry(8, 12f));
+        yValues.add(new Entry(9, 22.9f));
+        yValues.add(new Entry(10, 60f));
+        yValues.add(new Entry(11, 20f));
+        yValues.add(new Entry(12, 75f));
+        yValues.add(new Entry(13, 12f));
+        yValues.add(new Entry(14, 22.9f));
+        yValues.add(new Entry(15, 60f));
+        yValues.add(new Entry(16, 20f));
+        yValues.add(new Entry(17, 75f));
+        yValues.add(new Entry(18, 12f));
+        yValues.add(new Entry(19, 22.9f));
+        yValues.add(new Entry(20, 20f));
+        yValues.add(new Entry(21, 75f));
+        yValues.add(new Entry(22, 12f));
+        yValues.add(new Entry(23, 22.9f));
     }
+
+    private void fillDayEnum() {
+        yNumber.add(new Entry(0, 15f));
+        yNumber.add(new Entry(1, 35f));
+        yNumber.add(new Entry(2, 75f));
+        yNumber.add(new Entry(3, 89f));
+        yNumber.add(new Entry(4, 15f));
+        yNumber.add(new Entry(5, 27f));
+        yNumber.add(new Entry(6, 46f));
+    }
+
 }
