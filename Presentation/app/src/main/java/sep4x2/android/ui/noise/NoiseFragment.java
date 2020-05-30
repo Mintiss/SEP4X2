@@ -38,9 +38,11 @@ import com.github.mikephil.charting.utils.EntryXComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import sep4x2.android.R;
 import sep4x2.android.ui.humidity.HumidityModel;
+import sep4x2.android.ui.local_database.Entity.SensorData;
 
 
 public class NoiseFragment extends Fragment {
@@ -61,6 +63,9 @@ public class NoiseFragment extends Fragment {
     //Barchart
     ArrayList<HumidityModel> humidityModelArrayList = new ArrayList<>();
     ArrayList<HumidityModel> humidityModelArrayList2 = new ArrayList<>();
+
+    //FROM DB
+    List<SensorData> noiseData;
 
     private NoiseViewModel noiseViewModel;
 
@@ -93,9 +98,12 @@ public class NoiseFragment extends Fragment {
 
         barChart.animate().alpha(0).setDuration(0);
 
+        //DB--------------------------------------------------------------------------------------------------------------
+        noiseData = noiseViewModel.getNoiseData();
 
         //Switch----------------------------------------------------------------------------------------------------------
         aSwitch = root.findViewById(R.id.switch2);
+
 
         aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -178,15 +186,11 @@ public class NoiseFragment extends Fragment {
         labelsname = new ArrayList<>();
 
 
-        if (num == 1) {
-            for (int i = 0; i < humidityModelArrayList.size(); i++) {
-                String hour = humidityModelArrayList.get(i).getTime();
-                double co2 = humidityModelArrayList.get(i).getHumindity();
-
-                barEntries.add(new BarEntry(i, (float) co2));
-                labelsname.add(hour);
+        if (num == 1){
+                barEntries.add(new BarEntry(0, (float) noiseData.get(0).getNoise()));
+                labelsname.add(noiseData.get(0).getUpdateTime());
             }
-        } else {
+         else {
             for (int i = 0; i < humidityModelArrayList2.size(); i++) {
                 String day = humidityModelArrayList2.get(i).getTime();
                 double co2 = humidityModelArrayList2.get(i).getHumindity();

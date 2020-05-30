@@ -41,6 +41,7 @@ public class HomeFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+
         homeViewModel.sensorDataClient.updateSensorData();
 
         return view;
