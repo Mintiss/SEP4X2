@@ -1,34 +1,35 @@
-package sep4x2.android.ui.noise;
+package sep4x2.android.ui.co2;
 
 import android.app.Application;
 import android.os.AsyncTask;
+
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import sep4x2.android.SharedSensors.Noise;
+import sep4x2.android.SharedSensors.CO2;
 import sep4x2.android.local_database.LocalDatabase;
 import sep4x2.android.local_database.SensorDao;
 
-public class NoiseRepository {
+public class Co2Repository {
 
     private SensorDao sensorDao;
 
-    private static NoiseRepository instance;
+    private static Co2Repository instance;
 
-    private NoiseRepository(Application application)
+    private Co2Repository(Application application)
     {
         LocalDatabase database = LocalDatabase.getInstance(application);
         sensorDao = database.sensorDao();
     }
 
-    public static synchronized NoiseRepository getInstance(Application application) {
+    public static synchronized Co2Repository getInstance(Application application) {
         if (instance == null) {
-            instance = new NoiseRepository(application);
+            instance = new Co2Repository(application);
         }
         return instance;
     }
 
-    public List<Noise> getNoiseData() {
+    public List<CO2> getCO2Data() {
         try {
             return new getDataAsync(sensorDao).execute().get();
         } catch (ExecutionException e) {
@@ -39,7 +40,7 @@ public class NoiseRepository {
         return null;
     }
 
-    private static class getDataAsync extends AsyncTask<Void,Void,List<Noise>>
+    private static class getDataAsync extends AsyncTask<Void,Void, List<CO2>>
     {
         private SensorDao sensorDao;
 
@@ -48,8 +49,8 @@ public class NoiseRepository {
         }
 
         @Override
-        protected List<Noise> doInBackground(Void... voids) {
-            return sensorDao.getAllNoiseData();
+        protected List<CO2> doInBackground(Void... voids) {
+            return sensorDao.getAllCO2Data();
         }
     }
 

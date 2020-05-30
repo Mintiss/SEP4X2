@@ -1,14 +1,14 @@
-package sep4x2.android.ui.noise;
+package sep4x2.android.SharedSensors;
 
 import org.joda.time.DateTime;
 
-public class NoiseModel {
+public class Noise {
 
     double noise;
-    String time;
+    String updateTime;
 
     public DateTime getTime() {
-        return DateTime.parse(time);
+        return DateTime.parse(updateTime);
     }
 
     public double getNoise() {
@@ -20,11 +20,11 @@ public class NoiseModel {
     }
 
     public void setTime(String time) {
-        this.time = time;
+        this.updateTime = time;
     }
 
-    public NoiseModel(double noise, String time) {
+    public Noise(double noise, String updateTime) {
         this.noise = noise;
-        this.time = time;
+        this.updateTime = updateTime;
     }
 }

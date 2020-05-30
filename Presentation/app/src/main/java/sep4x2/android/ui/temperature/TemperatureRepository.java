@@ -1,18 +1,15 @@
 package sep4x2.android.ui.temperature;
 
 import android.app.Application;
-import android.database.sqlite.SQLiteConstraintException;
 import android.os.AsyncTask;
-import android.util.Log;
 
-import androidx.lifecycle.LiveData;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import sep4x2.android.ui.local_database.Entity.SensorData;
-import sep4x2.android.ui.local_database.LocalDatabase;
-import sep4x2.android.ui.local_database.SensorDao;
+import sep4x2.android.SharedSensors.Temperature;
+import sep4x2.android.local_database.LocalDatabase;
+import sep4x2.android.local_database.SensorDao;
 
 public class TemperatureRepository {
 
@@ -34,7 +31,7 @@ public class TemperatureRepository {
         return instance;
     }
 
-    public List<SensorData> getTemperatureData() {
+    public List<Temperature> getTemperatureData() {
         try {
             return new getDataAsync(sensorDao).execute().get();
         } catch (ExecutionException e) {
@@ -45,7 +42,7 @@ public class TemperatureRepository {
         return null;
     }
 
-    private static class getDataAsync extends AsyncTask<Void,Void,List<SensorData>>
+    private static class getDataAsync extends AsyncTask<Void,Void,List<Temperature>>
     {
         private SensorDao sensorDao;
 
@@ -54,8 +51,8 @@ public class TemperatureRepository {
         }
 
         @Override
-        protected List<SensorData> doInBackground(Void... voids) {
-            return sensorDao.getAllSensorData();
+        protected List<Temperature> doInBackground(Void... voids) {
+            return sensorDao.getAllTemperatureData();
         }
     }
 

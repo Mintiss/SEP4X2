@@ -1,21 +1,23 @@
 package sep4x2.android.ui.co2;
 
+import org.joda.time.DateTime;
+
 public class CO2Model {
 
-    String hours;
+    String time;
     double co2metric;
 
-    public CO2Model(String hours, double co2metric) {
-        this.hours = hours;
+    public CO2Model(String time, double co2metric) {
+        this.time = time;
         this.co2metric = co2metric;
     }
 
-    public String getHours() {
-        return hours;
+    public DateTime getHours() {
+        return DateTime.parse(time);
     }
 
     public void setHours(String hours) {
-        this.hours = hours;
+        this.time = hours;
     }
 
     public double getCo2metric() {

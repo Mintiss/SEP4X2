@@ -1,10 +1,9 @@
-package sep4x2.android.ui.network;
+package sep4x2.android.network;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Path;
 
-import static sep4x2.android.ui.network.NetworkConfig.BASE_URL;
+import static sep4x2.android.network.NetworkConfig.BASE_URL;
 
 public class ServiceGenerator {
     private static Retrofit.Builder retrofitBuilder = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create());

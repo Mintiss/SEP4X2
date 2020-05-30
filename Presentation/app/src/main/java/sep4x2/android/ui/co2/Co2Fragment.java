@@ -36,11 +36,18 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.EntryXComparator;
 
 import java.util.ArrayList;
+
 import java.util.Collections;
 
 import sep4x2.android.R;
 import sep4x2.android.ui.humidity.HumidityModel;
 import sep4x2.android.ui.humidity.HumidityViewModel;
+
+import java.util.List;
+
+import sep4x2.android.R;
+import sep4x2.android.SharedSensors.CO2;
+
 
 public class Co2Fragment extends Fragment  {
 
@@ -53,6 +60,11 @@ public class Co2Fragment extends Fragment  {
     ArrayList<BarEntry> barEntries;
     ArrayList<String> labelsname;
 
+   
+    //DB
+    private List<CO2> co2List;
+
+
     //LineChart
     ArrayList<Entry> yValues = new ArrayList<>();
 
@@ -64,8 +76,6 @@ public class Co2Fragment extends Fragment  {
 
 
     private HumidityViewModel humidityViewModel;
-
-
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -106,7 +116,12 @@ public class Co2Fragment extends Fragment  {
                     barChart.animate().alpha(1).setDuration(200);
                     lineChart.animate().alpha(0).setDuration(200);
 
-                } else {
+
+                //DB
+                co2List = co2ViewModel.getCo2Data();
+
+
+                
 
                     barChart.animate().alpha(0).setDuration(200);
                     lineChart.animate().alpha(1).setDuration(200);
@@ -146,6 +161,7 @@ public class Co2Fragment extends Fragment  {
 
 
 
+
         lineChart.setDragEnabled(true);
         lineChart.setScaleEnabled(false);
 
@@ -157,6 +173,7 @@ public class Co2Fragment extends Fragment  {
 
 
         } else {
+
             set1 = new LineDataSet(yNumber, "Data day");
 
         }
@@ -186,6 +203,7 @@ public class Co2Fragment extends Fragment  {
             for (int i = 0; i < humidityModelArrayList2.size(); i++) {
                 String day = humidityModelArrayList2.get(i).getTime();
                 double co2 = humidityModelArrayList2.get(i).getHumindity();
+
 
                 barEntries.add(new BarEntry(i, (float) co2));
                 labelsname.add(day);

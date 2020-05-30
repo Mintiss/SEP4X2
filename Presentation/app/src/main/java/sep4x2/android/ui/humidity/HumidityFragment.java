@@ -35,9 +35,14 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.EntryXComparator;
 
 import java.util.ArrayList;
+
 import java.util.Collections;
 
+import java.util.List;
+
+
 import sep4x2.android.R;
+import sep4x2.android.SharedSensors.Humidity;
 
 public class HumidityFragment extends Fragment  {
 
@@ -57,6 +62,10 @@ public class HumidityFragment extends Fragment  {
     //Barchart
     ArrayList<HumidityModel> humidityModelArrayList = new ArrayList<>();
     ArrayList<HumidityModel> humidityModelArrayList2 = new ArrayList<>();
+
+
+    //DB
+    private List<Humidity> humidityList;
 
 
     private HumidityViewModel humidityViewModel;
@@ -111,6 +120,7 @@ public class HumidityFragment extends Fragment  {
 
         radioGroup = (RadioGroup) root.findViewById(R.id.radioGroupHum);
 
+
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -128,6 +138,12 @@ public class HumidityFragment extends Fragment  {
                 }
             }
         });
+
+        //DB
+        this.humidityList=humidityViewModel.getHumidityData();
+
+
+       
 
 
         return root;

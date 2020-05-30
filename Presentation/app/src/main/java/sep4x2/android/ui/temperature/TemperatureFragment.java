@@ -1,8 +1,6 @@
 package sep4x2.android.ui.temperature;
 
 import android.os.Bundle;
-import android.os.Debug;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,17 +10,14 @@ import android.widget.CompoundButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Switch;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
@@ -44,9 +39,13 @@ import java.util.Collections;
 import java.util.List;
 
 import sep4x2.android.R;
+
 import sep4x2.android.ui.humidity.HumidityModel;
 import sep4x2.android.ui.local_database.Entity.SensorData;
 import sep4x2.android.ui.local_database.Entity.TemperatureData;
+
+import sep4x2.android.SharedSensors.Temperature;
+
 
 public class TemperatureFragment extends Fragment  {
 
@@ -62,15 +61,27 @@ public class TemperatureFragment extends Fragment  {
     ArrayList<Entry> yValues = new ArrayList<>();
     ArrayList<Entry> yNumber = new ArrayList<>();
 
+
     //Barchart
     ArrayList<HumidityModel> humidityModelArrayList = new ArrayList<>();
     ArrayList<HumidityModel> humidityModelArrayList2 = new ArrayList<>();
+
+    ArrayList<Temperature> TimeArrayList = new ArrayList<>();
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
 
         final View root = inflater.inflate(R.layout.fragment_temperature, container, false);
+
+
+    //FROM DB
+    private List<Temperature>temperatureList;
+
+
+
+
 
 
 //LineChart-------------------------------------------------------------------------------------------------------------------------------------------------
@@ -174,6 +185,10 @@ public class TemperatureFragment extends Fragment  {
         lineChart.invalidate();
 
 
+
+
+        return root;
+
     }
 
     private void SetBarchart(int num) {
@@ -189,6 +204,13 @@ public class TemperatureFragment extends Fragment  {
             for (int i = 0; i < humidityModelArrayList2.size(); i++) {
                 String day = humidityModelArrayList2.get(i).getTime();
                 double co2 = humidityModelArrayList2.get(i).getHumindity();
+
+           
+        } else {
+            for (int i = 0; i < temperatureList.size(); i++) {
+                String day = "Today";
+                double co2 =  temperatureList.get(i).getTemperature();
+
 
                 barEntries.add(new BarEntry(i, (float) co2));
                 labelsname.add(day);
