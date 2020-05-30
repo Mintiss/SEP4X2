@@ -74,14 +74,20 @@ public class NoiseFragment extends Fragment {
         //LineChart-------------------------------------------------------------------------------------------------------------------------------------------------
         lineChart = root.findViewById(R.id.LineChart);
 
-       setLinechart(0);
+        FillHourEbumy();
+        fillDayEnum();
 
+        Collections.sort(yValues, new EntryXComparator());
+        Collections.sort(yNumber, new EntryXComparator());
 
-
+        setLinechart(0);
 
 
         //Barchart------------------------------------------------------------------------------------------------------------------------------------------------------------
         barChart = root.findViewById(R.id.barchart);
+
+        fillHoursAndHumidityvaluess();
+        fillDaysAndHumidityvaluess2();
 
         SetBarchart(0);
 
@@ -118,7 +124,7 @@ public class NoiseFragment extends Fragment {
                 switch (checkedId) {
                     case R.id.dayradioButton:
                         Toast.makeText(getContext(), "day", Toast.LENGTH_SHORT).show();
-                       SetBarchart(0);
+                        SetBarchart(0);
                         setLinechart(0);
                         break;
                     case R.id.hourradioButton:
@@ -134,29 +140,26 @@ public class NoiseFragment extends Fragment {
         return root;
 
     }
-private void setLinechart(int number)
-{
-    FillHourEbumy();
-    fillDayEnum();
 
-    Collections.sort(yValues, new EntryXComparator());
-    Collections.sort(yNumber, new EntryXComparator());
-
-    lineChart.setDragEnabled(true);
-    lineChart.setScaleEnabled(false);
-
-    LineDataSet set1;
-    LineDataSet set2;
-
-    if(number == 1)
-    {
-        set1 = new LineDataSet(yValues, "Data hours");
+    private void setLinechart(int number) {
 
 
-    }else {
-        set1 = new LineDataSet(yNumber, "Data day");
 
-    }
+
+        lineChart.setDragEnabled(true);
+        lineChart.setScaleEnabled(false);
+
+        LineDataSet set1;
+        LineDataSet set2;
+
+        if (number == 1) {
+            set1 = new LineDataSet(yValues, "Data hours");
+
+
+        } else {
+            set1 = new LineDataSet(yNumber, "Data day");
+
+        }
         set1.setFillAlpha(250);
 
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
@@ -165,19 +168,15 @@ private void setLinechart(int number)
         LineData data = new LineData(dataSets);
         lineChart.setData(data);
 
-    lineChart.invalidate();
+        lineChart.invalidate();
 
 
-
-
-}
+    }
 
     private void SetBarchart(int num) {
         barEntries = new ArrayList<>();
         labelsname = new ArrayList<>();
 
-        fillHoursAndHumidityvaluess();
-        fillDaysAndHumidityvaluess2();
 
         if (num == 1) {
             for (int i = 0; i < humidityModelArrayList.size(); i++) {
@@ -268,8 +267,7 @@ private void setLinechart(int number)
         humidityModelArrayList2.add(new HumidityModel("sunday", 12.0));
     }
 
-    private void FillHourEbumy()
-    {
+    private void FillHourEbumy() {
         yValues.add(new Entry(0, 60f));
         yValues.add(new Entry(1, 20f));
         yValues.add(new Entry(2, 75f));
@@ -296,8 +294,7 @@ private void setLinechart(int number)
         yValues.add(new Entry(23, 22.9f));
     }
 
-    private void fillDayEnum()
-    {
+    private void fillDayEnum() {
         yNumber.add(new Entry(0, 15f));
         yNumber.add(new Entry(1, 35f));
         yNumber.add(new Entry(2, 75f));
