@@ -80,7 +80,7 @@ public class TemperatureFragment extends Fragment implements AdapterView.OnItemS
 
 
         temperatureList=temperatureViewModel.getTemperatureData();
-        
+
         //Switch
         aSwitch = root.findViewById(R.id.char_switch);
 
@@ -99,9 +99,7 @@ public class TemperatureFragment extends Fragment implements AdapterView.OnItemS
             }
         });
 
-
-
-
+        
         //LineChart
         lineChart = (LineChart) root.findViewById(R.id.temperatureLinewchart);
 
