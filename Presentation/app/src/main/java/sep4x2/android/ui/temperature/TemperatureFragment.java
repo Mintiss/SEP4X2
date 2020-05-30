@@ -1,7 +1,6 @@
 package sep4x2.android.ui.temperature;
 
 import android.os.Bundle;
-import android.os.Debug;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,16 +10,10 @@ import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.Switch;
-import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
@@ -40,8 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import sep4x2.android.R;
-import sep4x2.android.ui.local_database.Entity.SensorData;
-import sep4x2.android.ui.local_database.Entity.TemperatureData;
+import sep4x2.android.local_database.Entity.SensorData;
 
 public class TemperatureFragment extends Fragment implements AdapterView.OnItemSelectedListener, CompoundButton.OnCheckedChangeListener {
 

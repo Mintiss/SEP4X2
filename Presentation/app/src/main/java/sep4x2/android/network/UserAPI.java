@@ -1,4 +1,4 @@
-package sep4x2.android.ui.network;
+package sep4x2.android.network;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

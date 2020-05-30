@@ -1,17 +1,14 @@
 package sep4x2.android.ui.noise;
 
 import android.app.Application;
-import android.os.AsyncTask;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
-import sep4x2.android.ui.local_database.Entity.SensorData;
-import sep4x2.android.ui.local_database.SensorDao;
+import sep4x2.android.local_database.Entity.SensorData;
 
 public class NoiseViewModel extends AndroidViewModel {
 

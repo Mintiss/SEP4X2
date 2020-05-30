@@ -4,9 +4,9 @@ import android.app.Application;
 import android.os.AsyncTask;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-import sep4x2.android.ui.local_database.Entity.SensorData;
-import sep4x2.android.ui.local_database.LocalDatabase;
-import sep4x2.android.ui.local_database.SensorDao;
+import sep4x2.android.local_database.Entity.SensorData;
+import sep4x2.android.local_database.LocalDatabase;
+import sep4x2.android.local_database.SensorDao;
 
 public class NoiseRepository {
 

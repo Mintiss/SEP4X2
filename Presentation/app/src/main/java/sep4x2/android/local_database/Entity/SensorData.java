@@ -1,9 +1,9 @@
-package sep4x2.android.ui.local_database.Entity;
+package sep4x2.android.local_database.Entity;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import sep4x2.android.ui.network.SensorResponse;
+import sep4x2.android.network.SensorResponse;
 
 
 @Entity(tableName = "Sensor_storage_table")

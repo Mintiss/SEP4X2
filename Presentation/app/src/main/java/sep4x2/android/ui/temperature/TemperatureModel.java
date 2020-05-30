@@ -1,12 +1,8 @@
 package sep4x2.android.ui.temperature;
 
-import androidx.lifecycle.LiveData;
-
 import org.joda.time.DateTime;
 
-import java.util.List;
-
-import sep4x2.android.ui.local_database.Entity.TemperatureData;
+import sep4x2.android.local_database.Entity.TemperatureData;
 
 public class TemperatureModel {
 

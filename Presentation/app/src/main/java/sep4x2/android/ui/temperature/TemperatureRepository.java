@@ -1,18 +1,14 @@
 package sep4x2.android.ui.temperature;
 
 import android.app.Application;
-import android.database.sqlite.SQLiteConstraintException;
 import android.os.AsyncTask;
-import android.util.Log;
-
-import androidx.lifecycle.LiveData;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import sep4x2.android.ui.local_database.Entity.SensorData;
-import sep4x2.android.ui.local_database.LocalDatabase;
-import sep4x2.android.ui.local_database.SensorDao;
+import sep4x2.android.local_database.Entity.SensorData;
+import sep4x2.android.local_database.LocalDatabase;
+import sep4x2.android.local_database.SensorDao;
 
 public class TemperatureRepository {
 

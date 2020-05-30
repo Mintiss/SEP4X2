@@ -1,12 +1,4 @@
-package sep4x2.android.ui.local_database.Entity;
-
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-
-import org.joda.time.DateTime;
-
-import java.util.Calendar;
-import java.util.Date;
+package sep4x2.android.local_database.Entity;
 
 //@Entity(tableName = "temperature_data_table")
 public class TemperatureData {

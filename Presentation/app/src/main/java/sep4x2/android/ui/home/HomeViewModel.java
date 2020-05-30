@@ -5,10 +5,8 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-import sep4x2.android.ui.network.SensorDataClient;
-import sep4x2.android.ui.network.SensorResponse;
+import sep4x2.android.network.SensorDataClient;
 
 public class HomeViewModel extends AndroidViewModel {
 
