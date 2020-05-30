@@ -25,8 +25,10 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import sep4x2.android.R;
+import sep4x2.android.SharedSensors.Humidity;
 
 public class HumidityFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
@@ -41,6 +43,10 @@ public class HumidityFragment extends Fragment implements AdapterView.OnItemSele
     private static final String[] paths = {"Daily","Weekly"};
     public String string;
     public int nr;
+
+    //DB
+    private List<Humidity> humidityList;
+
 
     private HumidityViewModel humidityViewModel;
 
@@ -60,6 +66,10 @@ public class HumidityFragment extends Fragment implements AdapterView.OnItemSele
 
         //Barchart
         barChart = root.findViewById(R.id.HumidityBarChart);
+
+        //DB
+        this.humidityList=humidityViewModel.getHumidityData();
+
 
         //spinner
 

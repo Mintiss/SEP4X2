@@ -1,24 +1,17 @@
 package sep4x2.android.ui.noise;
 
 import android.os.Bundle;
-import android.security.keystore.KeyPermanentlyInvalidatedException;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -41,8 +34,8 @@ import java.util.Collections;
 import java.util.List;
 
 import sep4x2.android.R;
+import sep4x2.android.SharedSensors.Noise;
 import sep4x2.android.ui.humidity.HumidityModel;
-import sep4x2.android.ui.local_database.Entity.SensorData;
 
 
 public class NoiseFragment extends Fragment {
@@ -65,7 +58,7 @@ public class NoiseFragment extends Fragment {
     ArrayList<HumidityModel> humidityModelArrayList2 = new ArrayList<>();
 
     //FROM DB
-    List<SensorData> noiseData;
+    List<Noise> noiseData;
 
     private NoiseViewModel noiseViewModel;
 
@@ -188,7 +181,7 @@ public class NoiseFragment extends Fragment {
 
         if (num == 1){
                 barEntries.add(new BarEntry(0, (float) noiseData.get(0).getNoise()));
-                labelsname.add(noiseData.get(0).getUpdateTime());
+                labelsname.add(String.valueOf(noiseData.get(0).getTime().getHourOfDay()));
             }
          else {
             for (int i = 0; i < humidityModelArrayList2.size(); i++) {

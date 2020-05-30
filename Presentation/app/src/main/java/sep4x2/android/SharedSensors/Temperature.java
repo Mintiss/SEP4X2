@@ -1,8 +1,8 @@
-package sep4x2.android.ui.temperature;
+package sep4x2.android.SharedSensors;
 
 import org.joda.time.DateTime;
 
-public class TemperatureModel {
+public class Temperature {
 
     String updateTime;
     double temperature;
@@ -15,7 +15,7 @@ public class TemperatureModel {
         return temperature;
     }
 
-    public TemperatureModel(double temperature,String updateTime) {
+    public Temperature(double temperature, String updateTime) {
         this.temperature=temperature;
         this.updateTime=updateTime;
     }

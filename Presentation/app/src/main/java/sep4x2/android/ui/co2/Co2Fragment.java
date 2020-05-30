@@ -26,8 +26,10 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import sep4x2.android.R;
+import sep4x2.android.SharedSensors.CO2;
 
 public class Co2Fragment extends Fragment  implements AdapterView.OnItemSelectedListener{
 
@@ -43,10 +45,10 @@ public class Co2Fragment extends Fragment  implements AdapterView.OnItemSelected
     private static final String[] paths = {"Daily","Weekly"};
     public String string;
     public int nr;
+    //DB
+    private List<CO2> co2List;
 
     private Co2ViewModel co2ViewModel;
-
-
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -62,6 +64,10 @@ public class Co2Fragment extends Fragment  implements AdapterView.OnItemSelected
 
                 //BarChart
                 barChart = root.findViewById(R.id.CO2BarChart);
+
+                //DB
+                co2List = co2ViewModel.getCo2Data();
+
 
                 //DropDown
                 spinner = root.findViewById(R.id.spinnerCO2);
@@ -87,7 +93,7 @@ public class Co2Fragment extends Fragment  implements AdapterView.OnItemSelected
 
         if(num == 1) {
             for (int i = 0; i < CO2ModelArrayList.size(); i++) {
-                String hour = CO2ModelArrayList.get(i).getHours();
+                String hour = String.valueOf(CO2ModelArrayList.get(i).getHours().hourOfDay());
                 double co2 = CO2ModelArrayList.get(i).getCo2metric();
 
                 barEntries.add(new BarEntry(i, (float)co2));
@@ -95,7 +101,7 @@ public class Co2Fragment extends Fragment  implements AdapterView.OnItemSelected
             }
         } else {
             for (int i = 0; i < carbonEmissionPerWeekHoursArrayList.size(); i++) {
-                String day = carbonEmissionPerWeekHoursArrayList.get(i).getHours();
+                String day =  String.valueOf(CO2ModelArrayList.get(i).getHours().hourOfDay());
                 double co2 = carbonEmissionPerWeekHoursArrayList.get(i).getCo2metric();
 
                 barEntries.add(new BarEntry(i, (float) co2));

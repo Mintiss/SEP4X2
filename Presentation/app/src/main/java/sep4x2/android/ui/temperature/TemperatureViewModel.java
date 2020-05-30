@@ -3,14 +3,10 @@ package sep4x2.android.ui.temperature;
 import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
-import sep4x2.android.ui.local_database.Entity.SensorData;
-import sep4x2.android.ui.local_database.Entity.TemperatureData;
+import sep4x2.android.SharedSensors.Temperature;
 
 public class TemperatureViewModel extends AndroidViewModel {
 
@@ -21,8 +17,7 @@ public class TemperatureViewModel extends AndroidViewModel {
         repository = TemperatureRepository.getInstance(application);
     }
 
-
-    public List<SensorData> getTemperatureData() {
+    public List<Temperature> getTemperatureData() {
         return repository.getTemperatureData();
     }
 }
