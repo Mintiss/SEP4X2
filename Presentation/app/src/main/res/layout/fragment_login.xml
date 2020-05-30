@@ -4,6 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent">
 
+
     <EditText
         android:id="@+id/login_email"
         android:layout_width="350dp"
@@ -49,6 +50,7 @@
 
 
     <Button
+
         android:id="@+id/login_registerButton"
         android:layout_width="350dp"
         android:layout_height="wrap_content"

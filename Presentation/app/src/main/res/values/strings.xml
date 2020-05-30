@@ -45,4 +45,9 @@
     <string name="profile_log_out">Log Out</string>
     <string name="profile_enter_your_password">Enter your password</string>
     <string name="profile_confirm">Confirm</string>
+    <string name="home_temperature">Temperature:</string>
+    <string name="home_humidity">Humidity:</string>
+    <string name="home_CO2">CO2:</string>
+    <string name="home_Noise">Noise:</string>
+
 </resources>

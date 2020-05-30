@@ -1,6 +1,8 @@
 package sep4x2.android.ui.temperature;
 
 import android.os.Bundle;
+import android.os.Debug;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +17,9 @@ import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -33,8 +37,11 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import sep4x2.android.R;
+import sep4x2.android.ui.local_database.Entity.SensorData;
+import sep4x2.android.ui.local_database.Entity.TemperatureData;
 
 public class TemperatureFragment extends Fragment implements AdapterView.OnItemSelectedListener, CompoundButton.OnCheckedChangeListener {
 
@@ -47,9 +54,10 @@ public class TemperatureFragment extends Fragment implements AdapterView.OnItemS
     ArrayList<Entry> yValues = new ArrayList<>();
 
     ArrayList<TemperatureModel> TimeArrayList = new ArrayList<>();
+
     //For the drop down
     private Spinner spinner;
-    private static final String[] paths = {"Daily","Weekly"};
+    private static final String[] paths = {"Today","Weekly"};
     public String string;
     public int nr;
 
@@ -57,20 +65,22 @@ public class TemperatureFragment extends Fragment implements AdapterView.OnItemS
     private LineChart lineChart;
     private Switch aSwitch;
 
+
+    //FROM DB
+    private List<SensorData>temperatureList;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        temperatureViewModel =
-                ViewModelProviders.of(this).get(TemperatureViewModel.class);
-        final View root = inflater.inflate(R.layout.fragment_temperature, container, false);
-        final TextView textView = root.findViewById(R.id.text_slideshow);
-        final AdapterView.OnItemSelectedListener listener = this;
-        temperatureViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
 
+        temperatureViewModel = new ViewModelProvider(this).get(TemperatureViewModel.class);
+
+        final View root = inflater.inflate(R.layout.fragment_temperature, container, false);
+
+        final AdapterView.OnItemSelectedListener listener = this;
+
+
+        temperatureList=temperatureViewModel.getTemperatureData();
+        
         //Switch
         aSwitch = root.findViewById(R.id.char_switch);
 
@@ -126,33 +136,31 @@ public class TemperatureFragment extends Fragment implements AdapterView.OnItemS
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(listener);
+
+        temperatureList = temperatureViewModel.getTemperatureData();
+        Log.i("TEST FOR TEMP ON CEATE STUFF",temperatureList.toString());
+
         return root;
     }
-
-
-
-
 
 
     private void SetBarchart(int num) {
         barEntries =new ArrayList<>();
         labelsname = new ArrayList<>();
 
-        fillHoursAndTemperaturevaluess();
-        fillDaysAndTemperaturevaluess2();
-
         if(num == 1) {
             //instead of getTime it has to be changed to getHours in the hours case
-
-
              //   labelsname.add((temperatureViewModel.getTemperatureData().getValue().get(0).getUpdateTime()));
                // barEntries.add(new BarEntry(0,(float)temperatureViewModel.getTemperatureData().getValue().get(0).getTemperature()));
 
-
+            for (int i = 0; i < temperatureList.size(); i++) {
+                labelsname.add(temperatureList.get(i).getUpdateTime());
+                barEntries.add(new BarEntry(0, (int) temperatureList.get(i).getTemperature()));
+            }
         } else {
-            for (int i = 0; i < TimeArrayList.size(); i++) {
-                String day = TimeArrayList.get(i).getTime();
-                double co2 = TimeArrayList.get(i).getTemperature();
+            for (int i = 0; i < temperatureList.size(); i++) {
+                String day = "Today";
+                double co2 =  temperatureList.get(i).getTemperature();
 
                 barEntries.add(new BarEntry(i, (float) co2));
                 labelsname.add(day);
@@ -187,24 +195,6 @@ public class TemperatureFragment extends Fragment implements AdapterView.OnItemS
         barChart.animateY(400);
         barChart.invalidate();
     }
-
-
-    private void fillHoursAndTemperaturevaluess()
-    {
-
-    }
-
-    private void fillDaysAndTemperaturevaluess2()
-    {
-        TimeArrayList.clear();
-        TimeArrayList.add(new TemperatureModel("Monday",22.5));
-        TimeArrayList.add(new TemperatureModel("Tuesday",25.1));
-        TimeArrayList.add(new TemperatureModel("Wednesday",13.0));
-        TimeArrayList.add(new TemperatureModel("Thursday",22.0));
-        TimeArrayList.add(new TemperatureModel("Friday",22.9));
-    }
-
-
 
     public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
 
