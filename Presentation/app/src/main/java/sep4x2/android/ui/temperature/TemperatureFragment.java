@@ -1,6 +1,7 @@
 package sep4x2.android.ui.temperature;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ import java.util.List;
 
 import sep4x2.android.R;
 import sep4x2.android.SharedSensors.Temperature;
+import sep4x2.android.SharedSensors.WeeklyConverter;
 
 public class TemperatureFragment extends Fragment implements AdapterView.OnItemSelectedListener, CompoundButton.OnCheckedChangeListener {
 
@@ -60,7 +62,7 @@ public class TemperatureFragment extends Fragment implements AdapterView.OnItemS
     //FROM DB
     private List<Temperature>temperatureList;
 
-
+    private List<Double> weeklyConverter;
 
 
 
@@ -75,6 +77,10 @@ public class TemperatureFragment extends Fragment implements AdapterView.OnItemS
 
 
         temperatureList=temperatureViewModel.getTemperatureData();
+
+        weeklyConverter=temperatureViewModel.getWeeklyData(18).getWeeklyTemperature();
+        Log.i("THIS WEEK",weeklyConverter.toString());
+
 
         //Switch
         aSwitch = root.findViewById(R.id.char_switch);

@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import java.util.List;
 
 import sep4x2.android.SharedSensors.Temperature;
+import sep4x2.android.SharedSensors.WeeklyConverter;
 
 public class TemperatureViewModel extends AndroidViewModel {
 
@@ -19,5 +20,9 @@ public class TemperatureViewModel extends AndroidViewModel {
 
     public List<Temperature> getTemperatureData() {
         return repository.getTemperatureData();
+    }
+
+    public WeeklyConverter getWeeklyData(int weekNo){
+        return repository.getSpecificWeekSensorsTemperature(weekNo);
     }
 }

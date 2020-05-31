@@ -1,4 +1,4 @@
-package sep4x2.android.network;
+package sep4x2.android.network.GETResponses;
 
 public class SensorResponse {
 
