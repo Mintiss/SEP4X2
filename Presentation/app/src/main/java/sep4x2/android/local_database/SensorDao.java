@@ -1,6 +1,7 @@
 package sep4x2.android.local_database;
 
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -29,6 +30,9 @@ public interface SensorDao {
 
     @Query("SELECT * FROM Sensor_storage_table")
     List<SensorData> getAllSensorData();
+
+    @Query("SELECT * FROM Sensor_storage_table ORDER BY metricsId DESC LIMIT 1")
+    LiveData<SensorData> getLastestSensorData();
 
     @Query("SELECT DISTINCT temperature,updateTime FROM Sensor_storage_table")
     List<Temperature> getAllTemperatureData();
