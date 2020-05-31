@@ -29,6 +29,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
 import sep4x2.android.R;
+import sep4x2.android.local_database.Entity.SensorData;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
@@ -37,6 +38,8 @@ public class HomeFragment extends Fragment {
 
     private View view;
     private HomeViewModel homeViewModel;
+    private TextView temperature, humidity, co2, noise;
+
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -50,9 +53,25 @@ public class HomeFragment extends Fragment {
 
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
-        homeViewModel.sensorDataClient.updateSensorData();
+        //homeViewModel.sensorDataClient.updateSensorData();
 
-        
+        temperature = view.findViewById(R.id.home_temperature);
+        humidity = view.findViewById(R.id.home_humidity);
+        co2 = view.findViewById(R.id.home_co2);
+        noise = view.findViewById(R.id.home_noise);
+
+        homeViewModel.getData().observe(getViewLifecycleOwner(), new Observer<SensorData>() {
+            @Override
+            public void onChanged(SensorData sensorData) {
+                temperature.setText(Double.toString(sensorData.getTemperature()));
+                humidity.setText(Double.toString(sensorData.getHumidity()));
+                co2.setText(Double.toString(sensorData.getCo2()));
+                noise.setText(Double.toString(sensorData.getNoise()));
+            }
+        });
+
+
+
 
         return view;
     }

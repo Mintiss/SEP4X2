@@ -20,6 +20,7 @@
             />
 
         <TextView
+            android:id="@+id/home_temperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
@@ -47,6 +48,7 @@
             />
 
         <TextView
+            android:id="@+id/home_humidity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -73,6 +75,7 @@
             />
 
         <TextView
+            android:id="@+id/home_co2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -99,6 +102,7 @@
             />
 
         <TextView
+            android:id="@+id/home_noise"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
