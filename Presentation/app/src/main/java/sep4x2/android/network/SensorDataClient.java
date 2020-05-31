@@ -5,6 +5,8 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
+
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeConstants;
 import org.joda.time.DateTimeZone;
@@ -14,6 +16,8 @@ import org.joda.time.LocalTime;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -72,6 +76,17 @@ public class SensorDataClient extends Application{
                 Log.i("API GET SENSOR", "Call failed");
         }
         });
+    }
+
+    public List<SensorData> getDataForPoke(){
+        try {
+            return new getDataForPoke(sensorDao).execute().get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public void updateThisWeekSensors() {
@@ -163,6 +178,20 @@ public class SensorDataClient extends Application{
         protected Void doInBackground(Void... voids) {
             sensorDao.nukeTable();
             return null;
+        }
+    }
+
+    private static class getDataForPoke extends AsyncTask<Void,Void, List<SensorData>>
+    {
+        private SensorDao sensorDao;
+
+        private getDataForPoke(SensorDao sensorDao){
+            this.sensorDao=sensorDao;
+        }
+
+        @Override
+        protected List<SensorData> doInBackground(Void... voids) {
+            return sensorDao.getAllSensorData();
         }
     }
 }
