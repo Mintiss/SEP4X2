@@ -43,46 +43,6 @@ public class HomeViewModel extends AndroidViewModel {
         return homeRepository.getData();
     }
 
-    public void checkForNotifications(SensorData  data){
-        Log.i("Notif", "temp:" + data.getTemperature() + "old temp" + previousTemperature);
-        if((data.getTemperature() > previousTemperature + 10) || (data.getTemperature() < previousTemperature - 10)){
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplication().getApplicationContext(), NotificationChannel.DEFAULT_CHANNEL_ID)
-                    .setSmallIcon(R.drawable.ic_brightness_7_black_24dp)
-                    .setContentTitle("Health monitor")
-                    .setContentText("Major change in temperature.")
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplication().getApplicationContext());
-            notificationManager.notify(100, builder.build());
-
-        }
-        if((data.getHumidity() > previousHumidity + 10) || (data.getHumidity() < previousHumidity - 10)){
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplication().getApplicationContext(), NotificationChannel.DEFAULT_CHANNEL_ID)
-                    .setSmallIcon(R.drawable.ic_invert_colors_black_24dp)
-                    .setContentTitle("Health monitor")
-                    .setContentText("Major change in humidity.")
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplication().getApplicationContext());
-            notificationManager.notify(101, builder.build());
-        }
-        if((data.getCo2() > 1000)){
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplication().getApplicationContext(), NotificationChannel.DEFAULT_CHANNEL_ID)
-                    .setSmallIcon(R.drawable.ic_local_florist_black_24dp)
-                    .setContentTitle("Health monitor")
-                    .setContentText("Co2 levels can cause health issues")
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplication().getApplicationContext());
-            notificationManager.notify(103, builder.build());
-        }
-        if((data.getNoise() > previousNoise + 10) || (data.getNoise() < previousNoise - 10)) {
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplication().getApplicationContext(), NotificationChannel.DEFAULT_CHANNEL_ID)
-                    .setSmallIcon(R.drawable.ic_music_note_black_24dp)
-                    .setContentTitle("Health monitor")
-                    .setContentText("Environment more noisy than recorded before.")
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplication().getApplicationContext());
-            notificationManager.notify(104, builder.build());
-        }
-    }
 
     public LiveData<String> getText() {
         return mText;

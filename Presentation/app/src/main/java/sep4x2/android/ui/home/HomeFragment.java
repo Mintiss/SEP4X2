@@ -50,7 +50,6 @@ public class HomeFragment extends Fragment {
                 humidity.setText(Double.toString(sensorData.getHumidity()));
                 co2.setText(Double.toString(sensorData.getCo2()));
                 noise.setText(Double.toString(sensorData.getNoise()));
-             //   homeViewModel.checkForNotifications(sensorData);
             }
         });
 
