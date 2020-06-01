@@ -37,13 +37,8 @@ import java.util.Collections;
 import java.util.List;
 
 import sep4x2.android.R;
-
 import sep4x2.android.SharedSensors.Temperature;
-import sep4x2.android.SharedSensors.WeeklyConverter;
 
-import sep4x2.android.SharedSensors.Noise;
-import sep4x2.android.ui.humidity.HumidityModel;
-import sep4x2.android.ui.noise.NoiseViewModel;
 
 
 public class TemperatureFragment extends Fragment {
@@ -60,14 +55,14 @@ public class TemperatureFragment extends Fragment {
     //LineChart
     ArrayList<Entry> yValues = new ArrayList<>();
 
-    ArrayList<Entry> yNumber = new ArrayList<>();
+    ArrayList<Entry> yNumber = new ArrayList<>(7);
 
     //Barchart
-    ArrayList<HumidityModel> humidityModelArrayList = new ArrayList<>();
-    ArrayList<HumidityModel> humidityModelArrayList2 = new ArrayList<>();
+    ArrayList<TemperatureTemporaryValues> humidityModelArrayList = new ArrayList<>();
+    ArrayList<TemperatureTemporaryValues> humidityModelArrayList2 = new ArrayList<>();
 
     //FROM DB
-    List<Noise> noiseData;
+    List<Temperature> temperatures;
 
 
     private List<Double> weeklyConverter;
@@ -94,6 +89,11 @@ public class TemperatureFragment extends Fragment {
 
         final TextView textView = root.findViewById(R.id.text_send);
 
+
+        //Bad solution
+
+        weeklyConverter =temperatureViewModel.getWeeklyData(18).getWeeklyTemperature();
+
         //LineChart-------------------------------------------------------------------------------------------------------------------------------------------------
         lineChart = root.findViewById(R.id.LineCharttemp);
 
@@ -105,13 +105,8 @@ public class TemperatureFragment extends Fragment {
         Collections.sort(yNumber, new EntryXComparator());
 
 
+
         setLinechart(0);
-
-
-
-        weeklyConverter=temperatureViewModel.getWeeklyData(18).getWeeklyTemperature();
-        Log.i("THIS WEEK",weeklyConverter.toString());
-
 
 
 
@@ -126,6 +121,10 @@ public class TemperatureFragment extends Fragment {
         barChart.animate().alpha(0).setDuration(0);
 
         //DB--------------------------------------------------------------------------------------------------------------
+
+
+        Log.i("SENSOR DATA",""+temperatures.size());
+
 
         //Switch----------------------------------------------------------------------------------------------------------
         aSwitch = root.findViewById(R.id.switchTemp);
@@ -149,34 +148,12 @@ public class TemperatureFragment extends Fragment {
         });
 
 
-        //RadioGroup-----------------------------------------------------------------------------------------------------------------
 
-     /*   radioGroup = (RadioGroup) root.findViewById(R.id.radioGroupTemp);
-
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.dayradioButtonTemp:
-                        Toast.makeText(getContext(), "day", Toast.LENGTH_SHORT).show();
-                        SetBarchart(0);
-                        setLinechart(0);
-                        break;
-                    case R.id.hourradioButtonTemp2:
-                        Toast.makeText(getContext(), "hour", Toast.LENGTH_SHORT).show();
-                        setLinechart(1);
-                        SetBarchart(1);
-                        break;
-                }
-            }
-        });
-        */
 
 
         //Spinner------------------------------------------------------------------------------------------------------------------
 
-        //private Spinner spinnerchange;
-        //private static final String[] changepath = {"Today", "Week","Month"}
+
 
         spinnerchange = root.findViewById(R.id.spinnertempchange);
 
@@ -225,6 +202,9 @@ public class TemperatureFragment extends Fragment {
             }
         });
 
+
+
+
         //Spinner weekly-----------------------------------------------------------------------------------------------------------------
 
         spinnerweek = root.findViewById(R.id.spinnertempweek);
@@ -248,8 +228,15 @@ public class TemperatureFragment extends Fragment {
                         yNumber.clear();
                         Toast.makeText(getContext(), "1", Toast.LENGTH_SHORT).show();
 
-                        fillDaysAndHumidityvaluess1();
+
+
+
+
+                        weeklyConverter=temperatureViewModel.getWeeklyData(18).getWeeklyTemperature();
+                        FillWithNewData();
                         fillDayEnum();
+
+                        Log.i("SENSOR DATA",""+weeklyConverter.toString());
 
                         setLinechart(0);
                         SetBarchart(0);
@@ -261,8 +248,10 @@ public class TemperatureFragment extends Fragment {
                         yNumber.clear();
                         Toast.makeText(getContext(), "2", Toast.LENGTH_SHORT).show();
 
-                        fillDaysAndHumidityvaluess2();
-                        fillDayEnum2();
+
+                        fillDayEnum();
+
+                        weeklyConverter=temperatureViewModel.getWeeklyData(17).getWeeklyTemperature();
 
                         SetBarchart(0);
                         setLinechart(0);
@@ -271,8 +260,8 @@ public class TemperatureFragment extends Fragment {
                     case "Week 24":
                         yNumber.clear();
                         Toast.makeText(getContext(), "3", Toast.LENGTH_SHORT).show();
-                        fillDaysAndHumidityvaluess3();
-                        fillDayEnum3();
+
+                        fillDayEnum();
 
                         setLinechart(0);
 
@@ -283,8 +272,8 @@ public class TemperatureFragment extends Fragment {
                         yNumber.clear();
                         Toast.makeText(getContext(), "4", Toast.LENGTH_SHORT).show();
 
-                        fillDaysAndHumidityvaluess4();
-                        fillDayEnum4();
+
+                        fillDayEnum();
 
                         setLinechart(0);
 
@@ -294,8 +283,8 @@ public class TemperatureFragment extends Fragment {
                     case "Week 26":
                         yNumber.clear();
                         Toast.makeText(getContext(), "5", Toast.LENGTH_SHORT).show();
-                        fillDaysAndHumidityvaluess5();
-                        fillDayEnum5();
+
+                        fillDayEnum();
 
                         setLinechart(0);
                         SetBarchart(0);
@@ -309,7 +298,7 @@ public class TemperatureFragment extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                //     Toast.makeText(getContext(), "Nothing happened", Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -354,12 +343,12 @@ public class TemperatureFragment extends Fragment {
 
 
         if (num == 1) {
-            barEntries.add(new BarEntry(0, (float) noiseData.get(0).getNoise()));
-            labelsname.add(String.valueOf(noiseData.get(0).getTime().getHourOfDay()));
+            barEntries.add(new BarEntry(0, (float) temperatures.get(0).getTemperature()));
+            labelsname.add(String.valueOf(temperatures.get(0).getTime().getHourOfDay()));
         } else {
             for (int i = 0; i < humidityModelArrayList2.size(); i++) {
                 String day = humidityModelArrayList2.get(i).getTime();
-                double co2 = humidityModelArrayList2.get(i).getHumindity();
+                double co2 = humidityModelArrayList2.get(i).getTemperature();
 
                 barEntries.add(new BarEntry(i, (float) co2));
                 labelsname.add(day);
@@ -399,178 +388,80 @@ public class TemperatureFragment extends Fragment {
 
     private void fillHoursAndHumidityvaluess() {
         humidityModelArrayList.clear();
-        humidityModelArrayList.add(new HumidityModel("1pm", 65.5));
-        humidityModelArrayList.add(new HumidityModel("9am", 12.0));
-        humidityModelArrayList.add(new HumidityModel("10am", 34.5));
-        humidityModelArrayList.add(new HumidityModel("11am", 45.0));
-        humidityModelArrayList.add(new HumidityModel("1pm", 23.5));
-        humidityModelArrayList.add(new HumidityModel("1pm", 65.5));
-        humidityModelArrayList.add(new HumidityModel("9am", 12.0));
-        humidityModelArrayList.add(new HumidityModel("10am", 34.5));
-        humidityModelArrayList.add(new HumidityModel("11am", 45.0));
-        humidityModelArrayList.add(new HumidityModel("1pm", 23.5));
-        humidityModelArrayList.add(new HumidityModel("1pm", 65.5));
-        humidityModelArrayList.add(new HumidityModel("9am", 12.0));
-        humidityModelArrayList.add(new HumidityModel("10am", 34.5));
-        humidityModelArrayList.add(new HumidityModel("11am", 45.0));
-        humidityModelArrayList.add(new HumidityModel("1pm", 23.5));
-        humidityModelArrayList.add(new HumidityModel("1pm", 65.5));
-        humidityModelArrayList.add(new HumidityModel("9am", 12.0));
-        humidityModelArrayList.add(new HumidityModel("10am", 34.5));
-        humidityModelArrayList.add(new HumidityModel("11am", 45.0));
-        humidityModelArrayList.add(new HumidityModel("1pm", 23.5));
-        humidityModelArrayList.add(new HumidityModel("1pm", 65.5));
-        humidityModelArrayList.add(new HumidityModel("9am", 12.0));
-        humidityModelArrayList.add(new HumidityModel("10am", 34.5));
-        humidityModelArrayList.add(new HumidityModel("11am", 45.0));
 
+        temperatures = temperatureViewModel.getTemperatureData();
+
+       for (int i = 0; i < temperatures.size() ; i++) {
+            humidityModelArrayList.add(new TemperatureTemporaryValues(String.valueOf(temperatures.get(i).getTime().getHourOfDay()), temperatures.get(i).getTemperature()));
+
+        }
 
     }
 
-    private void fillDaysAndHumidityvaluess1() {
+    private void FillWithNewData() {
         humidityModelArrayList2.clear();
-        humidityModelArrayList2.add(new HumidityModel("monday", 16.5));
-        humidityModelArrayList2.add(new HumidityModel("tuesday", 25.0));
-        humidityModelArrayList2.add(new HumidityModel("wednesday", 34.5));
-        humidityModelArrayList2.add(new HumidityModel("thursday", 6.0));
-        humidityModelArrayList2.add(new HumidityModel("friday", 34));
-        humidityModelArrayList2.add(new HumidityModel("saturday", 12));
-        humidityModelArrayList2.add(new HumidityModel("sunday", 12.0));
+        humidityModelArrayList2.add(new TemperatureTemporaryValues("monday", weeklyConverter.get(0)));
+        humidityModelArrayList2.add(new TemperatureTemporaryValues("tuesday", weeklyConverter.get(1)));
+        humidityModelArrayList2.add(new TemperatureTemporaryValues("wednesday", weeklyConverter.get(2)));
+        humidityModelArrayList2.add(new TemperatureTemporaryValues("thursday", weeklyConverter.get(3)));
+        humidityModelArrayList2.add(new TemperatureTemporaryValues("friday", weeklyConverter.get(4)));
+        humidityModelArrayList2.add(new TemperatureTemporaryValues("saturday", weeklyConverter.get(5)));
+        humidityModelArrayList2.add(new TemperatureTemporaryValues("sunday", weeklyConverter.get(6)));
     }
 
-    private void fillDaysAndHumidityvaluess2() {
-        humidityModelArrayList2.clear();
-        humidityModelArrayList2.add(new HumidityModel("monday", 6.7));
-        humidityModelArrayList2.add(new HumidityModel("tuesday", 39.2));
-        humidityModelArrayList2.add(new HumidityModel("wednesday", 23.4));
-        humidityModelArrayList2.add(new HumidityModel("thursday", 6.0));
-        humidityModelArrayList2.add(new HumidityModel("friday", 67));
-        humidityModelArrayList2.add(new HumidityModel("saturday", 3));
-        humidityModelArrayList2.add(new HumidityModel("sunday", 12.0));
-    }
 
-    private void fillDaysAndHumidityvaluess3() {
-        humidityModelArrayList2.clear();
-        humidityModelArrayList2.add(new HumidityModel("monday", 5));
-        humidityModelArrayList2.add(new HumidityModel("tuesday", 5));
-        humidityModelArrayList2.add(new HumidityModel("wednesday", 5));
-        humidityModelArrayList2.add(new HumidityModel("thursday", 5));
-        humidityModelArrayList2.add(new HumidityModel("friday", 5));
-        humidityModelArrayList2.add(new HumidityModel("saturday", 5));
-        humidityModelArrayList2.add(new HumidityModel("sunday", 5));
-    }
-
-    private void fillDaysAndHumidityvaluess4() {
-        humidityModelArrayList2.clear();
-        humidityModelArrayList2.add(new HumidityModel("monday", 32.5));
-        humidityModelArrayList2.add(new HumidityModel("tuesday", 12.0));
-        humidityModelArrayList2.add(new HumidityModel("wednesday", 68.5));
-        humidityModelArrayList2.add(new HumidityModel("thursday", 3.0));
-        humidityModelArrayList2.add(new HumidityModel("friday", 64));
-        humidityModelArrayList2.add(new HumidityModel("saturday", 6));
-        humidityModelArrayList2.add(new HumidityModel("sunday", 12.0));
-    }
-
-    private void fillDaysAndHumidityvaluess5() {
-        humidityModelArrayList2.clear();
-        humidityModelArrayList2.add(new HumidityModel("monday", 3.5));
-        humidityModelArrayList2.add(new HumidityModel("tuesday", 5.0));
-        humidityModelArrayList2.add(new HumidityModel("wednesday", 12.5));
-        humidityModelArrayList2.add(new HumidityModel("thursday", 6.0));
-        humidityModelArrayList2.add(new HumidityModel("friday", 3));
-        humidityModelArrayList2.add(new HumidityModel("saturday", 1));
-        humidityModelArrayList2.add(new HumidityModel("sunday", 2.0));
-    }
 
 
     private void FillHourEbumy() {
-        yValues.add(new Entry(0, 60f));
-        yValues.add(new Entry(1, 20f));
-        yValues.add(new Entry(2, 75f));
-        yValues.add(new Entry(3, 12f));
-        yValues.add(new Entry(4, 22.9f));
-        yValues.add(new Entry(5, 60f));
-        yValues.add(new Entry(6, 20f));
-        yValues.add(new Entry(7, 75f));
-        yValues.add(new Entry(8, 12f));
-        yValues.add(new Entry(9, 22.9f));
-        yValues.add(new Entry(10, 60f));
-        yValues.add(new Entry(11, 20f));
-        yValues.add(new Entry(12, 75f));
-        yValues.add(new Entry(13, 12f));
-        yValues.add(new Entry(14, 22.9f));
-        yValues.add(new Entry(15, 60f));
-        yValues.add(new Entry(16, 20f));
-        yValues.add(new Entry(17, 75f));
-        yValues.add(new Entry(18, 12f));
-        yValues.add(new Entry(19, 22.9f));
-        yValues.add(new Entry(20, 20f));
-        yValues.add(new Entry(21, 75f));
-        yValues.add(new Entry(22, 12f));
-        yValues.add(new Entry(23, 22.9f));
+
+        yValues.clear();
+
+        int x = 0;
+
+        temperatures = temperatureViewModel.getTemperatureData();
+
+        for (int i = 0; i < temperatures.size(); i++) {
+
+
+
+            yValues.add(new Entry(x,(float) temperatures.get(i).getTemperature()));
+
+            x++;
+        }
+
+
     }
 
     private void fillDayEnum() {
-        yNumber.add(new Entry(0, 15f));
-        yNumber.add(new Entry(1, 24f));
-        yNumber.add(new Entry(2, 35f));
-        yNumber.add(new Entry(3, 6f));
-        yNumber.add(new Entry(4, 15f));
-        yNumber.add(new Entry(5, 27f));
-        yNumber.add(new Entry(6, 46f));
+
+        yNumber.clear();
+
+        double x = weeklyConverter.get(0);
+        float monday = (float) x;
+        double a = weeklyConverter.get(1);
+        float tuesday = (float) a;
+        double t = weeklyConverter.get(2);
+        float wednesday = (float) t;
+        double d = weeklyConverter.get(3);
+        float thursday = (float) d;
+        double k = weeklyConverter.get(4);
+        float friday = (float) k;
+        double z = weeklyConverter.get(5);
+        float saturday = (float) z;
+        double l = weeklyConverter.get(6);
+        float sunday = (float) l;
+
+        yNumber.add(new Entry(0, monday));
+        yNumber.add(new Entry(1, tuesday));
+        yNumber.add(new Entry(2, wednesday));
+        yNumber.add(new Entry(3, thursday));
+        yNumber.add(new Entry(4, friday));
+        yNumber.add(new Entry(5, saturday));
+        yNumber.add(new Entry(6, sunday));
     }
 
 
-    private void fillDayEnum3() {
-        yNumber.add(new Entry(0, 5f));
-        yNumber.add(new Entry(1, 5f));
-        yNumber.add(new Entry(2, 5f));
-        yNumber.add(new Entry(3, 5f));
-        yNumber.add(new Entry(4, 5f));
-        yNumber.add(new Entry(5, 5f));
-        yNumber.add(new Entry(6, 5f));
-    }
 
-    private void fillDayEnum4() {
-        yNumber.add(new Entry(0, 5f));
-        yNumber.add(new Entry(1, 5f));
-        yNumber.add(new Entry(2, 5f));
-        yNumber.add(new Entry(3, 5f));
-        yNumber.add(new Entry(4, 5f));
-        yNumber.add(new Entry(5, 5f));
-        yNumber.add(new Entry(6, 5f));
-    }
-
-
-    private void fillDayEnum5() {
-        yNumber.add(new Entry(0, 5f));
-        yNumber.add(new Entry(1, 5f));
-        yNumber.add(new Entry(2, 5f));
-        yNumber.add(new Entry(3, 5f));
-        yNumber.add(new Entry(4, 5f));
-        yNumber.add(new Entry(5, 5f));
-        yNumber.add(new Entry(6, 5f));
-    }
-
-    private void fillDayEnum6() {
-        yNumber.add(new Entry(0, 5f));
-        yNumber.add(new Entry(1, 5f));
-        yNumber.add(new Entry(2, 5f));
-        yNumber.add(new Entry(3, 5f));
-        yNumber.add(new Entry(4, 5f));
-        yNumber.add(new Entry(5, 5f));
-        yNumber.add(new Entry(6, 5f));
-    }
-
-    private void fillDayEnum2() {
-        yNumber.add(new Entry(0, 5f));
-        yNumber.add(new Entry(1, 5f));
-        yNumber.add(new Entry(2, 5f));
-        yNumber.add(new Entry(3, 5f));
-        yNumber.add(new Entry(4, 5f));
-        yNumber.add(new Entry(5, 5f));
-        yNumber.add(new Entry(6, 5f));
-    }
 
 
 }

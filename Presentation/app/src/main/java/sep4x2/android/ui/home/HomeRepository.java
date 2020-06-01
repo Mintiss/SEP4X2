@@ -30,6 +30,7 @@ public class HomeRepository {
     }
 
     public LiveData<SensorData> getData() {
+
         try {
             return new getDataAsync(sensorDao).execute().get();
         } catch (ExecutionException e) {
