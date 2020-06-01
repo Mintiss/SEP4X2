@@ -40,7 +40,7 @@ public class HomeFragment extends Fragment {
         co2 = view.findViewById(R.id.home_co2);
         noise = view.findViewById(R.id.home_noise);
 
-  /*      homeViewModel.getData().observe(getViewLifecycleOwner(), new Observer<SensorData>() {
+    /*  homeViewModel.getData().observe(getViewLifecycleOwner(), new Observer<SensorData>() {
             @Override
             public void onChanged(SensorData sensorData) {
                 temperature.setText(Double.toString(sensorData.getTemperature()));
@@ -50,7 +50,9 @@ public class HomeFragment extends Fragment {
             }
         });
 
-   */
+     */
+
+
 
 
 

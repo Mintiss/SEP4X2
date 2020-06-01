@@ -48,13 +48,13 @@ public class HumidityFragment extends Fragment {
     ArrayList<String> labelsname;
 
     //LineChart
-    ArrayList<Entry> yValues = new ArrayList<>();
+    ArrayList<Entry> hourEnum = new ArrayList<>();
 
-    ArrayList<Entry> yNumber = new ArrayList<>();
+    ArrayList<Entry> dayEnum = new ArrayList<>();
 
     //Barchart
-    ArrayList<HumidityTemporaryValues> humidityTemporaryValuesArrayList = new ArrayList<>();
-    ArrayList<HumidityTemporaryValues> humidityTemporaryValuesArrayList2 = new ArrayList<>();
+    ArrayList<HumidityTemporaryValues> humidityHourArray = new ArrayList<>();
+    ArrayList<HumidityTemporaryValues> humidityDayArray = new ArrayList<>();
 
     //DB
 
@@ -92,8 +92,8 @@ public class HumidityFragment extends Fragment {
         FillHourEbumy();
         fillDayEnum();
 
-        Collections.sort(yValues, new EntryXComparator());
-        Collections.sort(yNumber, new EntryXComparator());
+        Collections.sort(hourEnum, new EntryXComparator());
+        Collections.sort(dayEnum, new EntryXComparator());
 
         setLinechart(0);
 
@@ -198,7 +198,7 @@ public class HumidityFragment extends Fragment {
                 switch (selectedClass) {
                     case "Week 22":
                         // assigning div item list defined in XML to the div Spinner
-                        yNumber.clear();
+                        dayEnum.clear();
 
                         Toast.makeText(getContext(), "1", Toast.LENGTH_SHORT).show();
 
@@ -214,7 +214,7 @@ public class HumidityFragment extends Fragment {
                         break;
 
                     case "Week 23":
-                        yNumber.clear();
+                        dayEnum.clear();
                         Toast.makeText(getContext(), "2", Toast.LENGTH_SHORT).show();
                         weeklyHumidity = humidityViewModel.getWeeklyData(18).getWeeklyHumidity();
 
@@ -226,7 +226,7 @@ public class HumidityFragment extends Fragment {
                         break;
 
                     case "Week 24":
-                        yNumber.clear();
+                        dayEnum.clear();
                         weeklyHumidity = humidityViewModel.getWeeklyData(18).getWeeklyHumidity();
                         Toast.makeText(getContext(), "3", Toast.LENGTH_SHORT).show();
                         fillWithHumiditydays();
@@ -238,7 +238,7 @@ public class HumidityFragment extends Fragment {
                         break;
 
                     case "Week 25":
-                        yNumber.clear();
+                        dayEnum.clear();
                         weeklyHumidity = humidityViewModel.getWeeklyData(18).getWeeklyHumidity();
                         Toast.makeText(getContext(), "4", Toast.LENGTH_SHORT).show();
 
@@ -251,7 +251,7 @@ public class HumidityFragment extends Fragment {
                         break;
 
                     case "Week 26":
-                        yNumber.clear();
+                        dayEnum.clear();
                         Toast.makeText(getContext(), "5", Toast.LENGTH_SHORT).show();
                         weeklyHumidity = humidityViewModel.getWeeklyData(18).getWeeklyHumidity();
                         fillWithHumiditydays();
@@ -289,11 +289,11 @@ public class HumidityFragment extends Fragment {
         LineDataSet set2;
 
         if (number == 1) {
-            set1 = new LineDataSet(yValues, "Data hours");
+            set1 = new LineDataSet(hourEnum, "Data hours");
 
 
         } else {
-            set1 = new LineDataSet(yNumber, "Data day");
+            set1 = new LineDataSet(dayEnum, "Data day");
 
         }
         set1.setFillAlpha(250);
@@ -318,9 +318,9 @@ public class HumidityFragment extends Fragment {
               barEntries.add(new BarEntry(0, (float) humidity.get(0).getHumidity()));
               labelsname.add(String.valueOf(humidity.get(0).getTime().getHourOfDay()));
         } else {
-            for (int i = 0; i < humidityTemporaryValuesArrayList2.size(); i++) {
-                String day = humidityTemporaryValuesArrayList2.get(i).getTime();
-                double co2 = humidityTemporaryValuesArrayList2.get(i).getHumindity();
+            for (int i = 0; i < humidityDayArray.size(); i++) {
+                String day = humidityDayArray.get(i).getTime();
+                double co2 = humidityDayArray.get(i).getHumindity();
 
                 barEntries.add(new BarEntry(i, (float) co2));
                 labelsname.add(day);
@@ -357,12 +357,12 @@ public class HumidityFragment extends Fragment {
     }
 
     private void fillHoursAndHumidityvaluess() {
-        humidityTemporaryValuesArrayList.clear();
+        humidityHourArray.clear();
 
         humidity = humidityViewModel.getHumidityData();
 
         for (int i = 0; i <humidity.size() ; i++) {
-            humidityTemporaryValuesArrayList.add(new HumidityTemporaryValues(String.valueOf(humidity.get(i).getTime().getHourOfDay()), humidity.get(i).getHumidity()));
+            humidityHourArray.add(new HumidityTemporaryValues(String.valueOf(humidity.get(i).getTime().getHourOfDay()), humidity.get(i).getHumidity()));
         }
 
 
@@ -372,28 +372,28 @@ public class HumidityFragment extends Fragment {
     }
 
     private void fillWithHumiditydays() {
-        humidityTemporaryValuesArrayList2.clear();
-        humidityTemporaryValuesArrayList2.add(new HumidityTemporaryValues("monday", weeklyHumidity.get(0)));
-        humidityTemporaryValuesArrayList2.add(new HumidityTemporaryValues("tuesday", weeklyHumidity.get(1)));
-        humidityTemporaryValuesArrayList2.add(new HumidityTemporaryValues("wednesday", weeklyHumidity.get(2)));
-        humidityTemporaryValuesArrayList2.add(new HumidityTemporaryValues("thursday", weeklyHumidity.get(3)));
-        humidityTemporaryValuesArrayList2.add(new HumidityTemporaryValues("friday", weeklyHumidity.get(4)));
-        humidityTemporaryValuesArrayList2.add(new HumidityTemporaryValues("saturday", weeklyHumidity.get(5)));
-        humidityTemporaryValuesArrayList2.add(new HumidityTemporaryValues("sunday", weeklyHumidity.get(6)));
+        humidityDayArray.clear();
+        humidityDayArray.add(new HumidityTemporaryValues("monday", weeklyHumidity.get(0)));
+        humidityDayArray.add(new HumidityTemporaryValues("tuesday", weeklyHumidity.get(1)));
+        humidityDayArray.add(new HumidityTemporaryValues("wednesday", weeklyHumidity.get(2)));
+        humidityDayArray.add(new HumidityTemporaryValues("thursday", weeklyHumidity.get(3)));
+        humidityDayArray.add(new HumidityTemporaryValues("friday", weeklyHumidity.get(4)));
+        humidityDayArray.add(new HumidityTemporaryValues("saturday", weeklyHumidity.get(5)));
+        humidityDayArray.add(new HumidityTemporaryValues("sunday", weeklyHumidity.get(6)));
     }
 
 
 
     private void FillHourEbumy() {
 
-        yValues.clear();
+        hourEnum.clear();
 
         humidity = humidityViewModel.getHumidityData();
 
         int x = 0;
 
         for (int i = 0; i <humidity.size() ; i++) {
-            yValues.add(new Entry(x,(float) humidity.get(i).getHumidity()));
+            hourEnum.add(new Entry(x,(float) humidity.get(i).getHumidity()));
 
             x++;
         }
@@ -402,7 +402,7 @@ public class HumidityFragment extends Fragment {
     }
 
     private void fillDayEnum() {
-        yNumber.clear();
+        dayEnum.clear();
 
         double x = weeklyHumidity.get(0);
         float monday = (float) x;
@@ -419,13 +419,13 @@ public class HumidityFragment extends Fragment {
         double l = weeklyHumidity.get(6);
         float sunday = (float) l;
 
-        yNumber.add(new Entry(0, monday));
-        yNumber.add(new Entry(1, tuesday));
-        yNumber.add(new Entry(2, wednesday));
-        yNumber.add(new Entry(3, thursday));
-        yNumber.add(new Entry(4, friday));
-        yNumber.add(new Entry(5, saturday));
-        yNumber.add(new Entry(6, sunday));
+        dayEnum.add(new Entry(0, monday));
+        dayEnum.add(new Entry(1, tuesday));
+        dayEnum.add(new Entry(2, wednesday));
+        dayEnum.add(new Entry(3, thursday));
+        dayEnum.add(new Entry(4, friday));
+        dayEnum.add(new Entry(5, saturday));
+        dayEnum.add(new Entry(6, sunday));
     }
 
 

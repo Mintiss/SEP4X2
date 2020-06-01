@@ -51,19 +51,19 @@ public class TemperatureFragment extends Fragment {
     ArrayList<String> labelsname;
 
     //LineChart
-    ArrayList<Entry> yValues = new ArrayList<>();
+    ArrayList<Entry> hourEnum = new ArrayList<>();
 
-    ArrayList<Entry> yNumber = new ArrayList<>(7);
+    ArrayList<Entry> dayEnum = new ArrayList<>(7);
 
     //Barchart
-    ArrayList<TemperatureTemporaryValues> TemperatueArrayList = new ArrayList<>();
-    ArrayList<TemperatureTemporaryValues> humidityModelArrayList2 = new ArrayList<>();
+    ArrayList<TemperatureTemporaryValues> temperatureHourArrayList = new ArrayList<>();
+    ArrayList<TemperatureTemporaryValues> temperatureDayArrayList = new ArrayList<>();
 
     //FROM DB
     List<Temperature> temperatures;
 
 
-    private List<Double> weeklyConverter;
+    private List<Double> weeklyTemp;
 
     private TemperatureViewModel temperatureViewModel;
 
@@ -90,7 +90,7 @@ public class TemperatureFragment extends Fragment {
 
         //Bad solution
 
-        weeklyConverter = temperatureViewModel.getWeeklyData(18).getWeeklyTemperature();
+        weeklyTemp = temperatureViewModel.getWeeklyData(18).getWeeklyTemperature();
 
         //LineChart-------------------------------------------------------------------------------------------------------------------------------------------------
         lineChart = root.findViewById(R.id.LineCharttemp);
@@ -99,8 +99,8 @@ public class TemperatureFragment extends Fragment {
         fillDayEnum();
 
 
-        Collections.sort(yValues, new EntryXComparator());
-        Collections.sort(yNumber, new EntryXComparator());
+        Collections.sort(hourEnum, new EntryXComparator());
+        Collections.sort(dayEnum, new EntryXComparator());
 
 
         setLinechart(0);
@@ -208,15 +208,15 @@ public class TemperatureFragment extends Fragment {
                 switch (selectedClass) {
                     case "Week 22":
                         // assigning div item list defined in XML to the div Spinner
-                        yNumber.clear();
+                        dayEnum.clear();
                         Toast.makeText(getContext(), "1", Toast.LENGTH_SHORT).show();
 
 
-                        weeklyConverter = temperatureViewModel.getWeeklyData(18).getWeeklyTemperature();
+                        weeklyTemp = temperatureViewModel.getWeeklyData(18).getWeeklyTemperature();
                         FillWithNewData();
                         fillDayEnum();
 
-                        Log.i("SENSOR DATA", "" + weeklyConverter.toString());
+                        Log.i("SENSOR DATA", "" + weeklyTemp.toString());
 
                         setLinechart(0);
                         SetBarchart(0);
@@ -225,20 +225,20 @@ public class TemperatureFragment extends Fragment {
                         break;
 
                     case "Week 23":
-                        yNumber.clear();
+                        dayEnum.clear();
                         Toast.makeText(getContext(), "2", Toast.LENGTH_SHORT).show();
 
 
                         fillDayEnum();
 
-                        weeklyConverter = temperatureViewModel.getWeeklyData(17).getWeeklyTemperature();
+                        weeklyTemp = temperatureViewModel.getWeeklyData(17).getWeeklyTemperature();
 
                         SetBarchart(0);
                         setLinechart(0);
                         break;
 
                     case "Week 24":
-                        yNumber.clear();
+                        dayEnum.clear();
                         Toast.makeText(getContext(), "3", Toast.LENGTH_SHORT).show();
 
                         fillDayEnum();
@@ -249,7 +249,7 @@ public class TemperatureFragment extends Fragment {
                         break;
 
                     case "Week 25":
-                        yNumber.clear();
+                        dayEnum.clear();
                         Toast.makeText(getContext(), "4", Toast.LENGTH_SHORT).show();
 
 
@@ -261,7 +261,7 @@ public class TemperatureFragment extends Fragment {
                         break;
 
                     case "Week 26":
-                        yNumber.clear();
+                        dayEnum.clear();
                         Toast.makeText(getContext(), "5", Toast.LENGTH_SHORT).show();
 
                         fillDayEnum();
@@ -297,11 +297,11 @@ public class TemperatureFragment extends Fragment {
 
 
         if (number == 1) {
-            set1 = new LineDataSet(yValues, "Data hours");
+            set1 = new LineDataSet(hourEnum, "Data hours");
 
 
         } else {
-            set1 = new LineDataSet(yNumber, "Data day");
+            set1 = new LineDataSet(dayEnum, "Data day");
 
         }
         set1.setFillAlpha(250);
@@ -326,9 +326,9 @@ public class TemperatureFragment extends Fragment {
             barEntries.add(new BarEntry(0, (float) temperatures.get(0).getTemperature()));
             labelsname.add(String.valueOf(temperatures.get(0).getTime().getHourOfDay()));
         } else {
-            for (int i = 0; i < humidityModelArrayList2.size(); i++) {
-                String day = humidityModelArrayList2.get(i).getTime();
-                double co2 = humidityModelArrayList2.get(i).getTemperature();
+            for (int i = 0; i < temperatureDayArrayList.size(); i++) {
+                String day = temperatureDayArrayList.get(i).getTime();
+                double co2 = temperatureDayArrayList.get(i).getTemperature();
 
                 barEntries.add(new BarEntry(i, (float) co2));
                 labelsname.add(day);
@@ -367,32 +367,32 @@ public class TemperatureFragment extends Fragment {
 
 
     private void fillHoursAndTemperatures() {
-        TemperatueArrayList.clear();
+        temperatureHourArrayList.clear();
 
         temperatures = temperatureViewModel.getTemperatureData();
 
         for (int i = 0; i < temperatures.size(); i++) {
-            TemperatueArrayList.add(new TemperatureTemporaryValues(String.valueOf(temperatures.get(i).getTime().getHourOfDay()), temperatures.get(i).getTemperature()));
+            temperatureHourArrayList.add(new TemperatureTemporaryValues(String.valueOf(temperatures.get(i).getTime().getHourOfDay()), temperatures.get(i).getTemperature()));
 
         }
 
     }
 
     private void FillWithNewData() {
-        humidityModelArrayList2.clear();
-        humidityModelArrayList2.add(new TemperatureTemporaryValues("monday", weeklyConverter.get(0)));
-        humidityModelArrayList2.add(new TemperatureTemporaryValues("tuesday", weeklyConverter.get(1)));
-        humidityModelArrayList2.add(new TemperatureTemporaryValues("wednesday", weeklyConverter.get(2)));
-        humidityModelArrayList2.add(new TemperatureTemporaryValues("thursday", weeklyConverter.get(3)));
-        humidityModelArrayList2.add(new TemperatureTemporaryValues("friday", weeklyConverter.get(4)));
-        humidityModelArrayList2.add(new TemperatureTemporaryValues("saturday", weeklyConverter.get(5)));
-        humidityModelArrayList2.add(new TemperatureTemporaryValues("sunday", weeklyConverter.get(6)));
+        temperatureDayArrayList.clear();
+        temperatureDayArrayList.add(new TemperatureTemporaryValues("monday", weeklyTemp.get(0)));
+        temperatureDayArrayList.add(new TemperatureTemporaryValues("tuesday", weeklyTemp.get(1)));
+        temperatureDayArrayList.add(new TemperatureTemporaryValues("wednesday", weeklyTemp.get(2)));
+        temperatureDayArrayList.add(new TemperatureTemporaryValues("thursday", weeklyTemp.get(3)));
+        temperatureDayArrayList.add(new TemperatureTemporaryValues("friday", weeklyTemp.get(4)));
+        temperatureDayArrayList.add(new TemperatureTemporaryValues("saturday", weeklyTemp.get(5)));
+        temperatureDayArrayList.add(new TemperatureTemporaryValues("sunday", weeklyTemp.get(6)));
     }
 
 
     private void FillHourEbumy() {
 
-        yValues.clear();
+        hourEnum.clear();
 
 
 
@@ -401,7 +401,7 @@ public class TemperatureFragment extends Fragment {
         for (int i = 0; i < temperatures.size(); i++) {
 
 
-            yValues.add(new Entry(i, (float) temperatures.get(i).getTemperature()));
+            hourEnum.add(new Entry(i, (float) temperatures.get(i).getTemperature()));
 
 
         }
@@ -411,30 +411,30 @@ public class TemperatureFragment extends Fragment {
 
     private void fillDayEnum() {
 
-        yNumber.clear();
+        dayEnum.clear();
 
-        double x = weeklyConverter.get(0);
+        double x = weeklyTemp.get(0);
         float monday = (float) x;
-        double a = weeklyConverter.get(1);
+        double a = weeklyTemp.get(1);
         float tuesday = (float) a;
-        double t = weeklyConverter.get(2);
+        double t = weeklyTemp.get(2);
         float wednesday = (float) t;
-        double d = weeklyConverter.get(3);
+        double d = weeklyTemp.get(3);
         float thursday = (float) d;
-        double k = weeklyConverter.get(4);
+        double k = weeklyTemp.get(4);
         float friday = (float) k;
-        double z = weeklyConverter.get(5);
+        double z = weeklyTemp.get(5);
         float saturday = (float) z;
-        double l = weeklyConverter.get(6);
+        double l = weeklyTemp.get(6);
         float sunday = (float) l;
 
-        yNumber.add(new Entry(0, monday));
-        yNumber.add(new Entry(1, tuesday));
-        yNumber.add(new Entry(2, wednesday));
-        yNumber.add(new Entry(3, thursday));
-        yNumber.add(new Entry(4, friday));
-        yNumber.add(new Entry(5, saturday));
-        yNumber.add(new Entry(6, sunday));
+        dayEnum.add(new Entry(0, monday));
+        dayEnum.add(new Entry(1, tuesday));
+        dayEnum.add(new Entry(2, wednesday));
+        dayEnum.add(new Entry(3, thursday));
+        dayEnum.add(new Entry(4, friday));
+        dayEnum.add(new Entry(5, saturday));
+        dayEnum.add(new Entry(6, sunday));
     }
 
 

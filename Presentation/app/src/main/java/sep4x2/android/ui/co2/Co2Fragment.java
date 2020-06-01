@@ -38,7 +38,7 @@ import sep4x2.android.R;
 import sep4x2.android.SharedSensors.CO2;
 
 
-public class Co2Fragment extends Fragment  {
+public class Co2Fragment extends Fragment {
 
 
     private LineChart lineChart;
@@ -57,14 +57,13 @@ public class Co2Fragment extends Fragment  {
 
 
     //LineChart
-    ArrayList<Entry> yValues = new ArrayList<>();
+    ArrayList<Entry> hourEnum = new ArrayList<>();
 
-    ArrayList<Entry> yNumber = new ArrayList<>();
+    ArrayList<Entry> dayEnum = new ArrayList<>();
 
     //Barchart
-    ArrayList<CO2TemporaryValues> co2ModelArrayList = new ArrayList<>();
-    ArrayList<CO2TemporaryValues> co2ModelArrayList2 = new ArrayList<>();
-
+    ArrayList<CO2TemporaryValues> co2HourArray = new ArrayList<>();
+    ArrayList<CO2TemporaryValues> co2DayArray = new ArrayList<>();
 
 
     //Spinner
@@ -78,14 +77,14 @@ public class Co2Fragment extends Fragment  {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-       co2ViewModel =
+        co2ViewModel =
                 ViewModelProviders.of(this).get(Co2ViewModel.class);
 
-       final View root = inflater.inflate(R.layout.fragment_co2, container, false);
+        final View root = inflater.inflate(R.layout.fragment_co2, container, false);
 
         //Bad solution
 
-        weeklyCo2 =co2ViewModel.getWeeklyData(18).getWeeklyCO2();
+        weeklyCo2 = co2ViewModel.getWeeklyData(18).getWeeklyCO2();
 
 //LineChart-------------------------------------------------------------------------------------------------------------------------------------------------
         lineChart = root.findViewById(R.id.LineChartco2);
@@ -93,11 +92,10 @@ public class Co2Fragment extends Fragment  {
         FillHourEbumy();
         fillDayEnum();
 
-        Collections.sort(yValues, new EntryXComparator());
-        Collections.sort(yNumber, new EntryXComparator());
+        Collections.sort(hourEnum, new EntryXComparator());
+        Collections.sort(dayEnum, new EntryXComparator());
 
         setLinechart(0);
-
 
 
         //Barchart------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -128,9 +126,8 @@ public class Co2Fragment extends Fragment  {
                     barChart.animate().alpha(1).setDuration(200);
                     lineChart.animate().alpha(0).setDuration(200);
 
-                }else{
+                } else {
 
-                
 
                     barChart.animate().alpha(0).setDuration(200);
                     lineChart.animate().alpha(1).setDuration(200);
@@ -139,9 +136,8 @@ public class Co2Fragment extends Fragment  {
         });
 
 
-
-    // Spinner for changing between chars based on time
-    spinnerchange = root.findViewById(R.id.spinnerco2change);
+        // Spinner for changing between chars based on time
+        spinnerchange = root.findViewById(R.id.spinnerco2change);
 
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, changepath);
 
@@ -201,8 +197,8 @@ public class Co2Fragment extends Fragment  {
                 switch (selectedClass) {
                     case "Week 22":
                         // assigning div item list defined in XML to the div Spinner
-                        yNumber.clear();
-                        weeklyCo2=co2ViewModel.getWeeklyData(18).getWeeklyCO2();
+                        dayEnum.clear();
+                        weeklyCo2 = co2ViewModel.getWeeklyData(18).getWeeklyCO2();
                         Toast.makeText(getContext(), "1", Toast.LENGTH_SHORT).show();
 
                         fillWithNewData();
@@ -215,8 +211,8 @@ public class Co2Fragment extends Fragment  {
                         break;
 
                     case "Week 23":
-                        yNumber.clear();
-                        weeklyCo2=co2ViewModel.getWeeklyData(18).getWeeklyCO2();
+                        dayEnum.clear();
+                        weeklyCo2 = co2ViewModel.getWeeklyData(18).getWeeklyCO2();
                         Toast.makeText(getContext(), "2", Toast.LENGTH_SHORT).show();
 
                         fillWithNewData();
@@ -227,8 +223,8 @@ public class Co2Fragment extends Fragment  {
                         break;
 
                     case "Week 24":
-                        yNumber.clear();
-                        weeklyCo2=co2ViewModel.getWeeklyData(18).getWeeklyCO2();
+                        dayEnum.clear();
+                        weeklyCo2 = co2ViewModel.getWeeklyData(18).getWeeklyCO2();
                         Toast.makeText(getContext(), "3", Toast.LENGTH_SHORT).show();
                         fillWithNewData();
                         fillDayEnum();
@@ -239,8 +235,8 @@ public class Co2Fragment extends Fragment  {
                         break;
 
                     case "Week 25":
-                        yNumber.clear();
-                        weeklyCo2=co2ViewModel.getWeeklyData(18).getWeeklyCO2();
+                        dayEnum.clear();
+                        weeklyCo2 = co2ViewModel.getWeeklyData(18).getWeeklyCO2();
                         Toast.makeText(getContext(), "4", Toast.LENGTH_SHORT).show();
 
                         fillWithNewData();
@@ -252,8 +248,8 @@ public class Co2Fragment extends Fragment  {
                         break;
 
                     case "Week 26":
-                        yNumber.clear();
-                        weeklyCo2=co2ViewModel.getWeeklyData(18).getWeeklyCO2();
+                        dayEnum.clear();
+                        weeklyCo2 = co2ViewModel.getWeeklyData(18).getWeeklyCO2();
                         Toast.makeText(getContext(), "5", Toast.LENGTH_SHORT).show();
                         fillWithNewData();
                         fillDayEnum();
@@ -262,7 +258,7 @@ public class Co2Fragment extends Fragment  {
                         SetBarchart(0);
                         break;
                     case "Week 27":
-                        weeklyCo2=co2ViewModel.getWeeklyData(18).getWeeklyCO2();
+                        weeklyCo2 = co2ViewModel.getWeeklyData(18).getWeeklyCO2();
                         Toast.makeText(getContext(), "6, with no data", Toast.LENGTH_SHORT).show();
 
                         break;
@@ -276,14 +272,10 @@ public class Co2Fragment extends Fragment  {
         });
 
 
-
         return root;
     }
 
     private void setLinechart(int number) {
-
-
-
 
 
         lineChart.setDragEnabled(true);
@@ -293,12 +285,12 @@ public class Co2Fragment extends Fragment  {
 
 
         if (number == 1) {
-            set1 = new LineDataSet(yValues, "Data hours");
+            set1 = new LineDataSet(hourEnum, "Data hours");
 
 
         } else {
 
-            set1 = new LineDataSet(yNumber, "Data day");
+            set1 = new LineDataSet(dayEnum, "Data day");
 
         }
         set1.setFillAlpha(250);
@@ -319,14 +311,13 @@ public class Co2Fragment extends Fragment  {
         barEntries = new ArrayList<>();
         labelsname = new ArrayList<>();
 
-        if (num == 1){
-            barEntries.add(new BarEntry(0, (float)co2.get(0).getCo2()));
+        if (num == 1) {
+            barEntries.add(new BarEntry(0, (float) co2.get(0).getCo2()));
             labelsname.add(String.valueOf(co2.get(0).getTime().getHourOfDay()));
-        }
-        else {
-            for (int i = 0; i < co2ModelArrayList2.size(); i++) {
-                String day = co2ModelArrayList2.get(i).getTime();
-                double co2 = co2ModelArrayList2.get(i).getCo2();
+        } else {
+            for (int i = 0; i < co2DayArray.size(); i++) {
+                String day = co2DayArray.get(i).getTime();
+                double co2 = co2DayArray.get(i).getCo2();
 
 
                 barEntries.add(new BarEntry(i, (float) co2));
@@ -364,54 +355,48 @@ public class Co2Fragment extends Fragment  {
     }
 
     private void fillHoursAndCo2() {
-        co2ModelArrayList.clear();
+        co2HourArray.clear();
 
         co2 = co2ViewModel.getCo2Data();
 
-        for (int i = 0; i <co2.size() ; i++) {
-            co2ModelArrayList.add(new CO2TemporaryValues(String.valueOf(co2.get(i).getTime().getHourOfDay()), co2.get(i).getCo2()));
+        for (int i = 0; i < co2.size(); i++) {
+            co2HourArray.add(new CO2TemporaryValues(String.valueOf(co2.get(i).getTime().getHourOfDay()), co2.get(i).getCo2()));
         }
-
-
 
 
     }
 
     private void fillWithNewData() {
-        co2ModelArrayList2.clear();
-        co2ModelArrayList2.add(new CO2TemporaryValues("monday", weeklyCo2.get(0)));
-        co2ModelArrayList2.add(new CO2TemporaryValues("tuesday", weeklyCo2.get(1)));
-        co2ModelArrayList2.add(new CO2TemporaryValues("wednesday", weeklyCo2.get(2)));
-        co2ModelArrayList2.add(new CO2TemporaryValues("thursday", weeklyCo2.get(3)));
-        co2ModelArrayList2.add(new CO2TemporaryValues("friday", weeklyCo2.get(4)));
-        co2ModelArrayList2.add(new CO2TemporaryValues("saturday", weeklyCo2.get(5)));
-        co2ModelArrayList2.add(new CO2TemporaryValues("sunday", weeklyCo2.get(6)));
+        co2DayArray.clear();
+        co2DayArray.add(new CO2TemporaryValues("monday", weeklyCo2.get(0)));
+        co2DayArray.add(new CO2TemporaryValues("tuesday", weeklyCo2.get(1)));
+        co2DayArray.add(new CO2TemporaryValues("wednesday", weeklyCo2.get(2)));
+        co2DayArray.add(new CO2TemporaryValues("thursday", weeklyCo2.get(3)));
+        co2DayArray.add(new CO2TemporaryValues("friday", weeklyCo2.get(4)));
+        co2DayArray.add(new CO2TemporaryValues("saturday", weeklyCo2.get(5)));
+        co2DayArray.add(new CO2TemporaryValues("sunday", weeklyCo2.get(6)));
     }
-
 
 
     private void FillHourEbumy() {
 
-        yValues.clear();
-
+        hourEnum.clear();
 
 
         co2 = co2ViewModel.getCo2Data();
 
-        for (int i = 0; i <co2.size() ; i++) {
+        for (int i = 0; i < co2.size(); i++) {
 
-            yValues.add(new Entry(i, (float)co2.get(i).getCo2()));
+            hourEnum.add(new Entry(i, (float) co2.get(i).getCo2()));
 
         }
-
-
 
 
     }
 
     private void fillDayEnum() {
 
-        yNumber.clear();
+        dayEnum.clear();
 
         double x = weeklyCo2.get(0);
         float monday = (float) x;
@@ -428,17 +413,14 @@ public class Co2Fragment extends Fragment  {
         double l = weeklyCo2.get(6);
         float sunday = (float) l;
 
-        yNumber.add(new Entry(0, monday));
-        yNumber.add(new Entry(1, tuesday));
-        yNumber.add(new Entry(2, wednesday));
-        yNumber.add(new Entry(3, thursday));
-        yNumber.add(new Entry(4, friday));
-        yNumber.add(new Entry(5, saturday));
-        yNumber.add(new Entry(6, sunday));
+        dayEnum.add(new Entry(0, monday));
+        dayEnum.add(new Entry(1, tuesday));
+        dayEnum.add(new Entry(2, wednesday));
+        dayEnum.add(new Entry(3, thursday));
+        dayEnum.add(new Entry(4, friday));
+        dayEnum.add(new Entry(5, saturday));
+        dayEnum.add(new Entry(6, sunday));
     }
-
-
-
 
 
 }

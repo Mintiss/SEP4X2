@@ -56,13 +56,13 @@ public class NoiseFragment extends Fragment {
     ArrayList<String> labelsname;
 
     //LineChart
-    ArrayList<Entry> yValues = new ArrayList<>();
+    ArrayList<Entry> hourEnum = new ArrayList<>();
 
-    ArrayList<Entry> yNumber = new ArrayList<>();
+    ArrayList<Entry> dayEnum = new ArrayList<>();
 
     //Barchart
-    ArrayList<NoiseTemporaryValues> humidityTemporaryValuesArrayList = new ArrayList<>();
-    ArrayList<NoiseTemporaryValues> humidityTemporaryValuesArrayList2 = new ArrayList<>();
+    ArrayList<NoiseTemporaryValues> NoiseHourArray = new ArrayList<>();
+    ArrayList<NoiseTemporaryValues> NoiseDayArrayList = new ArrayList<>();
 
     //FROM DB
     List<Noise> noise;
@@ -88,8 +88,8 @@ public class NoiseFragment extends Fragment {
         FillHourEbumy();
         fillDayEnum();
 
-        Collections.sort(yValues, new EntryXComparator());
-        Collections.sort(yNumber, new EntryXComparator());
+        Collections.sort(hourEnum, new EntryXComparator());
+        Collections.sort(dayEnum, new EntryXComparator());
 
         setLinechart(0);
 
@@ -191,7 +191,7 @@ public class NoiseFragment extends Fragment {
                 switch (selectedClass) {
                     case "Week 22":
                         // assigning div item list defined in XML to the div Spinner
-                        yNumber.clear();
+                        dayEnum.clear();
                        weeklyNoise = noiseViewModel.getWeeklyData(noiseViewModel.getWeeklyData(18).getWeekNo()).getWeeklyNoise();
                         Toast.makeText(getContext(), "1", Toast.LENGTH_SHORT).show();
 
@@ -205,7 +205,7 @@ public class NoiseFragment extends Fragment {
                         break;
 
                     case "Week 23":
-                        yNumber.clear();
+                        dayEnum.clear();
                         weeklyNoise = noiseViewModel.getWeeklyData(18).getWeeklyNoise();
                         Toast.makeText(getContext(), "2", Toast.LENGTH_SHORT).show();
 
@@ -217,7 +217,7 @@ public class NoiseFragment extends Fragment {
                         break;
 
                     case "Week 24":
-                        yNumber.clear();
+                        dayEnum.clear();
                         weeklyNoise = noiseViewModel.getWeeklyData(18).getWeeklyNoise();
                         Toast.makeText(getContext(), "3", Toast.LENGTH_SHORT).show();
                         fillWithNewData();
@@ -229,7 +229,7 @@ public class NoiseFragment extends Fragment {
                         break;
 
                     case "Week 25":
-                        yNumber.clear();
+                        dayEnum.clear();
                         weeklyNoise = noiseViewModel.getWeeklyData(18).getWeeklyNoise();
                         Toast.makeText(getContext(), "4", Toast.LENGTH_SHORT).show();
 
@@ -242,7 +242,7 @@ public class NoiseFragment extends Fragment {
                         break;
 
                     case "Week 26":
-                        yNumber.clear();
+                        dayEnum.clear();
                         weeklyNoise = noiseViewModel.getWeeklyData(18).getWeeklyNoise();
                         Toast.makeText(getContext(), "5", Toast.LENGTH_SHORT).show();
                         fillWithNewData();
@@ -281,11 +281,11 @@ public class NoiseFragment extends Fragment {
         LineDataSet set2;
 
         if (number == 1) {
-            set1 = new LineDataSet(yValues, "Data hours");
+            set1 = new LineDataSet(hourEnum, "Data hours");
 
 
         } else {
-            set1 = new LineDataSet(yNumber, "Data day");
+            set1 = new LineDataSet(dayEnum, "Data day");
 
         }
         set1.setFillAlpha(250);
@@ -310,9 +310,9 @@ public class NoiseFragment extends Fragment {
             barEntries.add(new BarEntry(0, (float) noise.get(0).getNoise()));
             labelsname.add(String.valueOf(noise.get(0).getTime().getHourOfDay()));
         } else {
-            for (int i = 0; i < humidityTemporaryValuesArrayList2.size(); i++) {
-                String day = humidityTemporaryValuesArrayList2.get(i).getTime();
-                double co2 = humidityTemporaryValuesArrayList2.get(i).getNoise();
+            for (int i = 0; i < NoiseDayArrayList.size(); i++) {
+                String day = NoiseDayArrayList.get(i).getTime();
+                double co2 = NoiseDayArrayList.get(i).getNoise();
 
                 barEntries.add(new BarEntry(i, (float) co2));
                 labelsname.add(day);
@@ -350,13 +350,13 @@ public class NoiseFragment extends Fragment {
 
 
     private void fillHoursAndNoise() {
-        humidityTemporaryValuesArrayList.clear();
+        NoiseHourArray.clear();
 
         noise = noiseViewModel.getNoiseData();
 
         for (int i = 0; i <noise.size() ; i++) {
 
-            humidityTemporaryValuesArrayList.add(new NoiseTemporaryValues(String.valueOf(noise.get(i).getTime().getHourOfDay()), noise.get(i).getNoise()));
+            NoiseHourArray.add(new NoiseTemporaryValues(String.valueOf(noise.get(i).getTime().getHourOfDay()), noise.get(i).getNoise()));
 
         }
 
@@ -367,13 +367,13 @@ public class NoiseFragment extends Fragment {
     }
 
     private void fillWithNewData() {
-        humidityTemporaryValuesArrayList2.clear();
-        humidityTemporaryValuesArrayList2.add(new NoiseTemporaryValues("monday", weeklyNoise.get(0)));
-        humidityTemporaryValuesArrayList2.add(new NoiseTemporaryValues("wednesday", weeklyNoise.get(1)));
-        humidityTemporaryValuesArrayList2.add(new NoiseTemporaryValues("thursday", weeklyNoise.get(2)));
-        humidityTemporaryValuesArrayList2.add(new NoiseTemporaryValues("friday", weeklyNoise.get(3)));
-        humidityTemporaryValuesArrayList2.add(new NoiseTemporaryValues("saturday", weeklyNoise.get(4)));
-        humidityTemporaryValuesArrayList2.add(new NoiseTemporaryValues("sunday", weeklyNoise.get(5)));
+        NoiseDayArrayList.clear();
+        NoiseDayArrayList.add(new NoiseTemporaryValues("monday", weeklyNoise.get(0)));
+        NoiseDayArrayList.add(new NoiseTemporaryValues("wednesday", weeklyNoise.get(1)));
+        NoiseDayArrayList.add(new NoiseTemporaryValues("thursday", weeklyNoise.get(2)));
+        NoiseDayArrayList.add(new NoiseTemporaryValues("friday", weeklyNoise.get(3)));
+        NoiseDayArrayList.add(new NoiseTemporaryValues("saturday", weeklyNoise.get(4)));
+        NoiseDayArrayList.add(new NoiseTemporaryValues("sunday", weeklyNoise.get(5)));
     }
 
 
@@ -381,18 +381,18 @@ public class NoiseFragment extends Fragment {
 
     private void FillHourEbumy() {
 
-    yValues.clear();
+    hourEnum.clear();
     noise = noiseViewModel.getNoiseData();
 
         for (int i = 0; i <noise.size() ; i++) {
-            yValues.add(new Entry(i, (float)noise.get(i).getNoise()));
+            hourEnum.add(new Entry(i, (float)noise.get(i).getNoise()));
         }
 
 
     }
 
     private void fillDayEnum() {
-        yNumber.clear();
+        dayEnum.clear();
 
         double x = weeklyNoise.get(0);
         float monday = (float) x;
@@ -409,13 +409,13 @@ public class NoiseFragment extends Fragment {
         double l = weeklyNoise.get(6);
         float sunday = (float) l;
 
-        yNumber.add(new Entry(0, monday));
-        yNumber.add(new Entry(1, tuesday));
-        yNumber.add(new Entry(2, wednesday));
-        yNumber.add(new Entry(3, thursday));
-        yNumber.add(new Entry(4, friday));
-        yNumber.add(new Entry(5, saturday));
-        yNumber.add(new Entry(6, sunday));
+        dayEnum.add(new Entry(0, monday));
+        dayEnum.add(new Entry(1, tuesday));
+        dayEnum.add(new Entry(2, wednesday));
+        dayEnum.add(new Entry(3, thursday));
+        dayEnum.add(new Entry(4, friday));
+        dayEnum.add(new Entry(5, saturday));
+        dayEnum.add(new Entry(6, sunday));
     }
 
 
