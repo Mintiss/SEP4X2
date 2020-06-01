@@ -51,6 +51,8 @@ public class SensorDataClient extends Application{
         return instance;
     }
 
+    //new NukeData(sensorDao).execute();
+
     public void updateSensorData() {
         SensorAPI sensorAPI = ServiceGenerator.getSensorAPI();
         Call<SensorResponse> call = sensorAPI.getSensorData();
@@ -61,7 +63,7 @@ public class SensorDataClient extends Application{
             public void onResponse(Call<SensorResponse> call, Response<SensorResponse> response) {
                 if (response.code() == 200) {
                     sensorData=(new SensorData(response.body()));
-                    //new NukeData(sensorDao).execute();
+
                     new InsertSensorDataAsync(sensorDao).execute(sensorData);
                     Log.i("SENSOR DATA",""+response.body().getMetricsID());
                 }
@@ -162,6 +164,21 @@ public class SensorDataClient extends Application{
         @Override
         protected Void doInBackground(Void... voids) {
             sensorDao.nukeTable();
+            return null;
+        }
+    }
+
+    private static class NukeDataNotToday extends AsyncTask<Void,Void,Void>
+    {
+        private SensorDao sensorDao;
+
+        private NukeDataNotToday(SensorDao sensorDao){
+            this.sensorDao=sensorDao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            sensorDao.deleteAllSensorDataNotToday();
             return null;
         }
     }

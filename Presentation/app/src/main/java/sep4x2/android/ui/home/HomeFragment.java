@@ -46,10 +46,18 @@ public class HomeFragment extends Fragment {
         homeViewModel.getData().observe(getViewLifecycleOwner(), new Observer<SensorData>() {
             @Override
             public void onChanged(SensorData sensorData) {
-                temperature.setText(Double.toString(sensorData.getTemperature()));
-                humidity.setText(Double.toString(sensorData.getHumidity()));
-                co2.setText(Double.toString(sensorData.getCo2()));
-                noise.setText(Double.toString(sensorData.getNoise()));
+                try {
+                    temperature.setText(Double.toString(sensorData.getTemperature()));
+                    humidity.setText(Double.toString(sensorData.getHumidity()));
+                    co2.setText(Double.toString(sensorData.getCo2()));
+                    noise.setText(Double.toString(sensorData.getNoise()));
+                } catch (NullPointerException e) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+                }
             }
         });
 
