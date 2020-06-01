@@ -46,7 +46,7 @@ public class HumidityFragment extends Fragment implements AdapterView.OnItemSele
 
     //DB
     private List<Humidity> humidityList;
-
+    private List<Double> weeklyHumidity;
 
     private HumidityViewModel humidityViewModel;
 

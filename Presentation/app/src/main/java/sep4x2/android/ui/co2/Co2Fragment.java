@@ -47,6 +47,7 @@ public class Co2Fragment extends Fragment  implements AdapterView.OnItemSelected
     public int nr;
     //DB
     private List<CO2> co2List;
+    private List<Double> weeklyCo2;
 
     private Co2ViewModel co2ViewModel;
 
