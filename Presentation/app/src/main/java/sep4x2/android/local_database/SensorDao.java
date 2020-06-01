@@ -25,12 +25,6 @@ public interface SensorDao {
     @Insert
     void insert(SensorData sensorData);
 
-    @Insert
-    void insertIntoWeekly(WeeklyStatisticsAllData weeklyStatisticsAllData);
-
-    @Query("SELECT * FROM Sensor_storage_table")
-    List<SensorData> getAllSensorData();
-
     @Query("SELECT * FROM Sensor_storage_table ORDER BY metricsId DESC LIMIT 1")
     LiveData<SensorData> getLastestSensorData();
 
@@ -46,8 +40,17 @@ public interface SensorDao {
     @Query("SELECT DISTINCT noise,updateTime FROM Sensor_storage_table")
     List<Noise> getAllNoiseData();
 
+    @Query("DELETE FROM Sensor_storage_table WHERE updateTime != date('now')")
+    void deleteAllSensorDataNotToday();
+
+    @Query("SELECT * FROM Sensor_storage_table")
+    List<SensorData> getAllSensorData();
+
     @Query("DELETE FROM Sensor_storage_table")
     public void nukeTable();
+
+    @Insert
+    void insertIntoWeekly(WeeklyStatisticsAllData weeklyStatisticsAllData);
 
     @Query("SELECT * FROM Weekly_Statistics_table WHERE weekNo = :weekNo")
     WeeklyConverter getWeeklyData(int weekNo);
