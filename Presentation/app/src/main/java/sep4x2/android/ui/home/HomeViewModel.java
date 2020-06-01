@@ -21,14 +21,13 @@ public class HomeViewModel extends AndroidViewModel {
     private MutableLiveData<SensorData> data;
     private double previousTemperature, previousHumidity, previousNoise, previousCo2;
 
-    SensorDataClient sensorDataClient;
+
 
     public HomeViewModel(Application application) {
         super(application);
         mText = new MutableLiveData<>();
         mText.setValue("This is the Home fragment");
 
-        sensorDataClient= SensorDataClient.getInstance(application);
         homeRepository = HomeRepository.getInstance(application);
 
         //query the db for the second to last data
@@ -43,6 +42,9 @@ public class HomeViewModel extends AndroidViewModel {
         return homeRepository.getData();
     }
 
+    public void updateData() {
+        homeRepository.updateData();
+    }
 
     public LiveData<String> getText() {
         return mText;

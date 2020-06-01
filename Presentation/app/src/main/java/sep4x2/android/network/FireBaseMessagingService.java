@@ -15,10 +15,12 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Map;
+import java.util.Random;
 
 
 import sep4x2.android.MainActivity;
 import sep4x2.android.R;
+import sep4x2.android.local_database.Entity.SensorData;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
@@ -28,68 +30,72 @@ public class FireBaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
-        sensorDataClient= SensorDataClient.getInstance(getApplication());
+        sensorDataClient = SensorDataClient.getInstance(getApplication());
         sensorDataClient.updateSensorData();
 
-        if(remoteMessage.getData().size() > 0){
-            Map<String, String> data;
-            data = remoteMessage.getData();
-            NotificationManager notificationManager =
-                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            NotificationChannel notificationChannel = new NotificationChannel("123","SEP4X2 Channel", NotificationManager.IMPORTANCE_DEFAULT);
-            notificationChannel.enableLights(true);
-            notificationChannel.setLightColor(Color.RED);
-            notificationChannel.enableVibration(true);
-            notificationChannel.setVibrationPattern(new long[]{1});
-            notificationManager.createNotificationChannel(notificationChannel);
-            try {
+        Log.i("ass", "" + sensorDataClient.getDataForPoke().get(sensorDataClient.getDataForPoke().size() - 1).getCo2());
 
-                if(Integer.parseInt(data.get("temperature")) > 25){
-                    Notification notification = new Notification.Builder(getApplicationContext())
-                            .setContentTitle("Temperature Update")
-                            .setContentText("Current temperature is " + data.get("temperature") + "C which might cause discomfort")
-                            .setSmallIcon(R.drawable.ic_brightness_7_black_24dp)
-                            .setChannelId("123")
-                            .build();
-                    notificationManager.notify(1, notification);
-                }
-                if(Integer.parseInt(data.get("humidity")) > 50){
-                    Notification notification = new Notification.Builder(getApplicationContext())
-                            .setContentTitle("Humidity Update")
-                            .setContentText("Current humidity is " + data.get("humidity") + "% which might cause health issues")
-                            .setSmallIcon(R.drawable.ic_invert_colors_black_24dp)
-                            .setChannelId("123")
-                            .build();
-                    notificationManager.notify(1, notification);
-                }
-                if(Integer.parseInt(data.get("co2")) > 1000){
-                    Notification notification = new Notification.Builder(getApplicationContext())
-                            .setContentTitle("Co2 Update")
-                            .setContentText("Current co2 is " + data.get("co2") + "ppm which might cause health problems")
-                            .setSmallIcon(R.drawable.ic_local_florist_black_24dp)
-                            .setChannelId("123")
-                            .build();
-                    notificationManager.notify(1, notification);
-                }
-                if(Integer.parseInt(data.get("noise")) > 10){
-                    Notification notification = new Notification.Builder(getApplicationContext())
-                            .setContentTitle("Noise Update")
-                            .setContentText("Current noise is " + data.get("noise") + "db which might cause annoyance")
-                            .setSmallIcon(R.drawable.ic_music_note_black_24dp)
-                            .setChannelId("123")
-                            .build();
-                    notificationManager.notify(1, notification);
-                }
+        if ((sensorDataClient.getDataForPoke().get(sensorDataClient.getDataForPoke().size() - 1) != null) || (sensorDataClient.getDataForPoke().get(sensorDataClient.getDataForPoke().size() - 2) != null)) {
+
+            SensorData latestData = sensorDataClient.getDataForPoke().get(sensorDataClient.getDataForPoke().size() - 1);
+            SensorData previousData = sensorDataClient.getDataForPoke().get(sensorDataClient.getDataForPoke().size() - 2);
+
+            String contentTitle = "", contentText = "";
+            int iconId = 0;
+            int notificationId = new Random().nextInt(99999999);
+            boolean somethingIsWrong = false;
 
 
+            if ((latestData.getTemperature() >= previousData.getTemperature() + 1) || (latestData.getTemperature() <= previousData.getTemperature() - 10)) {
+                contentTitle = "Huge jump in temperature!";
+                contentText = "Current temperature is " + latestData.getTemperature() + "C, previously recorded temperature was " + previousData.getTemperature() + "C";
+                iconId = R.drawable.ic_brightness_7_black_24dp;
+                somethingIsWrong = true;
             }
-            catch (NullPointerException e){
-                Log.d(TAG, "unable to get data from poke.");
+            if ((latestData.getHumidity() >= previousData.getHumidity() + 10) || (latestData.getHumidity() <= previousData.getHumidity() - 10)) {
+                contentTitle = "Huge jump in humidity!";
+                contentText = "Current humidity is " + latestData.getHumidity() + "%, previously recorded humidity was " + previousData.getHumidity() + "%";
+                iconId = R.drawable.ic_invert_colors_black_24dp;
+                somethingIsWrong = true;
+            }
+            if ((latestData.getCo2() >= previousData.getCo2() + 500) || (latestData.getCo2() <= previousData.getCo2() - 500)) {
+                contentTitle = "Huge jump in co2!";
+                contentText = "Current co2 is " + latestData.getCo2() + "ppm, previously recorded co2 was " + previousData.getCo2() + "ppm";
+                iconId = R.drawable.ic_local_florist_black_24dp;
+                somethingIsWrong = true;
+            }
+            if ((latestData.getNoise() >= previousData.getNoise() + 30)) {
+                contentTitle = "Huge jump in noise!";
+                contentText = "Current noise is " + latestData.getNoise() + "db, previously recorded noise was " + previousData.getNoise() + "db";
+                iconId = R.drawable.ic_music_note_black_24dp;
+                somethingIsWrong = true;
             }
 
+            if(somethingIsWrong){
+                NotificationManager notificationManager =
+                        (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                NotificationChannel notificationChannel = new NotificationChannel("123", "SEP4X2 Channel", NotificationManager.IMPORTANCE_DEFAULT);
+                notificationChannel.enableLights(true);
+                notificationChannel.setLightColor(Color.RED);
+                notificationChannel.enableVibration(true);
+                notificationChannel.setVibrationPattern(new long[]{1});
+                notificationManager.createNotificationChannel(notificationChannel);
 
+                Notification notification = new Notification.Builder(getApplicationContext())
+                        .setContentTitle(contentTitle)
+                        .setContentText(contentText)
+                        .setStyle(new Notification.BigTextStyle()
+                                .bigText(contentText))
+                        .setSmallIcon(iconId)
+                        .setChannelId("123")
+                        .build();
+                notificationManager.notify(notificationId, notification);
+                somethingIsWrong = false;
+            }
         }
-
-        Log.d(TAG, "Sensors updated");
+        else {
+            Log.i("Error", "Unable to get sensor data");
+        }
     }
+
 }
