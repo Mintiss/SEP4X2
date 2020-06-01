@@ -49,5 +49,6 @@
     <string name="home_humidity">Humidity:</string>
     <string name="home_CO2">CO2:</string>
     <string name="home_Noise">Noise:</string>
+    <string name="home_refresh_button">Refresh</string>
 
 </resources>

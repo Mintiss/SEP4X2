@@ -9,17 +9,19 @@ import java.util.concurrent.ExecutionException;
 import sep4x2.android.local_database.Entity.SensorData;
 import sep4x2.android.local_database.LocalDatabase;
 import sep4x2.android.local_database.SensorDao;
+import sep4x2.android.network.SensorDataClient;
 
 public class HomeRepository {
 
     private SensorDao sensorDao;
-
+    private SensorDataClient sensorDataClient;
     private static HomeRepository instance;
 
     private HomeRepository(Application application)
     {
         LocalDatabase database = LocalDatabase.getInstance(application);
         sensorDao = database.sensorDao();
+        sensorDataClient= SensorDataClient.getInstance(application);
     }
 
     public static synchronized HomeRepository getInstance(Application application) {
@@ -38,6 +40,10 @@ public class HomeRepository {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void updateData() {
+         sensorDataClient.updateSensorData();
     }
 
     private static class getDataAsync extends AsyncTask<Void,Void,LiveData<SensorData>>

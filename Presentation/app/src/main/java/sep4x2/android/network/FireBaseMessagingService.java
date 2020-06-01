@@ -35,54 +35,66 @@ public class FireBaseMessagingService extends FirebaseMessagingService {
 
         Log.i("ass", "" + sensorDataClient.getDataForPoke().get(sensorDataClient.getDataForPoke().size() - 1).getCo2());
 
-        if (sensorDataClient.getDataForPoke().get(sensorDataClient.getDataForPoke().size() - 1) != null) {
-            NotificationManager notificationManager =
-                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            NotificationChannel notificationChannel = new NotificationChannel("123", "SEP4X2 Channel", NotificationManager.IMPORTANCE_DEFAULT);
-            notificationChannel.enableLights(true);
-            notificationChannel.setLightColor(Color.RED);
-            notificationChannel.enableVibration(true);
-            notificationChannel.setVibrationPattern(new long[]{1});
-            notificationManager.createNotificationChannel(notificationChannel);
-
+        if ((sensorDataClient.getDataForPoke().get(sensorDataClient.getDataForPoke().size() - 1) != null) || (sensorDataClient.getDataForPoke().get(sensorDataClient.getDataForPoke().size() - 2) != null)) {
 
             SensorData latestData = sensorDataClient.getDataForPoke().get(sensorDataClient.getDataForPoke().size() - 1);
             SensorData previousData = sensorDataClient.getDataForPoke().get(sensorDataClient.getDataForPoke().size() - 2);
+
             String contentTitle = "", contentText = "";
             int iconId = 0;
             int notificationId = new Random().nextInt(99999999);
+            boolean somethingIsWrong = false;
 
 
-            if ((latestData.getTemperature() > previousData.getTemperature() + 10) || (latestData.getTemperature() < previousData.getTemperature() - 10)) {
+            if ((latestData.getTemperature() >= previousData.getTemperature() + 1) || (latestData.getTemperature() <= previousData.getTemperature() - 10)) {
                 contentTitle = "Huge jump in temperature!";
                 contentText = "Current temperature is " + latestData.getTemperature() + "C, previously recorded temperature was " + previousData.getTemperature() + "C";
                 iconId = R.drawable.ic_brightness_7_black_24dp;
+                somethingIsWrong = true;
             }
-            if ((latestData.getHumidity() > previousData.getHumidity() + 10) || (latestData.getHumidity() < previousData.getHumidity() - 10)) {
+            if ((latestData.getHumidity() >= previousData.getHumidity() + 10) || (latestData.getHumidity() <= previousData.getHumidity() - 10)) {
                 contentTitle = "Huge jump in humidity!";
                 contentText = "Current humidity is " + latestData.getHumidity() + "%, previously recorded humidity was " + previousData.getHumidity() + "%";
                 iconId = R.drawable.ic_invert_colors_black_24dp;
+                somethingIsWrong = true;
             }
-            if ((latestData.getCo2() > previousData.getCo2() + 500) || (latestData.getCo2() < previousData.getCo2() - 500)) {
+            if ((latestData.getCo2() >= previousData.getCo2() + 500) || (latestData.getCo2() <= previousData.getCo2() - 500)) {
                 contentTitle = "Huge jump in co2!";
                 contentText = "Current co2 is " + latestData.getCo2() + "ppm, previously recorded co2 was " + previousData.getCo2() + "ppm";
                 iconId = R.drawable.ic_local_florist_black_24dp;
+                somethingIsWrong = true;
             }
-            if ((latestData.getNoise() > previousData.getNoise() + 30)) {
+            if ((latestData.getNoise() >= previousData.getNoise() + 30)) {
                 contentTitle = "Huge jump in noise!";
                 contentText = "Current noise is " + latestData.getNoise() + "db, previously recorded noise was " + previousData.getNoise() + "db";
                 iconId = R.drawable.ic_music_note_black_24dp;
+                somethingIsWrong = true;
             }
 
-            Notification notification = new Notification.Builder(getApplicationContext())
-                    .setContentTitle(contentTitle)
-                    .setContentText(contentText)
-                    .setSmallIcon(iconId)
-                    .setChannelId("123")
-                    .build();
-            notificationManager.notify(notificationId, notification);
+            if(somethingIsWrong){
+                NotificationManager notificationManager =
+                        (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                NotificationChannel notificationChannel = new NotificationChannel("123", "SEP4X2 Channel", NotificationManager.IMPORTANCE_DEFAULT);
+                notificationChannel.enableLights(true);
+                notificationChannel.setLightColor(Color.RED);
+                notificationChannel.enableVibration(true);
+                notificationChannel.setVibrationPattern(new long[]{1});
+                notificationManager.createNotificationChannel(notificationChannel);
 
-
+                Notification notification = new Notification.Builder(getApplicationContext())
+                        .setContentTitle(contentTitle)
+                        .setContentText(contentText)
+                        .setStyle(new Notification.BigTextStyle()
+                                .bigText(contentText))
+                        .setSmallIcon(iconId)
+                        .setChannelId("123")
+                        .build();
+                notificationManager.notify(notificationId, notification);
+                somethingIsWrong = false;
+            }
+        }
+        else {
+            Log.i("Error", "Unable to get sensor data");
         }
     }
 
