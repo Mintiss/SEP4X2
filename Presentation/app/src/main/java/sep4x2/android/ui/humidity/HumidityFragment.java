@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -44,6 +45,7 @@ public class HumidityFragment extends Fragment {
     private LineChart lineChart;
     private BarChart barChart;
     private Switch aSwitch;
+    private TextView message;
 
 
     ArrayList<BarEntry> barEntries;
@@ -108,7 +110,26 @@ public class HumidityFragment extends Fragment {
 
         barChart.animate().alpha(0).setDuration(0);
 
-        //Database
+        //TextView------------------------------------------------------------------------------------------------------
+
+        message = root.findViewById(R.id.text_hum);
+
+        double lastHum =  humidity.get(humidity.size()-1).getHumidity();
+
+
+
+        if(lastHum < 45)
+        {
+           message.setText("Humidity is considered comfortable, but can be dry as well.");
+        }else if(lastHum > 55)
+        {
+            message.setText("Humidity level considered high. Solution: Open a window, or call for help.");
+        }else{
+            message.setText("Your houses humidity level is in the recommended spectrum. Good Job!");
+        }
+
+
+
 
 
         //Switch----------------------------------------------------------------------------------------------------------
@@ -319,8 +340,11 @@ public class HumidityFragment extends Fragment {
 
 
         if (num == 1) {
-            barEntries.add(new BarEntry(0, (float) humidity.get(0).getHumidity()));
-            labelsname.add(String.valueOf(humidity.get(0).getTime().getHourOfDay()));
+            for (int i = 0; i <humidity.size() ; i++) {
+                barEntries.add(new BarEntry(i, (float) humidity.get(i).getHumidity()));
+                labelsname.add(String.valueOf(humidity.get(i).getTime().getHourOfDay()));
+            }
+
         } else {
             for (int i = 0; i < humidityDayArray.size(); i++) {
                 String day = humidityDayArray.get(i).getTime();

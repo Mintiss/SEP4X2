@@ -48,6 +48,7 @@ public class TemperatureFragment extends Fragment {
     private BarChart barChart;
     private Switch aSwitch;
     private TextView message;
+   // private SensorData sensorData;
 
     ArrayList<BarEntry> barEntries;
     ArrayList<String> labelsname;
@@ -126,6 +127,31 @@ public class TemperatureFragment extends Fragment {
         //Textview---------------------------------------------------------------------------------------------------------------
 
         message = root.findViewById(R.id.text_temp);
+
+        double lastTemp;
+
+
+        temperatures = temperatureViewModel.getTemperatureData();
+
+
+          lastTemp =   temperatures.get(temperatures.size()-1).getTemperature();
+
+        if(lastTemp > 24)
+        {
+            message.setText("Temperature may cause cardiovascular risk. Solution: Please open the window.");
+        }else if(lastTemp <16 )
+        {
+            message.setText("Temperature may cause respiratory and cardiovascular risks. Solution: Turn on the heating");
+        }else {
+            message.setText("The temperature is ideal. Keep up the good work!");
+        }
+
+
+
+
+
+
+
 
 
 

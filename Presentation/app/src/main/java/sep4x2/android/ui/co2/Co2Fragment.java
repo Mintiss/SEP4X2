@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -47,6 +48,7 @@ public class Co2Fragment extends Fragment {
     private LineChart lineChart;
     private BarChart barChart;
     private Switch aSwitch;
+    private TextView message;
 
 
     ArrayList<BarEntry> barEntries;
@@ -90,7 +92,7 @@ public class Co2Fragment extends Fragment {
         weeklyCo2 = co2ViewModel.getWeeklyData(18).getWeeklyCO2();
         Toast.makeText(getContext(), "1", Toast.LENGTH_SHORT).show();
 
-//LineChart-------------------------------------------------------------------------------------------------------------------------------------------------
+         //LineChart-------------------------------------------------------------------------------------------------------------------------------------------------
         lineChart = root.findViewById(R.id.LineChartco2);
 
         FillHourEbumy();
@@ -116,7 +118,26 @@ public class Co2Fragment extends Fragment {
         barChart.animate().alpha(0).setDuration(0);
 
 
-        //DB
+        //TextView----------------------------------------------------------------------------------------------------
+
+        message = root.findViewById(R.id.text_co2);
+
+       double lastCo2 =  co2.get(co2.size()-1).getCo2();
+
+       if(lastCo2 < 1000)
+       {
+           message.setText("Co2 level considered ideal. Good job!");
+       }else if(lastCo2>1000)
+       {
+           message.setText("Co2 level considered harmful. May cause headaches and sleepiness. Solution: Open the window.");
+       }else if(lastCo2 >= 40000)
+       {
+        message.setText("Co2 level is extremely harmful. You most likely dead. :( ");
+       }
+
+
+
+
 
         //Switch----------------------------------------------------------------------------------------------------------
         aSwitch = root.findViewById(R.id.switchco2);
@@ -218,7 +239,7 @@ public class Co2Fragment extends Fragment {
 
                     case "Week 23":
                         dayEnum.clear();
-                     //   weeklyCo2 = co2ViewModel.getWeeklyData(date.getWeekOfWeekyear()-1).getWeeklyCO2();
+                        //   weeklyCo2 = co2ViewModel.getWeeklyData(date.getWeekOfWeekyear()-1).getWeeklyCO2();
                         Toast.makeText(getContext(), "2", Toast.LENGTH_SHORT).show();
 
                         fillWithNewData();
@@ -230,7 +251,7 @@ public class Co2Fragment extends Fragment {
 
                     case "Week 24":
                         dayEnum.clear();
-                    //    weeklyCo2 = co2ViewModel.getWeeklyData(date.getWeekOfWeekyear()-2).getWeeklyCO2();
+                        //    weeklyCo2 = co2ViewModel.getWeeklyData(date.getWeekOfWeekyear()-2).getWeeklyCO2();
 
                         fillWithNewData();
                         fillDayEnum();
@@ -242,7 +263,7 @@ public class Co2Fragment extends Fragment {
 
                     case "Week 25":
                         dayEnum.clear();
-                   //     weeklyCo2 = co2ViewModel.getWeeklyData(date.getWeekOfWeekyear()-3).getWeeklyCO2();
+                        //     weeklyCo2 = co2ViewModel.getWeeklyData(date.getWeekOfWeekyear()-3).getWeeklyCO2();
 
 
                         fillWithNewData();
@@ -255,7 +276,7 @@ public class Co2Fragment extends Fragment {
 
                     case "Week 26":
                         dayEnum.clear();
-                   //     weeklyCo2 = co2ViewModel.getWeeklyData(date.getWeekOfWeekyear()-4).getWeeklyCO2();
+                        //     weeklyCo2 = co2ViewModel.getWeeklyData(date.getWeekOfWeekyear()-4).getWeeklyCO2();
 
                         fillWithNewData();
                         fillDayEnum();
@@ -264,7 +285,7 @@ public class Co2Fragment extends Fragment {
                         SetBarchart(0);
                         break;
                     case "Week 27":
-                 //       weeklyCo2 = co2ViewModel.getWeeklyData(-5).getWeeklyCO2();
+                        //       weeklyCo2 = co2ViewModel.getWeeklyData(-5).getWeeklyCO2();
                         Toast.makeText(getContext(), "6, with no data", Toast.LENGTH_SHORT).show();
 
                         break;
@@ -318,8 +339,11 @@ public class Co2Fragment extends Fragment {
         labelsname = new ArrayList<>();
 
         if (num == 1) {
-            barEntries.add(new BarEntry(0, (float) co2.get(0).getCo2()));
-            labelsname.add(String.valueOf(co2.get(0).getTime().getHourOfDay()));
+            for (int i = 0; i < co2.size(); i++) {
+                barEntries.add(new BarEntry(i, (float) co2.get(i).getCo2()));
+                labelsname.add(String.valueOf(co2.get(i).getTime().getHourOfDay()));
+            }
+
         } else {
             for (int i = 0; i < co2DayArray.size(); i++) {
                 String day = co2DayArray.get(i).getTime();

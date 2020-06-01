@@ -107,6 +107,23 @@ public class NoiseFragment extends Fragment {
 
         barChart.animate().alpha(0).setDuration(0);
 
+        //TextView------------------------------------------------------------------
+
+        message = root.findViewById(R.id.text_noise);
+
+        double lastNoise = noise.get(noise.size()-1).getNoise();
+
+        if(lastNoise < 75)
+        {
+            message.setText("The noise level considered average. Good job.");
+        }else if(85<lastNoise)
+        {
+            message.setText("The noise level considered harmful. Solution: use earplugs/ stop the music");
+        }else {
+                message.setText("Your place is a little bit louder than average");
+        }
+
+
 
 
         //Switch----------------------------------------------------------------------------------------------------------
@@ -312,8 +329,11 @@ public class NoiseFragment extends Fragment {
 
 
         if (num == 1) {
-            barEntries.add(new BarEntry(0, (float) noise.get(0).getNoise()));
-            labelsname.add(String.valueOf(noise.get(0).getTime().getHourOfDay()));
+            for (int i = 0; i <noise.size() ; i++) {
+                barEntries.add(new BarEntry(i, (float) noise.get(i).getNoise()));
+                labelsname.add(String.valueOf(noise.get(i).getTime().getHourOfDay()));
+            }
+
         } else {
             for (int i = 0; i < NoiseDayArrayList.size(); i++) {
                 String day = NoiseDayArrayList.get(i).getTime();

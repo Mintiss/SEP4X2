@@ -13,7 +13,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="115dp"
         android:layout_marginEnd="8dp"
-        android:text="The comfortable temperature level is bweteen 18-21 Celsius. Temerature below 24 Celsus can cause cardiovascular risk. Tempreature under 16-9 Celsius may cause respidatory, cardiovacular and hypthermia risks."
+        android:text="The comfortable temperature level is between 18-21 Celsius. Temperature below 24 Celsius can cause cardiovascular risk. Temperature under 16-9 Celsius may cause respiratory, cardiovascular and hypothermia risks."
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
