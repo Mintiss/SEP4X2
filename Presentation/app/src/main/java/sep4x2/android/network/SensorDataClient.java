@@ -7,18 +7,12 @@ import android.util.Log;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeConstants;
-import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
-
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 import sep4x2.android.local_database.Entity.SensorData;
 import sep4x2.android.local_database.Entity.WeeklyStatisticsAllData;
 import sep4x2.android.local_database.LocalDatabase;
@@ -38,8 +32,11 @@ public class SensorDataClient extends Application{
 
     public SensorDataClient(Application application)
     {
+
         LocalDatabase database = LocalDatabase.getInstance(application);
         sensorDao = database.sensorDao();
+
+        updateSensorData();
 
         updateThisWeekSensors();
     }

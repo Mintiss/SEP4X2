@@ -1,6 +1,7 @@
 package sep4x2.android.ui.noise;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,6 @@ import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -31,13 +31,14 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.EntryXComparator;
 
+import org.joda.time.DateTime;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import sep4x2.android.R;
 import sep4x2.android.SharedSensors.Noise;
-import sep4x2.android.ui.humidity.HumidityModel;
 
 
 public class NoiseFragment extends Fragment {
@@ -47,26 +48,27 @@ public class NoiseFragment extends Fragment {
     private Switch aSwitch;
     private Spinner spinnerweek;
     private Spinner spinnerchange;
+    private TextView message;
 
     //Spinner
 
     private static final String[] paths = {"Week 22", "Week 23", "Week 24", "Week 25", "Week 26", "Week 27"};
-    private static final String[] changepath = {"Today", "Week", "Month"};
+    private static final String[] changepath = {"Today", "Week"};
 
     ArrayList<BarEntry> barEntries;
     ArrayList<String> labelsname;
 
     //LineChart
-    ArrayList<Entry> yValues = new ArrayList<>();
+    ArrayList<Entry> hourEnum = new ArrayList<>();
 
-    ArrayList<Entry> yNumber = new ArrayList<>();
+    ArrayList<Entry> dayEnum = new ArrayList<>();
 
     //Barchart
-    ArrayList<HumidityModel> humidityModelArrayList = new ArrayList<>();
-    ArrayList<HumidityModel> humidityModelArrayList2 = new ArrayList<>();
+    ArrayList<NoiseTemporaryValues> NoiseHourArray = new ArrayList<>();
+    ArrayList<NoiseTemporaryValues> NoiseDayArrayList = new ArrayList<>();
 
     //FROM DB
-    List<Noise> noiseData;
+    List<Noise> noise;
     List<Double> weeklyNoise;
 
     private NoiseViewModel noiseViewModel;
@@ -78,14 +80,19 @@ public class NoiseFragment extends Fragment {
         final View root = inflater.inflate(R.layout.fragment_noise, container, false);
         final TextView textView = root.findViewById(R.id.text_send);
 
+
+        //Bad solution
+
+        weeklyNoise = noiseViewModel.getWeeklyData(18).getWeeklyNoise();
+
         //LineChart-------------------------------------------------------------------------------------------------------------------------------------------------
         lineChart = root.findViewById(R.id.LineChartNoise);
 
         FillHourEbumy();
         fillDayEnum();
 
-        Collections.sort(yValues, new EntryXComparator());
-        Collections.sort(yNumber, new EntryXComparator());
+        Collections.sort(hourEnum, new EntryXComparator());
+        Collections.sort(dayEnum, new EntryXComparator());
 
         setLinechart(0);
 
@@ -93,15 +100,31 @@ public class NoiseFragment extends Fragment {
         //Barchart------------------------------------------------------------------------------------------------------------------------------------------------------------
         barChart = root.findViewById(R.id.barchartNoise);
 
-        fillHoursAndHumidityvaluess();
+        fillHoursAndNoise();
 
 
         SetBarchart(0);
 
         barChart.animate().alpha(0).setDuration(0);
 
-        //DB--------------------------------------------------------------------------------------------------------------
-        noiseData = noiseViewModel.getNoiseData();
+        //TextView------------------------------------------------------------------
+
+        message = root.findViewById(R.id.text_noise);
+
+        double lastNoise = noise.get(noise.size()-1).getNoise();
+
+        if(lastNoise < 75)
+        {
+            message.setText("The noise level considered average. Good job.");
+        }else if(85<lastNoise)
+        {
+            message.setText("The noise level considered harmful. Solution: use earplugs/ stop the music");
+        }else {
+                message.setText("Your place is a little bit louder than average");
+        }
+
+
+
 
         //Switch----------------------------------------------------------------------------------------------------------
         aSwitch = root.findViewById(R.id.switchNoise);
@@ -124,29 +147,6 @@ public class NoiseFragment extends Fragment {
         });
 
 
-        //RadioGroup-----------------------------------------------------------------------------------------------------------------
-
-  /*      radioGroup = (RadioGroup) root.findViewById(R.id.radioGroupNoise);
-
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.dayradioButtonNoise:
-                        Toast.makeText(getContext(), "day", Toast.LENGTH_SHORT).show();
-                        SetBarchart(0);
-                        setLinechart(0);
-                        break;
-                    case R.id.hourradioButtonNoise2:
-                        Toast.makeText(getContext(), "hour", Toast.LENGTH_SHORT).show();
-                        setLinechart(1);
-                        SetBarchart(1);
-                        break;
-                }
-            }
-        });
-
-   */
 
         //Spinnerchange------------------------------------------------------------------------------------------------------
         spinnerchange = root.findViewById(R.id.spinnernoisechange);
@@ -180,13 +180,7 @@ public class NoiseFragment extends Fragment {
                         setLinechart(0);
 
                         break;
-                    case "Month":
-                        spinnerweek.animate().alpha(0).setDuration(0);
-                        spinnerweek.setEnabled(false);
 
-                        Toast.makeText(getContext(), "Coming soon", Toast.LENGTH_SHORT).show();
-
-                        break;
                 }
 
             }
@@ -209,6 +203,8 @@ public class NoiseFragment extends Fragment {
 
         spinnerweek.animate().alpha(0).setDuration(0);
 
+        DateTime date = new DateTime();
+
         spinnerweek.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -217,10 +213,11 @@ public class NoiseFragment extends Fragment {
                 switch (selectedClass) {
                     case "Week 22":
                         // assigning div item list defined in XML to the div Spinner
-                        yNumber.clear();
-                        Toast.makeText(getContext(), "1", Toast.LENGTH_SHORT).show();
+                        dayEnum.clear();
+                       weeklyNoise = noiseViewModel.getWeeklyData(noiseViewModel.getWeeklyData(18).getWeekNo()).getWeeklyNoise();
 
-                        fillDaysAndHumidityvaluess1();
+                        Log.i("SENSOR DATA", "" + weeklyNoise.toString());
+                        fillWithNewData();
                         fillDayEnum();
 
                         setLinechart(0);
@@ -229,22 +226,24 @@ public class NoiseFragment extends Fragment {
 
                         break;
 
-                    case "Week 23":
-                        yNumber.clear();
-                        Toast.makeText(getContext(), "2", Toast.LENGTH_SHORT).show();
+                    case "Week" :
+                        dayEnum.clear();
+                       weeklyNoise = noiseViewModel.getWeeklyData(date.getWeekOfWeekyear()-1).getWeeklyNoise();
 
-                        fillDaysAndHumidityvaluess2();
-                        fillDayEnum2();
+
+                        fillWithNewData();
+                        fillDayEnum();
 
                         SetBarchart(0);
                         setLinechart(0);
                         break;
 
                     case "Week 24":
-                        yNumber.clear();
-                        Toast.makeText(getContext(), "3", Toast.LENGTH_SHORT).show();
-                        fillDaysAndHumidityvaluess3();
-                        fillDayEnum3();
+                        dayEnum.clear();
+                       weeklyNoise = noiseViewModel.getWeeklyData(date.getWeekOfWeekyear()-2).getWeeklyNoise();
+
+                        fillWithNewData();
+                        fillDayEnum();
 
                         setLinechart(0);
 
@@ -252,11 +251,12 @@ public class NoiseFragment extends Fragment {
                         break;
 
                     case "Week 25":
-                        yNumber.clear();
-                        Toast.makeText(getContext(), "4", Toast.LENGTH_SHORT).show();
+                        dayEnum.clear();
+                      weeklyNoise = noiseViewModel.getWeeklyData(date.getWeekOfWeekyear()-3).getWeeklyNoise();
 
-                        fillDaysAndHumidityvaluess4();
-                        fillDayEnum4();
+
+                        fillWithNewData();
+                        fillDayEnum();
 
                         setLinechart(0);
 
@@ -264,16 +264,18 @@ public class NoiseFragment extends Fragment {
                         break;
 
                     case "Week 26":
-                        yNumber.clear();
-                        Toast.makeText(getContext(), "5", Toast.LENGTH_SHORT).show();
-                        fillDaysAndHumidityvaluess5();
-                        fillDayEnum5();
+                        dayEnum.clear();
+                     weeklyNoise = noiseViewModel.getWeeklyData(date.getWeekOfWeekyear()-4).getWeeklyNoise();
+
+                        fillWithNewData();
+                        fillDayEnum();
 
                         setLinechart(0);
                         SetBarchart(0);
                         break;
                     case "Week 27":
-                        Toast.makeText(getContext(), "6, with no data", Toast.LENGTH_SHORT).show();
+                       weeklyNoise = noiseViewModel.getWeeklyData(date.getWeekOfWeekyear()-5).getWeeklyNoise();
+
 
                         break;
                 }
@@ -301,11 +303,11 @@ public class NoiseFragment extends Fragment {
         LineDataSet set2;
 
         if (number == 1) {
-            set1 = new LineDataSet(yValues, "Data hours");
+            set1 = new LineDataSet(hourEnum, "Data hours");
 
 
         } else {
-            set1 = new LineDataSet(yNumber, "Data day");
+            set1 = new LineDataSet(dayEnum, "Data day");
 
         }
         set1.setFillAlpha(250);
@@ -327,12 +329,15 @@ public class NoiseFragment extends Fragment {
 
 
         if (num == 1) {
-            barEntries.add(new BarEntry(0, (float) noiseData.get(0).getNoise()));
-            labelsname.add(String.valueOf(noiseData.get(0).getTime().getHourOfDay()));
+            for (int i = 0; i <noise.size() ; i++) {
+                barEntries.add(new BarEntry(i, (float) noise.get(i).getNoise()));
+                labelsname.add(String.valueOf(noise.get(i).getTime().getHourOfDay()));
+            }
+
         } else {
-            for (int i = 0; i < humidityModelArrayList2.size(); i++) {
-                String day = humidityModelArrayList2.get(i).getTime();
-                double co2 = humidityModelArrayList2.get(i).getHumindity();
+            for (int i = 0; i < NoiseDayArrayList.size(); i++) {
+                String day = NoiseDayArrayList.get(i).getTime();
+                double co2 = NoiseDayArrayList.get(i).getNoise();
 
                 barEntries.add(new BarEntry(i, (float) co2));
                 labelsname.add(day);
@@ -369,179 +374,77 @@ public class NoiseFragment extends Fragment {
     }
 
 
-    private void fillHoursAndHumidityvaluess() {
-        humidityModelArrayList.clear();
-        humidityModelArrayList.add(new HumidityModel("1pm", 65.5));
-        humidityModelArrayList.add(new HumidityModel("9am", 12.0));
-        humidityModelArrayList.add(new HumidityModel("10am", 34.5));
-        humidityModelArrayList.add(new HumidityModel("11am", 45.0));
-        humidityModelArrayList.add(new HumidityModel("1pm", 23.5));
-        humidityModelArrayList.add(new HumidityModel("1pm", 65.5));
-        humidityModelArrayList.add(new HumidityModel("9am", 12.0));
-        humidityModelArrayList.add(new HumidityModel("10am", 34.5));
-        humidityModelArrayList.add(new HumidityModel("11am", 45.0));
-        humidityModelArrayList.add(new HumidityModel("1pm", 23.5));
-        humidityModelArrayList.add(new HumidityModel("1pm", 65.5));
-        humidityModelArrayList.add(new HumidityModel("9am", 12.0));
-        humidityModelArrayList.add(new HumidityModel("10am", 34.5));
-        humidityModelArrayList.add(new HumidityModel("11am", 45.0));
-        humidityModelArrayList.add(new HumidityModel("1pm", 23.5));
-        humidityModelArrayList.add(new HumidityModel("1pm", 65.5));
-        humidityModelArrayList.add(new HumidityModel("9am", 12.0));
-        humidityModelArrayList.add(new HumidityModel("10am", 34.5));
-        humidityModelArrayList.add(new HumidityModel("11am", 45.0));
-        humidityModelArrayList.add(new HumidityModel("1pm", 23.5));
-        humidityModelArrayList.add(new HumidityModel("1pm", 65.5));
-        humidityModelArrayList.add(new HumidityModel("9am", 12.0));
-        humidityModelArrayList.add(new HumidityModel("10am", 34.5));
-        humidityModelArrayList.add(new HumidityModel("11am", 45.0));
+    private void fillHoursAndNoise() {
+        NoiseHourArray.clear();
+
+        noise = noiseViewModel.getNoiseData();
+
+        for (int i = 0; i <noise.size() ; i++) {
+
+            NoiseHourArray.add(new NoiseTemporaryValues(String.valueOf(noise.get(i).getTime().getHourOfDay()), noise.get(i).getNoise()));
+
+        }
+
+
+
 
 
     }
 
-    private void fillDaysAndHumidityvaluess1() {
-        humidityModelArrayList2.clear();
-        humidityModelArrayList2.add(new HumidityModel("monday", 16.5));
-        humidityModelArrayList2.add(new HumidityModel("tuesday", 25.0));
-        humidityModelArrayList2.add(new HumidityModel("wednesday", 34.5));
-        humidityModelArrayList2.add(new HumidityModel("thursday", 6.0));
-        humidityModelArrayList2.add(new HumidityModel("friday", 34));
-        humidityModelArrayList2.add(new HumidityModel("saturday", 12));
-        humidityModelArrayList2.add(new HumidityModel("sunday", 12.0));
+    private void fillWithNewData() {
+        NoiseDayArrayList.clear();
+        NoiseDayArrayList.add(new NoiseTemporaryValues("monday", weeklyNoise.get(0)));
+        NoiseDayArrayList.add(new NoiseTemporaryValues("wednesday", weeklyNoise.get(1)));
+        NoiseDayArrayList.add(new NoiseTemporaryValues("thursday", weeklyNoise.get(2)));
+        NoiseDayArrayList.add(new NoiseTemporaryValues("friday", weeklyNoise.get(3)));
+        NoiseDayArrayList.add(new NoiseTemporaryValues("saturday", weeklyNoise.get(4)));
+        NoiseDayArrayList.add(new NoiseTemporaryValues("sunday", weeklyNoise.get(5)));
     }
 
-    private void fillDaysAndHumidityvaluess2() {
-        humidityModelArrayList2.clear();
-        humidityModelArrayList2.add(new HumidityModel("monday", 6.7));
-        humidityModelArrayList2.add(new HumidityModel("tuesday", 39.2));
-        humidityModelArrayList2.add(new HumidityModel("wednesday", 23.4));
-        humidityModelArrayList2.add(new HumidityModel("thursday", 6.0));
-        humidityModelArrayList2.add(new HumidityModel("friday", 67));
-        humidityModelArrayList2.add(new HumidityModel("saturday", 3));
-        humidityModelArrayList2.add(new HumidityModel("sunday", 12.0));
-    }
 
-    private void fillDaysAndHumidityvaluess3() {
-        humidityModelArrayList2.clear();
-        humidityModelArrayList2.add(new HumidityModel("monday", 5));
-        humidityModelArrayList2.add(new HumidityModel("tuesday", 5));
-        humidityModelArrayList2.add(new HumidityModel("wednesday", 5));
-        humidityModelArrayList2.add(new HumidityModel("thursday", 5));
-        humidityModelArrayList2.add(new HumidityModel("friday", 5));
-        humidityModelArrayList2.add(new HumidityModel("saturday", 5));
-        humidityModelArrayList2.add(new HumidityModel("sunday", 5));
-    }
 
-    private void fillDaysAndHumidityvaluess4() {
-        humidityModelArrayList2.clear();
-        humidityModelArrayList2.add(new HumidityModel("monday", 32.5));
-        humidityModelArrayList2.add(new HumidityModel("tuesday", 12.0));
-        humidityModelArrayList2.add(new HumidityModel("wednesday", 68.5));
-        humidityModelArrayList2.add(new HumidityModel("thursday", 3.0));
-        humidityModelArrayList2.add(new HumidityModel("friday", 64));
-        humidityModelArrayList2.add(new HumidityModel("saturday", 6));
-        humidityModelArrayList2.add(new HumidityModel("sunday", 12.0));
-    }
-
-    private void fillDaysAndHumidityvaluess5() {
-        humidityModelArrayList2.clear();
-        humidityModelArrayList2.add(new HumidityModel("monday", 3.5));
-        humidityModelArrayList2.add(new HumidityModel("tuesday", 5.0));
-        humidityModelArrayList2.add(new HumidityModel("wednesday", 12.5));
-        humidityModelArrayList2.add(new HumidityModel("thursday", 6.0));
-        humidityModelArrayList2.add(new HumidityModel("friday", 3));
-        humidityModelArrayList2.add(new HumidityModel("saturday", 1));
-        humidityModelArrayList2.add(new HumidityModel("sunday", 2.0));
-    }
 
     private void FillHourEbumy() {
-        yValues.add(new Entry(0, 60f));
-        yValues.add(new Entry(1, 20f));
-        yValues.add(new Entry(2, 75f));
-        yValues.add(new Entry(3, 12f));
-        yValues.add(new Entry(4, 22.9f));
-        yValues.add(new Entry(5, 60f));
-        yValues.add(new Entry(6, 20f));
-        yValues.add(new Entry(7, 75f));
-        yValues.add(new Entry(8, 12f));
-        yValues.add(new Entry(9, 22.9f));
-        yValues.add(new Entry(10, 60f));
-        yValues.add(new Entry(11, 20f));
-        yValues.add(new Entry(12, 75f));
-        yValues.add(new Entry(13, 12f));
-        yValues.add(new Entry(14, 22.9f));
-        yValues.add(new Entry(15, 60f));
-        yValues.add(new Entry(16, 20f));
-        yValues.add(new Entry(17, 75f));
-        yValues.add(new Entry(18, 12f));
-        yValues.add(new Entry(19, 22.9f));
-        yValues.add(new Entry(20, 20f));
-        yValues.add(new Entry(21, 75f));
-        yValues.add(new Entry(22, 12f));
-        yValues.add(new Entry(23, 22.9f));
+
+    hourEnum.clear();
+    noise = noiseViewModel.getNoiseData();
+
+        for (int i = 0; i <noise.size() ; i++) {
+            hourEnum.add(new Entry(i, (float)noise.get(i).getNoise()));
+        }
+
+
     }
 
     private void fillDayEnum() {
-        yNumber.add(new Entry(0, 15f));
-        yNumber.add(new Entry(1, 35f));
-        yNumber.add(new Entry(2, 75f));
-        yNumber.add(new Entry(3, 89f));
-        yNumber.add(new Entry(4, 15f));
-        yNumber.add(new Entry(5, 27f));
-        yNumber.add(new Entry(6, 46f));
+        dayEnum.clear();
+
+        double x = weeklyNoise.get(0);
+        float monday = (float) x;
+        double a =weeklyNoise.get(1);
+        float tuesday = (float) a;
+        double t = weeklyNoise.get(2);
+        float wednesday = (float) t;
+        double d = weeklyNoise.get(3);
+        float thursday = (float) d;
+        double k = weeklyNoise.get(4);
+        float friday = (float) k;
+        double z = weeklyNoise.get(5);
+        float saturday = (float) z;
+        double l = weeklyNoise.get(6);
+        float sunday = (float) l;
+
+        dayEnum.add(new Entry(0, monday));
+        dayEnum.add(new Entry(1, tuesday));
+        dayEnum.add(new Entry(2, wednesday));
+        dayEnum.add(new Entry(3, thursday));
+        dayEnum.add(new Entry(4, friday));
+        dayEnum.add(new Entry(5, saturday));
+        dayEnum.add(new Entry(6, sunday));
     }
 
 
-    private void fillDayEnum3() {
-        yNumber.add(new Entry(0, 5f));
-        yNumber.add(new Entry(1, 5f));
-        yNumber.add(new Entry(2, 5f));
-        yNumber.add(new Entry(3, 5f));
-        yNumber.add(new Entry(4, 5f));
-        yNumber.add(new Entry(5, 5f));
-        yNumber.add(new Entry(6, 5f));
-    }
 
-    private void fillDayEnum4() {
-        yNumber.add(new Entry(0, 5f));
-        yNumber.add(new Entry(1, 5f));
-        yNumber.add(new Entry(2, 5f));
-        yNumber.add(new Entry(3, 5f));
-        yNumber.add(new Entry(4, 5f));
-        yNumber.add(new Entry(5, 5f));
-        yNumber.add(new Entry(6, 5f));
-    }
-
-
-    private void fillDayEnum5() {
-        yNumber.add(new Entry(0, 5f));
-        yNumber.add(new Entry(1, 5f));
-        yNumber.add(new Entry(2, 5f));
-        yNumber.add(new Entry(3, 5f));
-        yNumber.add(new Entry(4, 5f));
-        yNumber.add(new Entry(5, 5f));
-        yNumber.add(new Entry(6, 5f));
-    }
-
-    private void fillDayEnum6() {
-        yNumber.add(new Entry(0, 5f));
-        yNumber.add(new Entry(1, 5f));
-        yNumber.add(new Entry(2, 5f));
-        yNumber.add(new Entry(3, 5f));
-        yNumber.add(new Entry(4, 5f));
-        yNumber.add(new Entry(5, 5f));
-        yNumber.add(new Entry(6, 5f));
-    }
-
-    private void fillDayEnum2() {
-        yNumber.add(new Entry(0, 5f));
-        yNumber.add(new Entry(1, 5f));
-        yNumber.add(new Entry(2, 5f));
-        yNumber.add(new Entry(3, 5f));
-        yNumber.add(new Entry(4, 5f));
-        yNumber.add(new Entry(5, 5f));
-        yNumber.add(new Entry(6, 5f));
-    }
 
 
 }

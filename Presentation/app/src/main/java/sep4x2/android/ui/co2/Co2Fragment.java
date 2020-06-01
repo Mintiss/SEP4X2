@@ -1,6 +1,7 @@
 package sep4x2.android.ui.co2;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -30,44 +32,43 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.EntryXComparator;
 
+import org.joda.time.DateTime;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import sep4x2.android.R;
 import sep4x2.android.SharedSensors.CO2;
-import sep4x2.android.SharedSensors.Noise;
-import sep4x2.android.ui.humidity.HumidityModel;
-import sep4x2.android.ui.noise.NoiseViewModel;
 
 
-public class Co2Fragment extends Fragment  {
+public class Co2Fragment extends Fragment {
 
 
     private LineChart lineChart;
     private BarChart barChart;
     private Switch aSwitch;
+    private TextView message;
 
 
     ArrayList<BarEntry> barEntries;
     ArrayList<String> labelsname;
 
     //DB
-    private List<CO2> co2List;
+    private List<CO2> co2;
     private List<Double> weeklyCo2;
 
-    private NoiseViewModel noiseViewModel;
+    private Co2ViewModel co2ViewModel;
 
 
     //LineChart
-    ArrayList<Entry> yValues = new ArrayList<>();
+    ArrayList<Entry> hourEnum = new ArrayList<>();
 
-    ArrayList<Entry> yNumber = new ArrayList<>();
+    ArrayList<Entry> dayEnum = new ArrayList<>();
 
     //Barchart
-    ArrayList<HumidityModel> humidityModelArrayList = new ArrayList<>();
-    ArrayList<HumidityModel> humidityModelArrayList2 = new ArrayList<>();
-
+    ArrayList<CO2TemporaryValues> co2HourArray = new ArrayList<>();
+    ArrayList<CO2TemporaryValues> co2DayArray = new ArrayList<>();
 
 
     //Spinner
@@ -75,34 +76,38 @@ public class Co2Fragment extends Fragment  {
     private static final String[] paths = {"Week 22", "Week 23", "Week 24", "Week 25", "Week 26", "Week 27"};
 
     private Spinner spinnerchange;
-    private static final String[] changepath = {"Today", "Week", "Month"};
+    private static final String[] changepath = {"Today", "Week"};
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        noiseViewModel =
-                ViewModelProviders.of(this).get(NoiseViewModel.class);
+        co2ViewModel =
+                ViewModelProviders.of(this).get(Co2ViewModel.class);
 
-       final View root = inflater.inflate(R.layout.fragment_co2, container, false);
+        final View root = inflater.inflate(R.layout.fragment_co2, container, false);
 
-//LineChart-------------------------------------------------------------------------------------------------------------------------------------------------
+        //Bad solution
+
+        weeklyCo2 = co2ViewModel.getWeeklyData(18).getWeeklyCO2();
+        Toast.makeText(getContext(), "1", Toast.LENGTH_SHORT).show();
+
+         //LineChart-------------------------------------------------------------------------------------------------------------------------------------------------
         lineChart = root.findViewById(R.id.LineChartco2);
 
         FillHourEbumy();
         fillDayEnum();
 
-        Collections.sort(yValues, new EntryXComparator());
-        Collections.sort(yNumber, new EntryXComparator());
+        Collections.sort(hourEnum, new EntryXComparator());
+        Collections.sort(dayEnum, new EntryXComparator());
 
         setLinechart(0);
-
 
 
         //Barchart------------------------------------------------------------------------------------------------------------------------------------------------------------
         barChart = root.findViewById(R.id.barchartco2);
 
-        fillHoursAndHumidityvaluess();
+        fillHoursAndCo2();
 
 
         barEntries = new ArrayList<>();
@@ -113,8 +118,26 @@ public class Co2Fragment extends Fragment  {
         barChart.animate().alpha(0).setDuration(0);
 
 
-        //DB
-        noiseData = noiseViewModel.getNoiseData();
+        //TextView----------------------------------------------------------------------------------------------------
+
+        message = root.findViewById(R.id.text_co2);
+
+       double lastCo2 =  co2.get(co2.size()-1).getCo2();
+
+       if(lastCo2 < 1000)
+       {
+           message.setText("Co2 level considered ideal. Good job!");
+       }else if(lastCo2>1000)
+       {
+           message.setText("Co2 level considered harmful. May cause headaches and sleepiness. Solution: Open the window.");
+       }else if(lastCo2 >= 40000)
+       {
+        message.setText("Co2 level is extremely harmful. You most likely dead. :( ");
+       }
+
+
+
+
 
         //Switch----------------------------------------------------------------------------------------------------------
         aSwitch = root.findViewById(R.id.switchco2);
@@ -128,9 +151,8 @@ public class Co2Fragment extends Fragment  {
                     barChart.animate().alpha(1).setDuration(200);
                     lineChart.animate().alpha(0).setDuration(200);
 
-                }else{
+                } else {
 
-                
 
                     barChart.animate().alpha(0).setDuration(200);
                     lineChart.animate().alpha(1).setDuration(200);
@@ -138,32 +160,9 @@ public class Co2Fragment extends Fragment  {
             }
         });
 
-        //RadioGroup-----------------------------------------------------------------------------------------------------------------
 
-    /*    radioGroup = (RadioGroup) root.findViewById(R.id.radioGroupco2);
-
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.dayradioButtonco2:
-                        Toast.makeText(getContext(), "day", Toast.LENGTH_SHORT).show();
-                        SetBarchart(0);
-                        setLinechart(0);
-                        break;
-                    case R.id.hourradioButtonco2_2:
-                        Toast.makeText(getContext(), "hour", Toast.LENGTH_SHORT).show();
-                        setLinechart(1);
-                        SetBarchart(1);
-                        break;
-                }
-            }
-        });
-
-     */
-
-    // Spinner for changing between chars based on time
-    spinnerchange = root.findViewById(R.id.spinnerco2change);
+        // Spinner for changing between chars based on time
+        spinnerchange = root.findViewById(R.id.spinnerco2change);
 
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, changepath);
 
@@ -193,13 +192,7 @@ public class Co2Fragment extends Fragment  {
                         setLinechart(0);
 
                         break;
-                    case "Month":
-                        spinnerweek.animate().alpha(0).setDuration(0);
-                        spinnerweek.setEnabled(false);
 
-                        Toast.makeText(getContext(), "Coming soon", Toast.LENGTH_SHORT).show();
-
-                        break;
 
                 }
             }
@@ -222,6 +215,8 @@ public class Co2Fragment extends Fragment  {
 
         spinnerweek.animate().alpha(0).setDuration(0);
 
+        DateTime date = new DateTime();
+
         spinnerweek.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -229,10 +224,11 @@ public class Co2Fragment extends Fragment  {
                 switch (selectedClass) {
                     case "Week 22":
                         // assigning div item list defined in XML to the div Spinner
-                        yNumber.clear();
-                        Toast.makeText(getContext(), "1", Toast.LENGTH_SHORT).show();
+                        dayEnum.clear();
+                        weeklyCo2 = co2ViewModel.getWeeklyData(18).getWeeklyCO2();
 
-                        fillDaysAndHumidityvaluess1();
+                        Log.i("SENSOR DATA", "" + weeklyCo2.toString());
+                        fillWithNewData();
                         fillDayEnum();
 
                         setLinechart(0);
@@ -242,21 +238,23 @@ public class Co2Fragment extends Fragment  {
                         break;
 
                     case "Week 23":
-                        yNumber.clear();
+                        dayEnum.clear();
+                        //   weeklyCo2 = co2ViewModel.getWeeklyData(date.getWeekOfWeekyear()-1).getWeeklyCO2();
                         Toast.makeText(getContext(), "2", Toast.LENGTH_SHORT).show();
 
-                        fillDaysAndHumidityvaluess2();
-                        fillDayEnum2();
+                        fillWithNewData();
+                        fillDayEnum();
 
                         SetBarchart(0);
                         setLinechart(0);
                         break;
 
                     case "Week 24":
-                        yNumber.clear();
-                        Toast.makeText(getContext(), "3", Toast.LENGTH_SHORT).show();
-                        fillDaysAndHumidityvaluess3();
-                        fillDayEnum3();
+                        dayEnum.clear();
+                        //    weeklyCo2 = co2ViewModel.getWeeklyData(date.getWeekOfWeekyear()-2).getWeeklyCO2();
+
+                        fillWithNewData();
+                        fillDayEnum();
 
                         setLinechart(0);
 
@@ -264,11 +262,12 @@ public class Co2Fragment extends Fragment  {
                         break;
 
                     case "Week 25":
-                        yNumber.clear();
-                        Toast.makeText(getContext(), "4", Toast.LENGTH_SHORT).show();
+                        dayEnum.clear();
+                        //     weeklyCo2 = co2ViewModel.getWeeklyData(date.getWeekOfWeekyear()-3).getWeeklyCO2();
 
-                        fillDaysAndHumidityvaluess4();
-                        fillDayEnum4();
+
+                        fillWithNewData();
+                        fillDayEnum();
 
                         setLinechart(0);
 
@@ -276,15 +275,17 @@ public class Co2Fragment extends Fragment  {
                         break;
 
                     case "Week 26":
-                        yNumber.clear();
-                        Toast.makeText(getContext(), "5", Toast.LENGTH_SHORT).show();
-                        fillDaysAndHumidityvaluess5();
-                        fillDayEnum5();
+                        dayEnum.clear();
+                        //     weeklyCo2 = co2ViewModel.getWeeklyData(date.getWeekOfWeekyear()-4).getWeeklyCO2();
+
+                        fillWithNewData();
+                        fillDayEnum();
 
                         setLinechart(0);
                         SetBarchart(0);
                         break;
                     case "Week 27":
+                        //       weeklyCo2 = co2ViewModel.getWeeklyData(-5).getWeeklyCO2();
                         Toast.makeText(getContext(), "6, with no data", Toast.LENGTH_SHORT).show();
 
                         break;
@@ -298,29 +299,25 @@ public class Co2Fragment extends Fragment  {
         });
 
 
-
         return root;
     }
 
     private void setLinechart(int number) {
 
 
-
-
-
         lineChart.setDragEnabled(true);
         lineChart.setScaleEnabled(false);
 
         LineDataSet set1;
-        LineDataSet set2;
+
 
         if (number == 1) {
-            set1 = new LineDataSet(yValues, "Data hours");
+            set1 = new LineDataSet(hourEnum, "Data hours");
 
 
         } else {
 
-            set1 = new LineDataSet(yNumber, "Data day");
+            set1 = new LineDataSet(dayEnum, "Data day");
 
         }
         set1.setFillAlpha(250);
@@ -341,14 +338,16 @@ public class Co2Fragment extends Fragment  {
         barEntries = new ArrayList<>();
         labelsname = new ArrayList<>();
 
-        if (num == 1){
-            barEntries.add(new BarEntry(0, (float) noiseData.get(0).getNoise()));
-            labelsname.add(String.valueOf(noiseData.get(0).getTime().getHourOfDay()));
-        }
-        else {
-            for (int i = 0; i < humidityModelArrayList2.size(); i++) {
-                String day = humidityModelArrayList2.get(i).getTime();
-                double co2 = humidityModelArrayList2.get(i).getHumindity();
+        if (num == 1) {
+            for (int i = 0; i < co2.size(); i++) {
+                barEntries.add(new BarEntry(i, (float) co2.get(i).getCo2()));
+                labelsname.add(String.valueOf(co2.get(i).getTime().getHourOfDay()));
+            }
+
+        } else {
+            for (int i = 0; i < co2DayArray.size(); i++) {
+                String day = co2DayArray.get(i).getTime();
+                double co2 = co2DayArray.get(i).getCo2();
 
 
                 barEntries.add(new BarEntry(i, (float) co2));
@@ -360,7 +359,7 @@ public class Co2Fragment extends Fragment  {
         barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
 
         Description description = new Description();
-        description.setText("Humidity");
+        description.setText("CO2");
         barChart.setDescription(description);
 
         BarData barData = new BarData(barDataSet);
@@ -385,178 +384,72 @@ public class Co2Fragment extends Fragment  {
         barChart.invalidate();
     }
 
-    private void fillHoursAndHumidityvaluess() {
-        humidityModelArrayList.clear();
-        humidityModelArrayList.add(new HumidityModel("1pm", 65.5));
-        humidityModelArrayList.add(new HumidityModel("9am", 12.0));
-        humidityModelArrayList.add(new HumidityModel("10am", 34.5));
-        humidityModelArrayList.add(new HumidityModel("11am", 45.0));
-        humidityModelArrayList.add(new HumidityModel("1pm", 23.5));
-        humidityModelArrayList.add(new HumidityModel("1pm", 65.5));
-        humidityModelArrayList.add(new HumidityModel("9am", 12.0));
-        humidityModelArrayList.add(new HumidityModel("10am", 34.5));
-        humidityModelArrayList.add(new HumidityModel("11am", 45.0));
-        humidityModelArrayList.add(new HumidityModel("1pm", 23.5));
-        humidityModelArrayList.add(new HumidityModel("1pm", 65.5));
-        humidityModelArrayList.add(new HumidityModel("9am", 12.0));
-        humidityModelArrayList.add(new HumidityModel("10am", 34.5));
-        humidityModelArrayList.add(new HumidityModel("11am", 45.0));
-        humidityModelArrayList.add(new HumidityModel("1pm", 23.5));
-        humidityModelArrayList.add(new HumidityModel("1pm", 65.5));
-        humidityModelArrayList.add(new HumidityModel("9am", 12.0));
-        humidityModelArrayList.add(new HumidityModel("10am", 34.5));
-        humidityModelArrayList.add(new HumidityModel("11am", 45.0));
-        humidityModelArrayList.add(new HumidityModel("1pm", 23.5));
-        humidityModelArrayList.add(new HumidityModel("1pm", 65.5));
-        humidityModelArrayList.add(new HumidityModel("9am", 12.0));
-        humidityModelArrayList.add(new HumidityModel("10am", 34.5));
-        humidityModelArrayList.add(new HumidityModel("11am", 45.0));
+    private void fillHoursAndCo2() {
+        co2HourArray.clear();
+
+        co2 = co2ViewModel.getCo2Data();
+
+        for (int i = 0; i < co2.size(); i++) {
+            co2HourArray.add(new CO2TemporaryValues(String.valueOf(co2.get(i).getTime().getHourOfDay()), co2.get(i).getCo2()));
+        }
 
 
     }
 
-    private void fillDaysAndHumidityvaluess1() {
-        humidityModelArrayList2.clear();
-        humidityModelArrayList2.add(new HumidityModel("monday", 16.5));
-        humidityModelArrayList2.add(new HumidityModel("tuesday", 25.0));
-        humidityModelArrayList2.add(new HumidityModel("wednesday", 34.5));
-        humidityModelArrayList2.add(new HumidityModel("thursday", 6.0));
-        humidityModelArrayList2.add(new HumidityModel("friday", 34));
-        humidityModelArrayList2.add(new HumidityModel("saturday", 12));
-        humidityModelArrayList2.add(new HumidityModel("sunday", 12.0));
+    private void fillWithNewData() {
+        co2DayArray.clear();
+        co2DayArray.add(new CO2TemporaryValues("monday", weeklyCo2.get(0)));
+        co2DayArray.add(new CO2TemporaryValues("tuesday", weeklyCo2.get(1)));
+        co2DayArray.add(new CO2TemporaryValues("wednesday", weeklyCo2.get(2)));
+        co2DayArray.add(new CO2TemporaryValues("thursday", weeklyCo2.get(3)));
+        co2DayArray.add(new CO2TemporaryValues("friday", weeklyCo2.get(4)));
+        co2DayArray.add(new CO2TemporaryValues("saturday", weeklyCo2.get(5)));
+        co2DayArray.add(new CO2TemporaryValues("sunday", weeklyCo2.get(6)));
     }
 
-    private void fillDaysAndHumidityvaluess2() {
-        humidityModelArrayList2.clear();
-        humidityModelArrayList2.add(new HumidityModel("monday", 6.7));
-        humidityModelArrayList2.add(new HumidityModel("tuesday", 39.2));
-        humidityModelArrayList2.add(new HumidityModel("wednesday", 23.4));
-        humidityModelArrayList2.add(new HumidityModel("thursday", 6.0));
-        humidityModelArrayList2.add(new HumidityModel("friday", 67));
-        humidityModelArrayList2.add(new HumidityModel("saturday", 3));
-        humidityModelArrayList2.add(new HumidityModel("sunday", 12.0));
-    }
-
-    private void fillDaysAndHumidityvaluess3() {
-        humidityModelArrayList2.clear();
-        humidityModelArrayList2.add(new HumidityModel("monday", 5));
-        humidityModelArrayList2.add(new HumidityModel("tuesday", 5));
-        humidityModelArrayList2.add(new HumidityModel("wednesday", 5));
-        humidityModelArrayList2.add(new HumidityModel("thursday", 5));
-        humidityModelArrayList2.add(new HumidityModel("friday", 5));
-        humidityModelArrayList2.add(new HumidityModel("saturday", 5));
-        humidityModelArrayList2.add(new HumidityModel("sunday", 5));
-    }
-
-    private void fillDaysAndHumidityvaluess4() {
-        humidityModelArrayList2.clear();
-        humidityModelArrayList2.add(new HumidityModel("monday", 32.5));
-        humidityModelArrayList2.add(new HumidityModel("tuesday", 12.0));
-        humidityModelArrayList2.add(new HumidityModel("wednesday", 68.5));
-        humidityModelArrayList2.add(new HumidityModel("thursday", 3.0));
-        humidityModelArrayList2.add(new HumidityModel("friday", 64));
-        humidityModelArrayList2.add(new HumidityModel("saturday", 6));
-        humidityModelArrayList2.add(new HumidityModel("sunday", 12.0));
-    }
-
-    private void fillDaysAndHumidityvaluess5() {
-        humidityModelArrayList2.clear();
-        humidityModelArrayList2.add(new HumidityModel("monday", 3.5));
-        humidityModelArrayList2.add(new HumidityModel("tuesday", 5.0));
-        humidityModelArrayList2.add(new HumidityModel("wednesday", 12.5));
-        humidityModelArrayList2.add(new HumidityModel("thursday", 6.0));
-        humidityModelArrayList2.add(new HumidityModel("friday", 3));
-        humidityModelArrayList2.add(new HumidityModel("saturday", 1));
-        humidityModelArrayList2.add(new HumidityModel("sunday", 2.0));
-    }
 
     private void FillHourEbumy() {
-        yValues.add(new Entry(0, 60f));
-        yValues.add(new Entry(1, 20f));
-        yValues.add(new Entry(2, 75f));
-        yValues.add(new Entry(3, 12f));
-        yValues.add(new Entry(4, 22.9f));
-        yValues.add(new Entry(5, 60f));
-        yValues.add(new Entry(6, 20f));
-        yValues.add(new Entry(7, 75f));
-        yValues.add(new Entry(8, 12f));
-        yValues.add(new Entry(9, 22.9f));
-        yValues.add(new Entry(10, 60f));
-        yValues.add(new Entry(11, 20f));
-        yValues.add(new Entry(12, 75f));
-        yValues.add(new Entry(13, 12f));
-        yValues.add(new Entry(14, 22.9f));
-        yValues.add(new Entry(15, 60f));
-        yValues.add(new Entry(16, 20f));
-        yValues.add(new Entry(17, 75f));
-        yValues.add(new Entry(18, 12f));
-        yValues.add(new Entry(19, 22.9f));
-        yValues.add(new Entry(20, 20f));
-        yValues.add(new Entry(21, 75f));
-        yValues.add(new Entry(22, 12f));
-        yValues.add(new Entry(23, 22.9f));
+
+        hourEnum.clear();
+
+
+        co2 = co2ViewModel.getCo2Data();
+
+        for (int i = 0; i < co2.size(); i++) {
+
+            hourEnum.add(new Entry(i, (float) co2.get(i).getCo2()));
+
+        }
+
+
     }
 
     private void fillDayEnum() {
-        yNumber.add(new Entry(0, 15f));
-        yNumber.add(new Entry(1, 24f));
-        yNumber.add(new Entry(2, 35f));
-        yNumber.add(new Entry(3, 6f));
-        yNumber.add(new Entry(4, 15f));
-        yNumber.add(new Entry(5, 27f));
-        yNumber.add(new Entry(6, 46f));
-    }
 
+        dayEnum.clear();
 
-    private void fillDayEnum3() {
-        yNumber.add(new Entry(0, 5f));
-        yNumber.add(new Entry(1, 5f));
-        yNumber.add(new Entry(2, 5f));
-        yNumber.add(new Entry(3, 5f));
-        yNumber.add(new Entry(4, 5f));
-        yNumber.add(new Entry(5, 5f));
-        yNumber.add(new Entry(6, 5f));
-    }
+        double x = weeklyCo2.get(0);
+        float monday = (float) x;
+        double a = weeklyCo2.get(1);
+        float tuesday = (float) a;
+        double t = weeklyCo2.get(2);
+        float wednesday = (float) t;
+        double d = weeklyCo2.get(3);
+        float thursday = (float) d;
+        double k = weeklyCo2.get(4);
+        float friday = (float) k;
+        double z = weeklyCo2.get(5);
+        float saturday = (float) z;
+        double l = weeklyCo2.get(6);
+        float sunday = (float) l;
 
-    private void fillDayEnum4() {
-        yNumber.add(new Entry(0, 5f));
-        yNumber.add(new Entry(1, 5f));
-        yNumber.add(new Entry(2, 5f));
-        yNumber.add(new Entry(3, 5f));
-        yNumber.add(new Entry(4, 5f));
-        yNumber.add(new Entry(5, 5f));
-        yNumber.add(new Entry(6, 5f));
-    }
-
-
-    private void fillDayEnum5() {
-        yNumber.add(new Entry(0, 7f));
-        yNumber.add(new Entry(1, 7f));
-        yNumber.add(new Entry(2, 7f));
-        yNumber.add(new Entry(3, 7f));
-        yNumber.add(new Entry(4, 7f));
-        yNumber.add(new Entry(5, 7f));
-        yNumber.add(new Entry(6, 7f));
-    }
-
-    private void fillDayEnum6() {
-        yNumber.add(new Entry(0, 8f));
-        yNumber.add(new Entry(1, 8f));
-        yNumber.add(new Entry(2, 8f));
-        yNumber.add(new Entry(3, 8f));
-        yNumber.add(new Entry(4, 8f));
-        yNumber.add(new Entry(5, 8f));
-        yNumber.add(new Entry(6, 8f));
-    }
-
-    private void fillDayEnum2() {
-        yNumber.add(new Entry(0, 1f));
-        yNumber.add(new Entry(1, 1f));
-        yNumber.add(new Entry(2, 1f));
-        yNumber.add(new Entry(3, 1f));
-        yNumber.add(new Entry(4, 1f));
-        yNumber.add(new Entry(5, 5f));
-        yNumber.add(new Entry(6, 5f));
+        dayEnum.add(new Entry(0, monday));
+        dayEnum.add(new Entry(1, tuesday));
+        dayEnum.add(new Entry(2, wednesday));
+        dayEnum.add(new Entry(3, thursday));
+        dayEnum.add(new Entry(4, friday));
+        dayEnum.add(new Entry(5, saturday));
+        dayEnum.add(new Entry(6, sunday));
     }
 
 
