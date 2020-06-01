@@ -35,6 +35,7 @@ import java.util.Collections;
 import java.util.List;
 
 import sep4x2.android.R;
+import sep4x2.android.SharedSensors.CO2;
 import sep4x2.android.SharedSensors.Noise;
 import sep4x2.android.ui.humidity.HumidityModel;
 import sep4x2.android.ui.noise.NoiseViewModel;
@@ -52,7 +53,8 @@ public class Co2Fragment extends Fragment  {
     ArrayList<String> labelsname;
 
     //DB
-    List<Noise> noiseData;
+    private List<CO2> co2List;
+    private List<Double> weeklyCo2;
 
     private NoiseViewModel noiseViewModel;
 
@@ -74,7 +76,6 @@ public class Co2Fragment extends Fragment  {
 
     private Spinner spinnerchange;
     private static final String[] changepath = {"Today", "Week", "Month"};
-
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,

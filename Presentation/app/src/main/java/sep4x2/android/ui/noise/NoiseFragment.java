@@ -67,6 +67,7 @@ public class NoiseFragment extends Fragment {
 
     //FROM DB
     List<Noise> noiseData;
+    List<Double> weeklyNoise;
 
     private NoiseViewModel noiseViewModel;
 

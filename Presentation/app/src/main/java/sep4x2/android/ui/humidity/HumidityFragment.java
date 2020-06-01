@@ -57,16 +57,17 @@ public class HumidityFragment extends Fragment {
     ArrayList<HumidityModel> humidityModelArrayList = new ArrayList<>();
     ArrayList<HumidityModel> humidityModelArrayList2 = new ArrayList<>();
 
+    //DB
+    private List<Humidity> humidityList;
+    private List<Double> weeklyHumidity;
+
+
     //Spinner
     private Spinner spinnerweek;
     private static final String[] paths = {"Week 22", "Week 23", "Week 24", "Week 25", "Week 26", "Week 27"};
 
     private Spinner spinnerchange;
     private static final String[] changepath = {"Today", "Week", "Month"};
-
-
-    //DB
-    List<Noise> noiseData;
 
     private NoiseViewModel noiseViewModel;
 
