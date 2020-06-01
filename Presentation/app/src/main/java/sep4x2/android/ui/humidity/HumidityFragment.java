@@ -1,6 +1,7 @@
 package sep4x2.android.ui.humidity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.Switch;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -29,6 +29,8 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.EntryXComparator;
+
+import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -71,7 +73,6 @@ public class HumidityFragment extends Fragment {
 
     private Spinner spinnerchange;
     private static final String[] changepath = {"Today", "Week"};
-
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -191,6 +192,8 @@ public class HumidityFragment extends Fragment {
 
         spinnerweek.animate().alpha(0).setDuration(0);
 
+        DateTime date = new DateTime();
+
         spinnerweek.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -200,9 +203,10 @@ public class HumidityFragment extends Fragment {
                         // assigning div item list defined in XML to the div Spinner
                         dayEnum.clear();
 
-                        Toast.makeText(getContext(), "1", Toast.LENGTH_SHORT).show();
 
                         weeklyHumidity = humidityViewModel.getWeeklyData(18).getWeeklyHumidity();
+
+                        Log.i("SENSOR DATA", "" + weeklyHumidity.toString());
 
                         fillWithHumiditydays();
                         fillDayEnum();
@@ -215,8 +219,8 @@ public class HumidityFragment extends Fragment {
 
                     case "Week 23":
                         dayEnum.clear();
-                        Toast.makeText(getContext(), "2", Toast.LENGTH_SHORT).show();
-                        weeklyHumidity = humidityViewModel.getWeeklyData(18).getWeeklyHumidity();
+
+                        weeklyHumidity = humidityViewModel.getWeeklyData(date.getWeekOfWeekyear() - 1).getWeeklyHumidity();
 
                         fillWithHumiditydays();
                         fillDayEnum();
@@ -227,8 +231,8 @@ public class HumidityFragment extends Fragment {
 
                     case "Week 24":
                         dayEnum.clear();
-                        weeklyHumidity = humidityViewModel.getWeeklyData(18).getWeeklyHumidity();
-                        Toast.makeText(getContext(), "3", Toast.LENGTH_SHORT).show();
+                        weeklyHumidity = humidityViewModel.getWeeklyData(date.getWeekOfWeekyear() - 2).getWeeklyHumidity();
+
                         fillWithHumiditydays();
                         fillDayEnum();
 
@@ -239,8 +243,8 @@ public class HumidityFragment extends Fragment {
 
                     case "Week 25":
                         dayEnum.clear();
-                        weeklyHumidity = humidityViewModel.getWeeklyData(18).getWeeklyHumidity();
-                        Toast.makeText(getContext(), "4", Toast.LENGTH_SHORT).show();
+                        weeklyHumidity = humidityViewModel.getWeeklyData(date.getWeekOfWeekyear() - 3).getWeeklyHumidity();
+
 
                         fillWithHumiditydays();
                         fillDayEnum();
@@ -252,8 +256,8 @@ public class HumidityFragment extends Fragment {
 
                     case "Week 26":
                         dayEnum.clear();
-                        Toast.makeText(getContext(), "5", Toast.LENGTH_SHORT).show();
-                        weeklyHumidity = humidityViewModel.getWeeklyData(18).getWeeklyHumidity();
+
+                        weeklyHumidity = humidityViewModel.getWeeklyData(date.getWeekOfWeekyear() - 4).getWeeklyHumidity();
                         fillWithHumiditydays();
                         fillDayEnum();
 
@@ -261,8 +265,8 @@ public class HumidityFragment extends Fragment {
                         SetBarchart(0);
                         break;
                     case "Week 27":
-                        Toast.makeText(getContext(), "6, with no data", Toast.LENGTH_SHORT).show();
-                        weeklyHumidity = humidityViewModel.getWeeklyData(18).getWeeklyHumidity();
+
+                        weeklyHumidity = humidityViewModel.getWeeklyData(date.getWeekOfWeekyear() - 5).getWeeklyHumidity();
                         fillWithHumiditydays();
                         break;
                 }
@@ -315,14 +319,14 @@ public class HumidityFragment extends Fragment {
 
 
         if (num == 1) {
-              barEntries.add(new BarEntry(0, (float) humidity.get(0).getHumidity()));
-              labelsname.add(String.valueOf(humidity.get(0).getTime().getHourOfDay()));
+            barEntries.add(new BarEntry(0, (float) humidity.get(0).getHumidity()));
+            labelsname.add(String.valueOf(humidity.get(0).getTime().getHourOfDay()));
         } else {
             for (int i = 0; i < humidityDayArray.size(); i++) {
                 String day = humidityDayArray.get(i).getTime();
-                double co2 = humidityDayArray.get(i).getHumindity();
+                double humidity = humidityDayArray.get(i).getHumidity();
 
-                barEntries.add(new BarEntry(i, (float) co2));
+                barEntries.add(new BarEntry(i, (float) humidity));
                 labelsname.add(day);
             }
         }
@@ -361,12 +365,9 @@ public class HumidityFragment extends Fragment {
 
         humidity = humidityViewModel.getHumidityData();
 
-        for (int i = 0; i <humidity.size() ; i++) {
+        for (int i = 0; i < humidity.size(); i++) {
             humidityHourArray.add(new HumidityTemporaryValues(String.valueOf(humidity.get(i).getTime().getHourOfDay()), humidity.get(i).getHumidity()));
         }
-
-
-
 
 
     }
@@ -383,7 +384,6 @@ public class HumidityFragment extends Fragment {
     }
 
 
-
     private void FillHourEbumy() {
 
         hourEnum.clear();
@@ -392,8 +392,8 @@ public class HumidityFragment extends Fragment {
 
         int x = 0;
 
-        for (int i = 0; i <humidity.size() ; i++) {
-            hourEnum.add(new Entry(x,(float) humidity.get(i).getHumidity()));
+        for (int i = 0; i < humidity.size(); i++) {
+            hourEnum.add(new Entry(x, (float) humidity.get(i).getHumidity()));
 
             x++;
         }
@@ -406,7 +406,7 @@ public class HumidityFragment extends Fragment {
 
         double x = weeklyHumidity.get(0);
         float monday = (float) x;
-        double a =weeklyHumidity.get(1);
+        double a = weeklyHumidity.get(1);
         float tuesday = (float) a;
         double t = weeklyHumidity.get(2);
         float wednesday = (float) t;
@@ -427,8 +427,6 @@ public class HumidityFragment extends Fragment {
         dayEnum.add(new Entry(5, saturday));
         dayEnum.add(new Entry(6, sunday));
     }
-
-
 
 
 }

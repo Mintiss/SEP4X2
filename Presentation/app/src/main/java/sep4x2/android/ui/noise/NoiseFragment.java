@@ -1,6 +1,7 @@
 package sep4x2.android.ui.noise;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,6 @@ import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -31,6 +31,8 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.EntryXComparator;
 
+import org.joda.time.DateTime;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -46,6 +48,7 @@ public class NoiseFragment extends Fragment {
     private Switch aSwitch;
     private Spinner spinnerweek;
     private Spinner spinnerchange;
+    private TextView message;
 
     //Spinner
 
@@ -183,6 +186,8 @@ public class NoiseFragment extends Fragment {
 
         spinnerweek.animate().alpha(0).setDuration(0);
 
+        DateTime date = new DateTime();
+
         spinnerweek.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -193,8 +198,8 @@ public class NoiseFragment extends Fragment {
                         // assigning div item list defined in XML to the div Spinner
                         dayEnum.clear();
                        weeklyNoise = noiseViewModel.getWeeklyData(noiseViewModel.getWeeklyData(18).getWeekNo()).getWeeklyNoise();
-                        Toast.makeText(getContext(), "1", Toast.LENGTH_SHORT).show();
 
+                        Log.i("SENSOR DATA", "" + weeklyNoise.toString());
                         fillWithNewData();
                         fillDayEnum();
 
@@ -204,10 +209,10 @@ public class NoiseFragment extends Fragment {
 
                         break;
 
-                    case "Week 23":
+                    case "Week" :
                         dayEnum.clear();
-                        weeklyNoise = noiseViewModel.getWeeklyData(18).getWeeklyNoise();
-                        Toast.makeText(getContext(), "2", Toast.LENGTH_SHORT).show();
+                       weeklyNoise = noiseViewModel.getWeeklyData(date.getWeekOfWeekyear()-1).getWeeklyNoise();
+
 
                         fillWithNewData();
                         fillDayEnum();
@@ -218,8 +223,8 @@ public class NoiseFragment extends Fragment {
 
                     case "Week 24":
                         dayEnum.clear();
-                        weeklyNoise = noiseViewModel.getWeeklyData(18).getWeeklyNoise();
-                        Toast.makeText(getContext(), "3", Toast.LENGTH_SHORT).show();
+                       weeklyNoise = noiseViewModel.getWeeklyData(date.getWeekOfWeekyear()-2).getWeeklyNoise();
+
                         fillWithNewData();
                         fillDayEnum();
 
@@ -230,8 +235,8 @@ public class NoiseFragment extends Fragment {
 
                     case "Week 25":
                         dayEnum.clear();
-                        weeklyNoise = noiseViewModel.getWeeklyData(18).getWeeklyNoise();
-                        Toast.makeText(getContext(), "4", Toast.LENGTH_SHORT).show();
+                      weeklyNoise = noiseViewModel.getWeeklyData(date.getWeekOfWeekyear()-3).getWeeklyNoise();
+
 
                         fillWithNewData();
                         fillDayEnum();
@@ -243,8 +248,8 @@ public class NoiseFragment extends Fragment {
 
                     case "Week 26":
                         dayEnum.clear();
-                        weeklyNoise = noiseViewModel.getWeeklyData(18).getWeeklyNoise();
-                        Toast.makeText(getContext(), "5", Toast.LENGTH_SHORT).show();
+                     weeklyNoise = noiseViewModel.getWeeklyData(date.getWeekOfWeekyear()-4).getWeeklyNoise();
+
                         fillWithNewData();
                         fillDayEnum();
 
@@ -252,8 +257,8 @@ public class NoiseFragment extends Fragment {
                         SetBarchart(0);
                         break;
                     case "Week 27":
-                        weeklyNoise = noiseViewModel.getWeeklyData(18).getWeeklyNoise();
-                        Toast.makeText(getContext(), "6, with no data", Toast.LENGTH_SHORT).show();
+                       weeklyNoise = noiseViewModel.getWeeklyData(date.getWeekOfWeekyear()-5).getWeeklyNoise();
+
 
                         break;
                 }

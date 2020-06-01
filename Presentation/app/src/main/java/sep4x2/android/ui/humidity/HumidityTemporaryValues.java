@@ -3,8 +3,8 @@ package sep4x2.android.ui.humidity;
 public class HumidityTemporaryValues {
 
     String time;
-    double humindity;
-    HumidityRepository humidityRepository;
+    double humidity;
+
 
     public HumidityTemporaryValues() {
     }
@@ -17,16 +17,14 @@ public class HumidityTemporaryValues {
         this.time = time;
     }
 
-    public double getHumindity() {
-        return humindity;
+    public double getHumidity() {
+        return humidity;
     }
 
-    public void setHumindity(double humindity) {
-        this.humindity = humindity;
-    }
+
 
     public HumidityTemporaryValues(String time, double humindity) {
         this.time = time;
-        this.humindity = humindity;
+        this.humidity = humindity;
     }
 }

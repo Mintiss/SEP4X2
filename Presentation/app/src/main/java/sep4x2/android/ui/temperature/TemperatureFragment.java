@@ -32,6 +32,8 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.EntryXComparator;
 
+import org.joda.time.DateTime;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -45,7 +47,7 @@ public class TemperatureFragment extends Fragment {
     private LineChart lineChart;
     private BarChart barChart;
     private Switch aSwitch;
-
+    private TextView message;
 
     ArrayList<BarEntry> barEntries;
     ArrayList<String> labelsname;
@@ -120,6 +122,13 @@ public class TemperatureFragment extends Fragment {
 
 
         Log.i("SENSOR DATA", "" + temperatures.size());
+
+        //Textview---------------------------------------------------------------------------------------------------------------
+
+        message = root.findViewById(R.id.text_temp);
+
+
+
 
 
         //Switch----------------------------------------------------------------------------------------------------------
@@ -201,6 +210,8 @@ public class TemperatureFragment extends Fragment {
 
         spinnerweek.animate().alpha(0).setDuration(0);
 
+        DateTime date = new DateTime();
+
         spinnerweek.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -209,7 +220,6 @@ public class TemperatureFragment extends Fragment {
                     case "Week 22":
                         // assigning div item list defined in XML to the div Spinner
                         dayEnum.clear();
-                        Toast.makeText(getContext(), "1", Toast.LENGTH_SHORT).show();
 
 
                         weeklyTemp = temperatureViewModel.getWeeklyData(18).getWeeklyTemperature();
@@ -231,7 +241,7 @@ public class TemperatureFragment extends Fragment {
 
                         fillDayEnum();
 
-                        weeklyTemp = temperatureViewModel.getWeeklyData(17).getWeeklyTemperature();
+                        weeklyTemp = temperatureViewModel.getWeeklyData(date.getWeekOfWeekyear() - 1).getWeeklyTemperature();
 
                         SetBarchart(0);
                         setLinechart(0);
@@ -240,6 +250,8 @@ public class TemperatureFragment extends Fragment {
                     case "Week 24":
                         dayEnum.clear();
                         Toast.makeText(getContext(), "3", Toast.LENGTH_SHORT).show();
+                        weeklyTemp = temperatureViewModel.getWeeklyData(date.getWeekOfWeekyear() - 2).getWeeklyTemperature();
+
 
                         fillDayEnum();
 
@@ -251,6 +263,7 @@ public class TemperatureFragment extends Fragment {
                     case "Week 25":
                         dayEnum.clear();
                         Toast.makeText(getContext(), "4", Toast.LENGTH_SHORT).show();
+                        weeklyTemp = temperatureViewModel.getWeeklyData(date.getWeekOfWeekyear() - 3).getWeeklyTemperature();
 
 
                         fillDayEnum();
@@ -263,6 +276,8 @@ public class TemperatureFragment extends Fragment {
                     case "Week 26":
                         dayEnum.clear();
                         Toast.makeText(getContext(), "5", Toast.LENGTH_SHORT).show();
+                        weeklyTemp = temperatureViewModel.getWeeklyData(date.getWeekOfWeekyear() - 4).getWeeklyTemperature();
+
 
                         fillDayEnum();
 
@@ -271,6 +286,8 @@ public class TemperatureFragment extends Fragment {
                         break;
                     case "Week 27":
                         Toast.makeText(getContext(), "6, with no data", Toast.LENGTH_SHORT).show();
+                        weeklyTemp = temperatureViewModel.getWeeklyData(date.getWeekOfWeekyear() - 5).getWeeklyTemperature();
+
 
                         break;
                 }
@@ -323,8 +340,11 @@ public class TemperatureFragment extends Fragment {
 
 
         if (num == 1) {
-            barEntries.add(new BarEntry(0, (float) temperatures.get(0).getTemperature()));
-            labelsname.add(String.valueOf(temperatures.get(0).getTime().getHourOfDay()));
+            for (int i = 0; i < temperatures.size(); i++) {
+                barEntries.add(new BarEntry(i, (float) temperatures.get(i).getTemperature()));
+                labelsname.add(String.valueOf(temperatures.get(i).getTime().getHourOfDay()));
+            }
+
         } else {
             for (int i = 0; i < temperatureDayArrayList.size(); i++) {
                 String day = temperatureDayArrayList.get(i).getTime();
@@ -393,7 +413,6 @@ public class TemperatureFragment extends Fragment {
     private void FillHourEbumy() {
 
         hourEnum.clear();
-
 
 
         temperatures = temperatureViewModel.getTemperatureData();
