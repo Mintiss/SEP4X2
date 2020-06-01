@@ -138,7 +138,7 @@ public class TemperatureFragment extends Fragment {
 
         if(lastTemp > 24)
         {
-            message.setText("Temperature may cause cardiovascular risk. Solution: Please open the window.");
+            message.setText("Temperature may cause cardiovascular risk. Solution: Please lower the temperature.");
         }else if(lastTemp <16 )
         {
             message.setText("Temperature may cause respiratory and cardiovascular risks. Solution: Turn on the heating");
