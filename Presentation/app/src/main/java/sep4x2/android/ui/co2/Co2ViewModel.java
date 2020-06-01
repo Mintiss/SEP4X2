@@ -5,11 +5,13 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
+
 
 import java.util.List;
 
 import sep4x2.android.SharedSensors.CO2;
+import sep4x2.android.SharedSensors.WeeklyConverter;
+
 
 public class Co2ViewModel extends AndroidViewModel {
 
@@ -32,4 +34,9 @@ public class Co2ViewModel extends AndroidViewModel {
     public List<CO2> getCo2Data(){
         return repository.getCO2Data();
     }
+
+    public WeeklyConverter getWeeklyData(int weekNo){
+        return repository.getSpecificWeekSensorsTemperature(weekNo);
+    }
+
 }

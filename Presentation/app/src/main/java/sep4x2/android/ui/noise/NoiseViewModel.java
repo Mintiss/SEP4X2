@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import java.util.List;
 
 import sep4x2.android.SharedSensors.Noise;
+import sep4x2.android.SharedSensors.WeeklyConverter;
 
 public class NoiseViewModel extends AndroidViewModel {
 
@@ -32,5 +33,7 @@ public class NoiseViewModel extends AndroidViewModel {
         return mText;
     }
 
-
+    public WeeklyConverter getWeeklyData(int weekNo){
+        return repository.getSpecificWeekSensorsTemperature(weekNo);
+    }
 }

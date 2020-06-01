@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel;
 import java.util.List;
 
 import sep4x2.android.SharedSensors.Humidity;
+import sep4x2.android.SharedSensors.WeeklyConverter;
 
 public class HumidityViewModel extends AndroidViewModel {
 
@@ -31,5 +32,9 @@ public class HumidityViewModel extends AndroidViewModel {
 
     public List<Humidity> getHumidityData(){
         return repository.getHumidityData();
+    }
+
+    public WeeklyConverter getWeeklyData(int weekNo){
+        return repository.getSpecificWeekSensorsTemperature(weekNo);
     }
 }
