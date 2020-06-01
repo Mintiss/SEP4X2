@@ -5,35 +5,68 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <TextView
-        android:id="@+id/text_gallery"
+        android:id="@+id/text_send"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="110dp"
         android:layout_marginEnd="8dp"
+        android:text=" The coo2 level considered good if ppm conentration between 250-1000pm. From 1000-5000ppm causes headaches, sleepiness ect. From 40000 and above casues come, brain damage, even death."
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Spinner
-        android:id="@+id/spinnerCO2"
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/LineChartco2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:drawable/btn_dropdown"
-        android:spinnerMode="dropdown"
-        app:layout_constraintBottom_toTopOf="@+id/CO2BarChart"
-        app:layout_constraintTop_toBottomOf="@+id/text_gallery"
-        tools:layout_editor_absoluteX="52dp" />
-
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/CO2BarChart"
-        android:layout_width="match_parent"
-        android:layout_height="350dp"
-
+        android:layout_height="250dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"></com.github.mikephil.charting.charts.BarChart>
+        app:layout_constraintStart_toStartOf="parent"></com.github.mikephil.charting.charts.LineChart>
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/barchartco2"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        ></com.github.mikephil.charting.charts.BarChart>
+
+    <Switch
+        android:id="@+id/switchco2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="237dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginBottom="231dp"
+        android:text="Char change"
+        app:layout_constraintBottom_toTopOf="@+id/LineChart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinnerco2week"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
+    <Spinner
+        android:id="@+id/spinnerco2change"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="27dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

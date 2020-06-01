@@ -5,22 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <TextView
-        android:id="@+id/text_send"
+        android:id="@+id/text_noise_rec"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="135dp"
         android:layout_marginEnd="8dp"
+        android:text="The noise level considered average when decibel level is between 0-75dB. In general, sounds are harmful above 85 dB, depending on how long and how often you are exposed to them."
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/LineChart"
+        android:id="@+id/LineChartNoise"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -28,7 +30,7 @@
         app:layout_constraintStart_toStartOf="parent"></com.github.mikephil.charting.charts.LineChart>
 
     <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/barchart"
+        android:id="@+id/barchartNoise"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -37,7 +39,7 @@
         tools:visibility="gone"></com.github.mikephil.charting.charts.BarChart>
 
     <Switch
-        android:id="@+id/switch2"
+        android:id="@+id/switchNoise"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="237dp"
@@ -51,32 +53,23 @@
         app:layout_constraintTop_toBottomOf="@+id/text_send"
         app:layout_constraintVertical_bias="1.0" />
 
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="350dp"
-        android:layout_height="251dp"
-        android:layout_marginTop="98dp"
-        android:layout_marginBottom="98dp"
-        app:layout_constraintBottom_toTopOf="@+id/LineChart"
-        app:layout_constraintEnd_toEndOf="parent"
+    <Spinner
+        android:id="@+id/spinnernoiseweek"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="50dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_send">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 
-
-        <RadioButton
-            android:id="@+id/dayradioButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:text="day"
-         />
-
-        <RadioButton
-            android:id="@+id/hourradioButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:text="hour"
-             />
-    </RadioGroup>
+    <Spinner
+        android:id="@+id/spinnernoisechange"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="27dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

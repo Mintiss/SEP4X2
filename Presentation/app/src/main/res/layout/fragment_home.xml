@@ -1,115 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="32dp"
-        android:layout_marginStart="32dp">
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="50dp"
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="154dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:text="@string/home_temperature"
-            android:textSize="30sp"
-            />
+            android:textSize="30sp" />
 
         <TextView
+
             android:id="@+id/home_temperature"
             android:layout_width="wrap_content"
+
             android:layout_height="wrap_content"
 
+            android:layout_gravity="center"
             android:layout_marginStart="16dp"
             android:text="20C"
-            android:textSize="30sp"
-            android:layout_gravity="center"
-            />
+            android:textSize="30sp" />
+
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="302dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
-        android:layout_marginStart="32dp">
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Humidity"
-            android:textSize="30sp"
-            />
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/home_humidity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginStart="16dp"
             android:text="69%"
-            android:textSize="30sp"
-            android:layout_gravity="center"
-            />
+            android:textSize="30sp" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
-        android:layout_marginStart="32dp">
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="CO2"
-            android:textSize="30sp"
-            />
+            android:textSize="30sp" />
 
         <TextView
+
             android:id="@+id/home_co2"
             android:layout_width="wrap_content"
+
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginStart="16dp"
             android:text="1000 ppm"
-            android:textSize="30sp"
-            android:layout_gravity="center"
-            />
+            android:textSize="30sp" />
 
     </LinearLayout>
 
+
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="291dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
-        android:layout_marginStart="32dp">
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Noise"
-            android:textSize="30sp"
-            />
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/home_noise"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginStart="16dp"
             android:text="15 DB"
-            android:textSize="30sp"
-            android:layout_gravity="center"
-            />
+            android:textSize="30sp" />
 
     </LinearLayout>
 

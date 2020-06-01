@@ -118,6 +118,7 @@ public class TemperatureRepository {
         }
     }
 
+
     private static class getWeeklyDataAsync extends AsyncTask<Integer,Void,WeeklyConverter>
     {
         private SensorDao sensorDao;
@@ -151,6 +152,7 @@ public class TemperatureRepository {
             return null;
         }
     }
+
 
 
 }

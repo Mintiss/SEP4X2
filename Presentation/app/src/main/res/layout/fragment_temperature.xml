@@ -5,60 +5,70 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <TextView
-        android:id="@+id/text_slideshow"
+        android:id="@+id/text_send"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="115dp"
         android:layout_marginEnd="8dp"
+        android:text="The comfortable temperature level is bweteen 18-21 Celsius. Temerature below 24 Celsus can cause cardiovascular risk. Tempreature under 16-9 Celsius may cause respidatory, cardiovacular and hypthermia risks."
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <Spinner
-        android:id="@+id/spinnerTemperature"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:drawable/btn_dropdown"
-        android:spinnerMode="dropdown"
-        app:layout_constraintBottom_toTopOf="@+id/TemperatureBarChart"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_home" />
-
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/TemperatureBarChart"
-        android:layout_width="match_parent"
-        android:layout_height="350dp"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <com.github.mikephil.charting.charts.LineChart
-
-        android:id="@+id/temperatureLinewchart"
+        android:id="@+id/LineCharttemp"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:visibility="invisible"
+        android:layout_height="250dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"></com.github.mikephil.charting.charts.LineChart>
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/barcharttemp"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="gone"></com.github.mikephil.charting.charts.BarChart>
 
     <Switch
-        android:id="@+id/char_switch"
+        android:id="@+id/switchTemp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="96dp"
-        android:layout_marginEnd="64dp"
-        android:contextClickable="true"
-        android:text="Switch"
+        android:layout_marginStart="237dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginBottom="231dp"
+        android:text="Char change"
+        app:layout_constraintBottom_toTopOf="@+id/LineChart"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <Spinner
+        android:id="@+id/spinnertempweek"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
+    <Spinner
+        android:id="@+id/spinnertempchange"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="27dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -50,4 +50,15 @@
     <string name="home_CO2">CO2:</string>
     <string name="home_Noise">Noise:</string>
 
+    <string-array name="weeks">
+        <item>week 22</item>
+        <item>week 23</item>
+        <item>week 24</item>
+        <item>week 25</item>
+        <item>week 26</item>
+        <item>week 27</item>
+        <item>week 28</item>
+        <item>week 29</item>
+    </string-array>
+
 </resources>
