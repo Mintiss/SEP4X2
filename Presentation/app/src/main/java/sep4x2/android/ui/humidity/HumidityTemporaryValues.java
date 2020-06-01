@@ -1,12 +1,12 @@
 package sep4x2.android.ui.humidity;
 
-public class HumidityModel {
+public class HumidityTemporaryValues {
 
     String time;
     double humindity;
     HumidityRepository humidityRepository;
 
-    public HumidityModel() {
+    public HumidityTemporaryValues() {
     }
 
     public String getTime() {
@@ -25,7 +25,7 @@ public class HumidityModel {
         this.humindity = humindity;
     }
 
-    public HumidityModel(String time, double humindity) {
+    public HumidityTemporaryValues(String time, double humindity) {
         this.time = time;
         this.humindity = humindity;
     }

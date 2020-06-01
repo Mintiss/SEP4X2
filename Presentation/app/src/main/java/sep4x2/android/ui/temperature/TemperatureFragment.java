@@ -40,13 +40,11 @@ import sep4x2.android.R;
 import sep4x2.android.SharedSensors.Temperature;
 
 
-
 public class TemperatureFragment extends Fragment {
 
     private LineChart lineChart;
     private BarChart barChart;
     private Switch aSwitch;
-
 
 
     ArrayList<BarEntry> barEntries;
@@ -58,7 +56,7 @@ public class TemperatureFragment extends Fragment {
     ArrayList<Entry> yNumber = new ArrayList<>(7);
 
     //Barchart
-    ArrayList<TemperatureTemporaryValues> humidityModelArrayList = new ArrayList<>();
+    ArrayList<TemperatureTemporaryValues> TemperatueArrayList = new ArrayList<>();
     ArrayList<TemperatureTemporaryValues> humidityModelArrayList2 = new ArrayList<>();
 
     //FROM DB
@@ -75,7 +73,7 @@ public class TemperatureFragment extends Fragment {
 
 
     private Spinner spinnerchange;
-    private static final String[] changepath = {"Today", "Week", "Month"};
+    private static final String[] changepath = {"Today", "Week"};
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -92,7 +90,7 @@ public class TemperatureFragment extends Fragment {
 
         //Bad solution
 
-        weeklyConverter =temperatureViewModel.getWeeklyData(18).getWeeklyTemperature();
+        weeklyConverter = temperatureViewModel.getWeeklyData(18).getWeeklyTemperature();
 
         //LineChart-------------------------------------------------------------------------------------------------------------------------------------------------
         lineChart = root.findViewById(R.id.LineCharttemp);
@@ -105,15 +103,13 @@ public class TemperatureFragment extends Fragment {
         Collections.sort(yNumber, new EntryXComparator());
 
 
-
         setLinechart(0);
-
 
 
         //Barchart------------------------------------------------------------------------------------------------------------------------------------------------------------
         barChart = root.findViewById(R.id.barcharttemp);
 
-        fillHoursAndHumidityvaluess();
+        fillHoursAndTemperatures();
 
 
         SetBarchart(0);
@@ -123,12 +119,11 @@ public class TemperatureFragment extends Fragment {
         //DB--------------------------------------------------------------------------------------------------------------
 
 
-        Log.i("SENSOR DATA",""+temperatures.size());
+        Log.i("SENSOR DATA", "" + temperatures.size());
 
 
         //Switch----------------------------------------------------------------------------------------------------------
         aSwitch = root.findViewById(R.id.switchTemp);
-
 
 
         aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -148,11 +143,7 @@ public class TemperatureFragment extends Fragment {
         });
 
 
-
-
-
         //Spinner------------------------------------------------------------------------------------------------------------------
-
 
 
         spinnerchange = root.findViewById(R.id.spinnertempchange);
@@ -185,13 +176,7 @@ public class TemperatureFragment extends Fragment {
                         setLinechart(0);
 
                         break;
-                    case "Month":
-                        spinnerweek.animate().alpha(0).setDuration(0);
-                        spinnerweek.setEnabled(false);
 
-                        Toast.makeText(getContext(), "Coming soon", Toast.LENGTH_SHORT).show();
-
-                        break;
 
                 }
             }
@@ -201,8 +186,6 @@ public class TemperatureFragment extends Fragment {
 
             }
         });
-
-
 
 
         //Spinner weekly-----------------------------------------------------------------------------------------------------------------
@@ -229,14 +212,11 @@ public class TemperatureFragment extends Fragment {
                         Toast.makeText(getContext(), "1", Toast.LENGTH_SHORT).show();
 
 
-
-
-
-                        weeklyConverter=temperatureViewModel.getWeeklyData(18).getWeeklyTemperature();
+                        weeklyConverter = temperatureViewModel.getWeeklyData(18).getWeeklyTemperature();
                         FillWithNewData();
                         fillDayEnum();
 
-                        Log.i("SENSOR DATA",""+weeklyConverter.toString());
+                        Log.i("SENSOR DATA", "" + weeklyConverter.toString());
 
                         setLinechart(0);
                         SetBarchart(0);
@@ -251,7 +231,7 @@ public class TemperatureFragment extends Fragment {
 
                         fillDayEnum();
 
-                        weeklyConverter=temperatureViewModel.getWeeklyData(17).getWeeklyTemperature();
+                        weeklyConverter = temperatureViewModel.getWeeklyData(17).getWeeklyTemperature();
 
                         SetBarchart(0);
                         setLinechart(0);
@@ -314,7 +294,7 @@ public class TemperatureFragment extends Fragment {
         lineChart.setScaleEnabled(false);
 
         LineDataSet set1;
-        LineDataSet set2;
+
 
         if (number == 1) {
             set1 = new LineDataSet(yValues, "Data hours");
@@ -386,13 +366,13 @@ public class TemperatureFragment extends Fragment {
     }
 
 
-    private void fillHoursAndHumidityvaluess() {
-        humidityModelArrayList.clear();
+    private void fillHoursAndTemperatures() {
+        TemperatueArrayList.clear();
 
         temperatures = temperatureViewModel.getTemperatureData();
 
-       for (int i = 0; i < temperatures.size() ; i++) {
-            humidityModelArrayList.add(new TemperatureTemporaryValues(String.valueOf(temperatures.get(i).getTime().getHourOfDay()), temperatures.get(i).getTemperature()));
+        for (int i = 0; i < temperatures.size(); i++) {
+            TemperatueArrayList.add(new TemperatureTemporaryValues(String.valueOf(temperatures.get(i).getTime().getHourOfDay()), temperatures.get(i).getTemperature()));
 
         }
 
@@ -410,23 +390,20 @@ public class TemperatureFragment extends Fragment {
     }
 
 
-
-
     private void FillHourEbumy() {
 
         yValues.clear();
 
-        int x = 0;
+
 
         temperatures = temperatureViewModel.getTemperatureData();
 
         for (int i = 0; i < temperatures.size(); i++) {
 
 
+            yValues.add(new Entry(i, (float) temperatures.get(i).getTemperature()));
 
-            yValues.add(new Entry(x,(float) temperatures.get(i).getTemperature()));
 
-            x++;
         }
 
 
@@ -459,9 +436,6 @@ public class TemperatureFragment extends Fragment {
         yNumber.add(new Entry(5, saturday));
         yNumber.add(new Entry(6, sunday));
     }
-
-
-
 
 
 }

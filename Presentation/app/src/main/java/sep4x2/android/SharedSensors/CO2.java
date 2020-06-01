@@ -16,7 +16,7 @@ public class CO2 {
         return DateTime.parse(updateTime);
     }
 
-    public double getCo2metric() {
+    public double getCo2() {
         return co2;
     }
 

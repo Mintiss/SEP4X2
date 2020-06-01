@@ -1,14 +1,12 @@
 package sep4x2.android.ui.noise;
 
-import org.joda.time.DateTime;
-
-public class NoiseModel {
+public class NoiseTemporaryValues {
 
     double noise;
     String time;
 
-    public DateTime getTime() {
-        return DateTime.parse(time);
+    public String getTime() {
+        return time;
     }
 
     public double getNoise() {
@@ -23,7 +21,7 @@ public class NoiseModel {
         this.time = time;
     }
 
-    public NoiseModel(double noise, String time) {
+    public NoiseTemporaryValues( String time,double noise) {
         this.noise = noise;
         this.time = time;
     }
