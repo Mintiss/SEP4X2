@@ -45,7 +45,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firestore;
     private FirebaseUser user;
-    private String userId;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -67,9 +66,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         firestore = FirebaseFirestore.getInstance();
         user = firebaseAuth.getCurrentUser();
 
-        userId = firebaseAuth.getCurrentUser().getUid();
 
-        DocumentReference documentReference = firestore.collection("users").document(userId);
+        DocumentReference documentReference = firestore.collection("users").document(firebaseAuth.getUid());
         documentReference.addSnapshotListener(getActivity(), new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
@@ -77,7 +75,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 lastName.setText(documentSnapshot.getString("lastName"));
                 email.setText(documentSnapshot.getString("email"));
                 productId.setText(documentSnapshot.getString("productId"));
-
             }
         });
 
@@ -107,25 +104,32 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 confirmDeleteButton.setVisibility(View.VISIBLE);
                 break;
             case R.id.profile_confirm_delete:
-                AuthCredential authCredential = EmailAuthProvider.getCredential(email.getText().toString(), confirmPassword.getText().toString());
-                user.reauthenticate(authCredential).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()){
-                            user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    NavDirections action;
-                                    FirebaseAuth.getInstance().signOut();
-                                    action = ProfileFragmentDirections.actionNavProfileToNavLogin();
-                                    Navigation.findNavController(v).navigate(action);
-                                    Toast.makeText(getContext(),"Account Deleted", Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                try {
+                    AuthCredential authCredential = EmailAuthProvider.getCredential(email.getText().toString(), confirmPassword.getText().toString());
+                    user.reauthenticate(authCredential).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()){
+                                user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        NavDirections action;
+                                        FirebaseAuth.getInstance().signOut();
+                                        action = ProfileFragmentDirections.actionNavProfileToNavLogin();
+                                        Navigation.findNavController(v).navigate(action);
+                                        Toast.makeText(getContext(),"Account Deleted", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
                         }
-                    }
-                });
-                break;
+                    });
+                    break;
+                }
+                catch (IllegalArgumentException e){
+                    Toast.makeText(getContext(), "Please enter your password.", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+
             case R.id.profile_log_out:
                 FirebaseAuth.getInstance().signOut();
                 action = ProfileFragmentDirections.actionNavProfileToNavLogin();

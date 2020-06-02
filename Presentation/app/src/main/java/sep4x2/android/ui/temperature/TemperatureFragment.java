@@ -90,7 +90,7 @@ public class TemperatureFragment extends Fragment {
 
         final View root = inflater.inflate(R.layout.fragment_temperature, container, false);
 
-        final TextView textView = root.findViewById(R.id.text_send);
+        final TextView textView = root.findViewById(R.id.text_temp);
 
 
         //Bad solution
@@ -307,7 +307,6 @@ public class TemperatureFragment extends Fragment {
                         dayEnum.clear();
                         Toast.makeText(getContext(), "5", Toast.LENGTH_SHORT).show();
                         weeklyTemp = temperatureViewModel.getWeeklyData(25).getWeeklyTemperature();
-
 
                         fillDayEnum();
 
