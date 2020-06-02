@@ -1,5 +1,6 @@
 package sep4x2.android.ui.humidity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -329,8 +330,23 @@ public class HumidityFragment extends Fragment {
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(set1);
 
+        set1.setColor(Color.parseColor("#008577"));
+        set1.setCircleColor(Color.BLACK);
+        set1.setCircleColorHole(Color.BLACK);
+        set1.setLineWidth(2f);
+        set1.setCircleSize(3f);
+        set1.setDrawValues(false);
+
+
+        Description description = new Description();
+        description.setText("%");
+        lineChart.setDescription(description);
+
         LineData data = new LineData(dataSets);
         lineChart.setData(data);
+
+        lineChart.getAxisRight().setDrawLabels(false);
+        lineChart.setDrawBorders(true);
 
         lineChart.invalidate();
 
@@ -384,6 +400,9 @@ public class HumidityFragment extends Fragment {
         xAxis.setLabelRotationAngle(270);
 
         barChart.animateY(400);
+
+        barChart.getAxisRight().setDrawLabels(false);
+        barChart.setDrawBorders(true);
         barChart.invalidate();
     }
 

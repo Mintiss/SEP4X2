@@ -1,5 +1,6 @@
 package sep4x2.android.ui.temperature;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -342,6 +343,9 @@ public class TemperatureFragment extends Fragment {
         LineDataSet set1;
 
 
+
+
+
         if (number == 1) {
             set1 = new LineDataSet(hourEnum, "Data hours");
 
@@ -352,13 +356,31 @@ public class TemperatureFragment extends Fragment {
         }
         set1.setFillAlpha(250);
 
+
+
+
+        set1.setColor(Color.parseColor("#008577"));
+        set1.setCircleColor(Color.BLACK);
+        set1.setCircleColorHole(Color.BLACK);
+        set1.setLineWidth(2f);
+        set1.setCircleSize(3f);
+        set1.setDrawValues(false);
+
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(set1);
 
-
+        Description description = new Description();
+        description.setText("°C");
+        lineChart.setDescription(description);
 
         LineData data = new LineData(dataSets);
         lineChart.setData(data);
+        lineChart.setNoDataText("No data");
+
+        lineChart.getAxisRight().setDrawLabels(false);
+        lineChart.setDrawBorders(true);
+
+
 
         lineChart.invalidate();
 
@@ -402,6 +424,7 @@ public class TemperatureFragment extends Fragment {
         XAxis xAxis = barChart.getXAxis();
         xAxis.setValueFormatter(new IndexAxisValueFormatter(labelsname));
 
+
         //Set the positions of the labels(hours)
 
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -412,6 +435,9 @@ public class TemperatureFragment extends Fragment {
         xAxis.setLabelRotationAngle(270);
 
         barChart.animateY(400);
+
+        barChart.getAxisRight().setDrawLabels(false);
+        barChart.setDrawBorders(true);
 
         barChart.invalidate();
     }

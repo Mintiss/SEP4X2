@@ -1,5 +1,6 @@
 package sep4x2.android.ui.noise;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -317,11 +318,26 @@ public class NoiseFragment extends Fragment {
         }
         set1.setFillAlpha(250);
 
+        set1.setColor(Color.parseColor("#008577"));
+        set1.setCircleColor(Color.BLACK);
+        set1.setCircleColorHole(Color.BLACK);
+        set1.setLineWidth(2f);
+        set1.setCircleSize(3f);
+        set1.setDrawValues(false);
+
+
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(set1);
 
+        Description description = new Description();
+        description.setText("dBA");
+        lineChart.setDescription(description);
+
         LineData data = new LineData(dataSets);
         lineChart.setData(data);
+
+        lineChart.getAxisRight().setDrawLabels(false);
+        lineChart.setDrawBorders(true);
 
         lineChart.invalidate();
 
@@ -375,6 +391,10 @@ public class NoiseFragment extends Fragment {
         xAxis.setLabelRotationAngle(270);
 
         barChart.animateY(400);
+
+        barChart.getAxisRight().setDrawLabels(false);
+        barChart.setDrawBorders(true);
+
         barChart.invalidate();
     }
 
