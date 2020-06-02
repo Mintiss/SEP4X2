@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">SEP4X2 Android</string>
+    <string name="app_name">Health Monitor</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_title">Health Monitor</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
 
@@ -47,9 +47,14 @@
     <string name="profile_confirm">Confirm</string>
     <string name="home_temperature">Temperature:</string>
     <string name="home_humidity">Humidity:</string>
-    <string name="home_CO2">CO2:</string>
-    <string name="home_Noise">Noise:</string>
     <string name="home_refresh_button">Refresh</string>
+    <string name="home_co2">CO2:</string>
+    <string name="home_noise">Noise:</string>
+    <string name="home_green_condition">Excellent indoor conditions</string>
+    <string name="home_poor_indoor_condition">Inadequate indoor conditions</string>
+    <string name="home_dangerous_indoor_conditions">Dangerous indoor conditions</string>
+    <string name="nav_logged_in_as">Logged in as</string>
+    <string name="nav_user">User</string>
 
     <string-array name="weeks">
         <item>week 22</item>

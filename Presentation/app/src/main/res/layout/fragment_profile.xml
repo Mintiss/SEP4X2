@@ -6,147 +6,166 @@
     android:orientation="vertical"
     android:baselineAligned="false">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="50dp">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/register_first_name"
-            android:textSize="18sp"/>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/profile_first_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="@string/example_name"
-            android:textSize="18sp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-    </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="50dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/register_first_name"
+                        android:textSize="18sp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/register_last_name"
-            android:textSize="18sp"/>
+                    <TextView
+                        android:id="@+id/profile_first_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/example_name"
+                        android:textSize="18sp"/>
 
-        <TextView
-            android:id="@+id/profile_last_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="@string/example_last_name"
-            android:textSize="18sp"/>
+                </LinearLayout>
 
-    </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/register_last_name"
+                        android:textSize="18sp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/login_email"
-            android:textSize="18sp"/>
+                    <TextView
+                        android:id="@+id/profile_last_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/example_last_name"
+                        android:textSize="18sp"/>
 
-        <TextView
-            android:id="@+id/profile_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="@string/example_email"
-            android:textSize="18sp"/>
+                </LinearLayout>
 
-    </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/login_email"
+                        android:textSize="18sp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/register_product_id"
-            android:textSize="18sp"/>
+                    <TextView
+                        android:id="@+id/profile_email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/example_email"
+                        android:textSize="18sp"/>
 
-        <TextView
-            android:id="@+id/profile_product_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="@string/example_product_id"
-            android:textSize="18sp"/>
+                </LinearLayout>
 
-    </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp">
 
-    <Button
-        android:id="@+id/profile_log_out"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        android:text="@string/profile_log_out" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/register_product_id"
+                        android:textSize="18sp"/>
 
-    <Button
-        android:id="@+id/profile_change_password_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="100dp"
-        android:text="@string/profile_change_password" />
+                    <TextView
+                        android:id="@+id/profile_product_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/example_product_id"
+                        android:textSize="18sp"/>
 
-    <Button
-        android:id="@+id/profile_delete_account_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="8dp"
-        android:text="@string/profile_delete_account" />
+                </LinearLayout>
 
-    <EditText
-        android:id="@+id/profile_confirm_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:hint="@string/profile_enter_your_password"
-        android:inputType="textPassword"
-        android:visibility="invisible"/>
+                <Button
+                    android:id="@+id/profile_log_out"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/profile_log_out" />
 
-    <Button
-        android:id="@+id/profile_confirm_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#6F0000"
-        android:text="@string/profile_confirm"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        android:visibility="invisible"/>
+                <Button
+                    android:id="@+id/profile_change_password_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="100dp"
+                    android:text="@string/profile_change_password" />
+
+                <Button
+                    android:id="@+id/profile_delete_account_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/profile_delete_account" />
+
+                <EditText
+                    android:id="@+id/profile_confirm_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:hint="@string/profile_enter_your_password"
+                    android:inputType="textPassword"
+                    android:visibility="invisible"/>
+
+                <Button
+                    android:id="@+id/profile_confirm_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#6F0000"
+                    android:text="@string/profile_confirm"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="16dp"
+                    android:visibility="invisible"/>
+
+            </LinearLayout>
+        </FrameLayout>
+    </ScrollView>
+
+
 
 </LinearLayout>

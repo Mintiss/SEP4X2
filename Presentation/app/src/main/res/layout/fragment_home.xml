@@ -6,143 +6,259 @@
     android:orientation="vertical"
     android:baselineAligned="false">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="32dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp">
-
-
-        <TextView
-            android:layout_width="154dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:text="@string/home_temperature"
-            android:textSize="30sp" />
-
-        <TextView
-
-            android:id="@+id/home_temperature"
-            android:layout_width="wrap_content"
-
-            android:layout_height="wrap_content"
-
-            android:layout_gravity="center"
-            android:layout_marginStart="16dp"
-            android:text="20C"
-            android:textSize="30sp" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="302dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Humidity"
-            android:textSize="30sp" />
-
-        <TextView
-            android:id="@+id/home_humidity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="16dp"
-            android:text="69%"
-            android:textSize="30sp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:orientation="horizontal"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="CO2"
-            android:textSize="30sp" />
-
-        <TextView
-
-            android:id="@+id/home_co2"
-            android:layout_width="wrap_content"
-
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="16dp"
-            android:text="1000 ppm"
-            android:textSize="30sp" />
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="291dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:orientation="horizontal"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Noise"
-            android:textSize="30sp" />
-
-        <TextView
-            android:id="@+id/home_noise"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="16dp"
-            android:text="15 DB"
-            android:textSize="30sp" />
-
-    </LinearLayout>
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <ProgressBar
-            android:id="@+id/home_loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="8dp"
-
-            android:visibility="invisible"/>
-
-        <Button
-            android:id="@+id/home_refresh_button"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:text="@string/home_refresh_button"/>
-    </LinearLayout>
+            android:layout_height="wrap_content">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginEnd="32dp">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:text="@string/home_temperature"
+                        android:textSize="30sp" />
+
+                    <TextView
+
+                        android:id="@+id/home_temperature"
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="wrap_content"
+
+                        android:layout_gravity="center"
+                        android:layout_marginStart="16dp"
+                        android:text="20"
+                        android:textSize="30sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" C"
+                        android:textSize="30sp"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="302dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="32dp">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/home_humidity"
+                        android:textSize="30sp" />
+
+                    <TextView
+                        android:id="@+id/home_humidity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="16dp"
+                        android:text="69"
+                        android:textSize="30sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" %"
+                        android:textSize="30sp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginEnd="32dp">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/home_co2"
+                        android:textSize="30sp" />
+
+                    <TextView
+
+                        android:id="@+id/home_co2"
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="16dp"
+                        android:text="1000"
+                        android:textSize="30sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" ppm"
+                        android:textSize="30sp"/>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="291dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginEnd="32dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/home_noise"
+                        android:textSize="30sp" />
+
+                    <TextView
+                        android:id="@+id/home_noise"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="16dp"
+                        android:text="15"
+                        android:textSize="30sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" DB"
+                        android:textSize="30sp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ProgressBar
+                        android:id="@+id/home_loading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="8dp"
+
+                        android:visibility="invisible"/>
+
+                    <Button
+                        android:id="@+id/home_refresh_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:text="@string/home_refresh_button"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="16dp">
+
+                        <TextView
+                            android:id="@+id/home_green_cube"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:background="@color/colorGreen"
+                            android:layout_gravity="center"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/home_green_condition"
+                            android:textSize="30sp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="16dp">
+
+                        <TextView
+                            android:id="@+id/home_yellow_cube"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:background="@color/colorYellow"
+                            android:layout_gravity="center"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/home_poor_indoor_condition"
+                            android:textSize="30sp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="16dp">
+
+                        <TextView
+                            android:id="@+id/home_red_cube"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:background="@color/colorRed"
+                            android:layout_gravity="center"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/home_dangerous_indoor_conditions"
+                            android:textSize="30sp"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </FrameLayout>
+    </ScrollView>
 
 </LinearLayout>

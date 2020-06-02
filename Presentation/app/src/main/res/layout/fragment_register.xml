@@ -4,101 +4,108 @@
     android:orientation="vertical"
     android:layout_width="match_parent">
 
-    <EditText
-        android:id="@+id/register_email"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:hint="@string/login_email"
-        android:layout_gravity="center_horizontal"
-        android:inputType="textEmailAddress"/>
+        android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/register_first_name"
-        android:layout_width="match_parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:hint="@string/register_first_name"
-        android:layout_gravity="center_horizontal"
-        android:inputType="textAutoCorrect"/>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <EditText
-        android:id="@+id/register_last_name"
-        android:layout_width="match_parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:hint="@string/register_last_name"
-        android:layout_gravity="center_horizontal"
-        android:inputType="textAutoCorrect"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/register_product_id"
-        android:layout_width="match_parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:hint="@string/register_product_id"
-        android:layout_gravity="center_horizontal"
-        android:inputType="number"/>
+                <EditText
+                    android:id="@+id/register_email"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:hint="@string/login_email"
+                    android:layout_gravity="center_horizontal"
+                    android:inputType="textEmailAddress"/>
 
-    <EditText
-        android:id="@+id/register_password"
-        android:layout_width="match_parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:hint="@string/login_password"
-        android:layout_gravity="center_horizontal"
-        android:inputType="textPassword"/>
+                <EditText
+                    android:id="@+id/register_first_name"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:hint="@string/register_first_name"
+                    android:layout_gravity="center_horizontal"
+                    android:inputType="textAutoCorrect"/>
 
-    <EditText
-        android:id="@+id/register_passwordConfirm"
-        android:layout_width="match_parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_gravity="center_horizontal"
-        android:hint="@string/register_passwordConfirm"
-        android:inputType="textPassword"/>
+                <EditText
+                    android:id="@+id/register_last_name"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:hint="@string/register_last_name"
+                    android:layout_gravity="center_horizontal"
+                    android:inputType="textAutoCorrect"/>
 
-    <Button
-        android:id="@+id/register_registerButton"
-        android:layout_width="match_parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_height="wrap_content"
-        android:text="@string/register_registerButton"
-        android:layout_marginTop="40dp"
-        android:layout_gravity="center_horizontal"/>
+                <EditText
+                    android:id="@+id/register_product_id"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:hint="@string/register_product_id"
+                    android:layout_gravity="center_horizontal"
+                    android:inputType="number"/>
 
+                <EditText
+                    android:id="@+id/register_password"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:hint="@string/login_password"
+                    android:layout_gravity="center_horizontal"
+                    android:inputType="textPassword"/>
 
+                <EditText
+                    android:id="@+id/register_passwordConfirm"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:layout_gravity="center_horizontal"
+                    android:hint="@string/register_passwordConfirm"
+                    android:inputType="textPassword"/>
 
-    <Button
-        android:id="@+id/register_backButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/backButton"
-        android:layout_marginTop="40dp"
-        android:layout_gravity="center_horizontal"/>
-
-
-
-
-
-
+                <Button
+                    android:id="@+id/register_registerButton"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/register_registerButton"
+                    android:layout_marginTop="40dp"
+                    android:layout_gravity="center_horizontal"/>
 
 
 
+                <Button
+                    android:id="@+id/register_backButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/backButton"
+                    android:layout_marginTop="40dp"
+                    android:layout_gravity="center_horizontal"/>
 
+            </LinearLayout>
+        </FrameLayout>
+    </ScrollView>
 
 
 

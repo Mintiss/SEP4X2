@@ -17,12 +17,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import sep4x2.android.R;
 
@@ -55,9 +61,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         if(firebaseAuth.getCurrentUser() != null)
         {
             NavDirections action;
-            Toast.makeText(getContext(), "Logged in Automatically", Toast.LENGTH_SHORT).show();
             action = LoginFragmentDirections.actionNavLoginToNavHome();
             Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(action);
+            Toast.makeText(getContext(), "Logged in Automatically", Toast.LENGTH_SHORT).show();
+
+
         }
 
         return view;

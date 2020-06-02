@@ -9,12 +9,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import sep4x2.android.R;
 import sep4x2.android.local_database.Entity.SensorData;
@@ -24,9 +27,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private View view;
     private HomeViewModel homeViewModel;
-    private TextView temperature, humidity, co2, noise;
+    private TextView temperature, humidity, co2, noise, redBox, greenBox, yellowBox;
     private ProgressBar loading;
     private Button refreshButton;
+
 
 
     public static HomeFragment newInstance() {
@@ -49,6 +53,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         noise = view.findViewById(R.id.home_noise);
         loading = view.findViewById(R.id.home_loading);
         refreshButton = view.findViewById(R.id.home_refresh_button);
+        redBox = view.findViewById(R.id.home_red_cube);
+        greenBox = view.findViewById(R.id.home_green_cube);
+        yellowBox = view.findViewById(R.id.home_yellow_cube);
+
+        redBox.setBackgroundColor(Color.RED);
+        greenBox.setBackgroundColor(Color.GREEN);
+        yellowBox.setBackgroundColor(Color.YELLOW);
+
 
         refreshButton.setOnClickListener(this);
 
@@ -109,5 +121,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         homeViewModel.updateData();
+        Toast.makeText(getContext(), "Update Successful", Toast.LENGTH_SHORT).show();
     }
 }

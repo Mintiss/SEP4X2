@@ -1,5 +1,6 @@
 package sep4x2.android.ui.temperature;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -88,7 +89,7 @@ public class TemperatureFragment extends Fragment {
 
         final View root = inflater.inflate(R.layout.fragment_temperature, container, false);
 
-        final TextView textView = root.findViewById(R.id.text_send);
+        final TextView textView = root.findViewById(R.id.text_temp);
 
 
         //Bad solution
@@ -303,7 +304,7 @@ public class TemperatureFragment extends Fragment {
                         dayEnum.clear();
                         Toast.makeText(getContext(), "5", Toast.LENGTH_SHORT).show();
                         weeklyTemp = temperatureViewModel.getWeeklyData(date.getWeekOfWeekyear() - 4).getWeeklyTemperature();
-
+                        R.color.
 
                         fillDayEnum();
 

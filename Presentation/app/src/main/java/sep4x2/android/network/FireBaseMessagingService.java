@@ -33,8 +33,6 @@ public class FireBaseMessagingService extends FirebaseMessagingService {
         sensorDataClient = SensorDataClient.getInstance(getApplication());
         sensorDataClient.updateSensorData();
 
-        Log.i("ass", "" + sensorDataClient.getDataForPoke().get(sensorDataClient.getDataForPoke().size() - 1).getCo2());
-
         if ((sensorDataClient.getDataForPoke().get(sensorDataClient.getDataForPoke().size() - 1) != null) || (sensorDataClient.getDataForPoke().get(sensorDataClient.getDataForPoke().size() - 2) != null)) {
 
             SensorData latestData = sensorDataClient.getDataForPoke().get(sensorDataClient.getDataForPoke().size() - 1);
