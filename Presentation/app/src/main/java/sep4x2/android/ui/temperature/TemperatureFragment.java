@@ -22,6 +22,7 @@ import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -372,12 +373,21 @@ public class TemperatureFragment extends Fragment {
         description.setText("°C");
         lineChart.setDescription(description);
 
+        YAxis y = lineChart.getAxisLeft();
+        y.setLabelCount(5);
+        y.setAxisMinValue(-25);
+
         LineData data = new LineData(dataSets);
         lineChart.setData(data);
         lineChart.setNoDataText("No data");
 
+       lineChart.getAxisRight().setDrawGridLines(false);
+        lineChart.getAxisLeft().setDrawGridLines(true);
+        lineChart.getXAxis().setDrawGridLines(true);
+
         lineChart.getAxisRight().setDrawLabels(false);
         lineChart.setDrawBorders(true);
+
 
 
 
@@ -434,6 +444,7 @@ public class TemperatureFragment extends Fragment {
         xAxis.setLabelRotationAngle(270);
 
         barChart.animateY(400);
+
 
         barChart.getAxisRight().setDrawLabels(false);
         barChart.setDrawBorders(true);

@@ -22,6 +22,7 @@ import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -342,6 +343,14 @@ public class Co2Fragment extends Fragment {
         Description description = new Description();
         description.setText("ppm");
         lineChart.setDescription(description);
+
+        YAxis y = lineChart.getAxisLeft();
+        y.setLabelCount(5);
+        y.setAxisMinValue(0);
+
+        lineChart.getAxisRight().setDrawGridLines(false);
+        lineChart.getAxisLeft().setDrawGridLines(true);
+        lineChart.getXAxis().setDrawGridLines(true);
 
         LineData data = new LineData(dataSets);
         lineChart.setData(data);
