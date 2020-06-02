@@ -10,9 +10,10 @@
         android:id="@+id/text_temp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="115dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,7 +29,7 @@
         android:layout_height="250dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"></com.github.mikephil.charting.charts.LineChart>
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/barcharttemp"
@@ -37,20 +38,22 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:visibility="gone"></com.github.mikephil.charting.charts.BarChart>
+        tools:visibility="gone"/>
+
 
     <Switch
         android:id="@+id/switchTemp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="237dp"
-        android:layout_marginEnd="56dp"
-        android:layout_marginBottom="231dp"
-        android:text="Char change"
-        app:layout_constraintBottom_toTopOf="@+id/LineChart"
+        android:layout_marginEnd="16dp"
+        android:text="@string/change_chart"
+        app:layout_constraintBottom_toBottomOf="@+id/text_temp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
+        app:layout_constraintHorizontal_bias="0.176"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.513" />
 
     <Spinner
         android:id="@+id/spinnertempweek"
@@ -74,8 +77,12 @@
 
     <TextView
         android:id="@+id/textRecomTemp"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginStart="16dp"
+        android:textAlignment="center"
+        android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toTopOf="@+id/LineCharttemp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

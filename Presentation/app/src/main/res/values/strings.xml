@@ -55,6 +55,7 @@
     <string name="home_dangerous_indoor_conditions">Dangerous indoor conditions</string>
     <string name="nav_logged_in_as">Logged in as</string>
     <string name="nav_user">User</string>
+    <string name="change_chart">Change chart</string>
 
     <string-array name="weeks">
         <item>week 22</item>

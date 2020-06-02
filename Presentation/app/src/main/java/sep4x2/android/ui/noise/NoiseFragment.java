@@ -80,7 +80,7 @@ public class NoiseFragment extends Fragment {
         noiseViewModel =
                 ViewModelProviders.of(this).get(NoiseViewModel.class);
         final View root = inflater.inflate(R.layout.fragment_noise, container, false);
-        final TextView textView = root.findViewById(R.id.text_send);
+        final TextView textView = root.findViewById(R.id.text_noise);
 
 
         //Bad solution

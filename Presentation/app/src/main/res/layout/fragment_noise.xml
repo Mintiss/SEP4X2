@@ -42,15 +42,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="237dp"
-        android:layout_marginTop="189dp"
         android:layout_marginEnd="56dp"
-        android:layout_marginBottom="231dp"
-        android:text="Char change"
-        app:layout_constraintBottom_toTopOf="@+id/LineChart"
+        android:text="@string/change_chart"
+        app:layout_constraintBottom_toBottomOf="@+id/text_noise"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_send"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.429" />
 
     <Spinner
         android:id="@+id/spinnernoiseweek"
@@ -74,11 +73,13 @@
 
     <TextView
         android:id="@+id/textrecNoise"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="169dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="94dp"
-        android:layout_marginEnd="183dp"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="110dp"
         app:layout_constraintBottom_toTopOf="@+id/LineChartNoise"
         app:layout_constraintEnd_toEndOf="parent"

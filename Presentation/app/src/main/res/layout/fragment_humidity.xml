@@ -41,12 +41,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="237dp"
-        android:layout_marginEnd="56dp"
-        android:layout_marginBottom="231dp"
-        android:text="Char change"
-        app:layout_constraintBottom_toTopOf="@+id/LineChart"
+        android:layout_marginEnd="16dp"
+        android:text="@string/change_chart"
+        app:layout_constraintBottom_toBottomOf="@+id/text_hum"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.53" />
 
     <Spinner
         android:id="@+id/spinnerhumweek"
@@ -72,10 +74,13 @@
         android:id="@+id/textrecHum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="173dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="122dp"
-        android:layout_marginEnd="179dp"
+        android:textSize="20sp"
+
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="127dp"
+        android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/LineChartHum"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
