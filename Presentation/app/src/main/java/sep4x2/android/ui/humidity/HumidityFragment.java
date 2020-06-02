@@ -46,6 +46,7 @@ public class HumidityFragment extends Fragment {
     private BarChart barChart;
     private Switch aSwitch;
     private TextView message;
+    private TextView recHum;
 
 
     ArrayList<BarEntry> barEntries;
@@ -128,7 +129,9 @@ public class HumidityFragment extends Fragment {
             message.setText("Your houses humidity level is in the recommended spectrum. Good Job!");
         }
 
+        recHum = root.findViewById(R.id.textrecHum);
 
+        recHum.setText("The recommended Humidity is between 45% and 55%.");
 
 
 
@@ -359,7 +362,7 @@ public class HumidityFragment extends Fragment {
         barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
 
         Description description = new Description();
-        description.setText("Humidity");
+        description.setText("%");
         barChart.setDescription(description);
 
         BarData barData = new BarData(barDataSet);

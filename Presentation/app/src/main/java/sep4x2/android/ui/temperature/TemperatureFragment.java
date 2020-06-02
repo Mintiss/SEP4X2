@@ -48,6 +48,7 @@ public class TemperatureFragment extends Fragment {
     private BarChart barChart;
     private Switch aSwitch;
     private TextView message;
+    private  TextView recTemp;
    // private SensorData sensorData;
 
     ArrayList<BarEntry> barEntries;
@@ -122,7 +123,7 @@ public class TemperatureFragment extends Fragment {
         //DB--------------------------------------------------------------------------------------------------------------
 
 
-        Log.i("SENSOR DATA", "" + temperatures.size());
+
 
         //Textview---------------------------------------------------------------------------------------------------------------
 
@@ -141,13 +142,15 @@ public class TemperatureFragment extends Fragment {
             message.setText("Temperature may cause cardiovascular risk. Solution: Please lower the temperature.");
         }else if(lastTemp <16 )
         {
-            message.setText("Temperature may cause respiratory and cardiovascular risks. Solution: Turn on the heating");
+            message.setText("Temperature may cause respiratory and cardiovascular risks. Solution: Turn on the heating.");
         }else {
             message.setText("The temperature is ideal. Keep up the good work!");
         }
 
 
+        recTemp = root.findViewById(R.id.textRecomTemp);
 
+        recTemp.setText("The recommended temperature is between 16 and 24 Celsius.");
 
 
 
@@ -267,7 +270,7 @@ public class TemperatureFragment extends Fragment {
 
                         fillDayEnum();
 
-                        weeklyTemp = temperatureViewModel.getWeeklyData(date.getWeekOfWeekyear() - 1).getWeeklyTemperature();
+                        weeklyTemp = temperatureViewModel.getWeeklyData(19).getWeeklyTemperature();
 
                         SetBarchart(0);
                         setLinechart(0);
@@ -276,7 +279,7 @@ public class TemperatureFragment extends Fragment {
                     case "Week 24":
                         dayEnum.clear();
                         Toast.makeText(getContext(), "3", Toast.LENGTH_SHORT).show();
-                        weeklyTemp = temperatureViewModel.getWeeklyData(date.getWeekOfWeekyear() - 2).getWeeklyTemperature();
+                        weeklyTemp = temperatureViewModel.getWeeklyData(04).getWeeklyTemperature();
 
 
                         fillDayEnum();
@@ -289,7 +292,7 @@ public class TemperatureFragment extends Fragment {
                     case "Week 25":
                         dayEnum.clear();
                         Toast.makeText(getContext(), "4", Toast.LENGTH_SHORT).show();
-                        weeklyTemp = temperatureViewModel.getWeeklyData(date.getWeekOfWeekyear() - 3).getWeeklyTemperature();
+                        weeklyTemp = temperatureViewModel.getWeeklyData(27).getWeeklyTemperature();
 
 
                         fillDayEnum();
@@ -302,7 +305,7 @@ public class TemperatureFragment extends Fragment {
                     case "Week 26":
                         dayEnum.clear();
                         Toast.makeText(getContext(), "5", Toast.LENGTH_SHORT).show();
-                        weeklyTemp = temperatureViewModel.getWeeklyData(date.getWeekOfWeekyear() - 4).getWeeklyTemperature();
+                        weeklyTemp = temperatureViewModel.getWeeklyData(25).getWeeklyTemperature();
 
 
                         fillDayEnum();
@@ -352,6 +355,8 @@ public class TemperatureFragment extends Fragment {
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(set1);
 
+
+
         LineData data = new LineData(dataSets);
         lineChart.setData(data);
 
@@ -381,11 +386,11 @@ public class TemperatureFragment extends Fragment {
             }
         }
 
-        BarDataSet barDataSet = new BarDataSet(barEntries, "Humidity in percentage");
+        BarDataSet barDataSet = new BarDataSet(barEntries, "Temperature in Celsius");
         barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
 
         Description description = new Description();
-        description.setText("Humidity");
+        description.setText("°C");
         barChart.setDescription(description);
 
         BarData barData = new BarData(barDataSet);

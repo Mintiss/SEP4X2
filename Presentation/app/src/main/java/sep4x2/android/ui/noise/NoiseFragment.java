@@ -49,6 +49,7 @@ public class NoiseFragment extends Fragment {
     private Spinner spinnerweek;
     private Spinner spinnerchange;
     private TextView message;
+    private TextView recNoise;
 
     //Spinner
 
@@ -118,10 +119,14 @@ public class NoiseFragment extends Fragment {
             message.setText("The noise level considered average. Good job.");
         }else if(85<lastNoise)
         {
-            message.setText("The noise level considered harmful. Solution: use earplugs/ stop the music");
+            message.setText("The noise level considered harmful. Solution: use earplugs/ stop the music.");
         }else {
-                message.setText("Your place is a little bit louder than average");
+                message.setText("Your place is a little bit louder than average.");
         }
+
+        recNoise = root.findViewById(R.id.textrecNoise);
+
+        recNoise.setText("The recommended noise is between 75 and 30 dBA.");
 
 
 
@@ -344,11 +349,11 @@ public class NoiseFragment extends Fragment {
             }
         }
 
-        BarDataSet barDataSet = new BarDataSet(barEntries, "Humidity in percentage");
+        BarDataSet barDataSet = new BarDataSet(barEntries, "Noise in decibels");
         barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
 
         Description description = new Description();
-        description.setText("Humidity");
+        description.setText("dBA");
         barChart.setDescription(description);
 
         BarData barData = new BarData(barDataSet);

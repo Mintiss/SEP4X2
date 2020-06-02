@@ -49,6 +49,7 @@ public class Co2Fragment extends Fragment {
     private BarChart barChart;
     private Switch aSwitch;
     private TextView message;
+    private TextView recCo2;
 
 
     ArrayList<BarEntry> barEntries;
@@ -134,6 +135,10 @@ public class Co2Fragment extends Fragment {
        {
         message.setText("Co2 level is extremely harmful. You most likely dead. :( ");
        }
+
+       recCo2 = root.findViewById(R.id.textrecCo2);
+
+       recCo2.setText("The recommended CO2 is between 400 and 1000ppm.");
 
 
 
@@ -239,7 +244,7 @@ public class Co2Fragment extends Fragment {
 
                     case "Week 23":
                         dayEnum.clear();
-                        //   weeklyCo2 = co2ViewModel.getWeeklyData(date.getWeekOfWeekyear()-1).getWeeklyCO2();
+                           weeklyCo2 = co2ViewModel.getWeeklyData(19).getWeeklyCO2();
                         Toast.makeText(getContext(), "2", Toast.LENGTH_SHORT).show();
 
                         fillWithNewData();
@@ -355,11 +360,11 @@ public class Co2Fragment extends Fragment {
             }
         }
 
-        BarDataSet barDataSet = new BarDataSet(barEntries, "Humidity in percentage");
+        BarDataSet barDataSet = new BarDataSet(barEntries, "CO2 in ppm(parts in million)");
         barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
 
         Description description = new Description();
-        description.setText("CO2");
+        description.setText("ppm");
         barChart.setDescription(description);
 
         BarData barData = new BarData(barDataSet);

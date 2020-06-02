@@ -13,7 +13,6 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="110dp"
         android:layout_marginEnd="8dp"
-        android:text=" The coo2 level considered good if ppm concentration between 250-1000pm. From 1000-5000ppm causes headaches, sleepiness ect. From 40000 and above causes come, brain damage, even death."
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -69,4 +68,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/textrecCo2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="171dp"
+        android:layout_marginTop="110dp"
+        android:layout_marginEnd="181dp"
+        android:layout_marginBottom="120dp"
+        app:layout_constraintBottom_toTopOf="@+id/LineChartco2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_co2" />
 </androidx.constraintlayout.widget.ConstraintLayout>

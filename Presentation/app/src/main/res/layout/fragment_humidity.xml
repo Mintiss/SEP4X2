@@ -12,7 +12,6 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="115dp"
         android:layout_marginEnd="8dp"
-        android:text="The humidity level is considered comfortable between 30-60%. Between 45-55% is recommended and form 55-80% is high."
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -68,4 +67,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/textrecHum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="173dp"
+        android:layout_marginTop="122dp"
+        android:layout_marginEnd="179dp"
+        android:layout_marginBottom="127dp"
+        app:layout_constraintBottom_toTopOf="@+id/LineChartHum"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_hum" />
 </androidx.constraintlayout.widget.ConstraintLayout>

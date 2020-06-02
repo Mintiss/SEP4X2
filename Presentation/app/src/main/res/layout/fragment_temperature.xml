@@ -13,13 +13,14 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="115dp"
         android:layout_marginEnd="8dp"
-        android:text="The comfortable temperature level is between 18-21 Celsius. Temperature below 24 Celsius can cause cardiovascular risk. Temperature under 16-9 Celsius may cause respiratory, cardiovascular and hypothermia risks."
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/LineCharttemp"
@@ -70,5 +71,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/textRecomTemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/LineCharttemp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_temp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
