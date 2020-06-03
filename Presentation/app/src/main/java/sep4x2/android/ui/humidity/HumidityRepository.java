@@ -55,7 +55,7 @@ public class HumidityRepository {
         return null;
     }
 
-    public WeeklyConverter getSpecificWeekSensorsTemperature(int weekNo){
+    public WeeklyConverter getSpecificWeekSensors(int weekNo){
 
         try {
             return new getWeeklyDataAsync(sensorDao).execute(weekNo).get();

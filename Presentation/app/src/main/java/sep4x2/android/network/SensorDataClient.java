@@ -43,7 +43,6 @@ public class SensorDataClient extends Application{
         sensorDao = database.sensorDao();
 
         updateSensorData();
-
         updateThisWeekSensors();
     }
 
@@ -66,7 +65,7 @@ public class SensorDataClient extends Application{
             public void onResponse(Call<SensorResponse> call, Response<SensorResponse> response) {
                 if (response.code() == 200) {
                     sensorData=(new SensorData(response.body()));
-
+                    new NukeData(sensorDao).execute();
                     new InsertSensorDataAsync(sensorDao).execute(sensorData);
                     Log.i("SENSOR DATA",""+response.body().getMetricsID());
                 }
@@ -112,7 +111,7 @@ public class SensorDataClient extends Application{
                 if (response.code() == 200) {
                     weeklyStatisticsAllData = (new WeeklyStatisticsAllData(response.body()));
                     new InsertWeeklySensorDataAsync(sensorDao).execute(weeklyStatisticsAllData);
-                    Log.i("WEEKLY SENSOR", "WORKS");
+                    Log.i("WEEKLY SENSOR", "ON INIT"+weeklyStatisticsAllData.getWeekNo());
                 }
                 if (response.code() == 400){
                     Log.i("WEEKLY SENSOR", call.request().url().toString());

@@ -53,7 +53,7 @@ public class NoiseFragment extends Fragment {
 
     //Spinner
 
-    private static final String[] paths = {"Week 22", "Week 23", "Week 24", "Week 25", "Week 26", "Week 27"};
+    private static final String[] paths = {"Week 18", "Week 19", "Week 20", "Week 21", "Week 22"};
     private static final String[] changepath = {"Today", "Week"};
 
     ArrayList<BarEntry> barEntries;
@@ -83,7 +83,6 @@ public class NoiseFragment extends Fragment {
 
 
         //Bad solution
-
         weeklyNoise = noiseViewModel.getWeeklyData(18).getWeeklyNoise();
 
         //LineChart-------------------------------------------------------------------------------------------------------------------------------------------------
@@ -216,10 +215,10 @@ public class NoiseFragment extends Fragment {
 
                 String selectedClass = parent.getItemAtPosition(position).toString();
                 switch (selectedClass) {
-                    case "Week 22":
+                    case "Week 18":
                         // assigning div item list defined in XML to the div Spinner
                         dayEnum.clear();
-                       weeklyNoise = noiseViewModel.getWeeklyData(noiseViewModel.getWeeklyData(18).getWeekNo()).getWeeklyNoise();
+                        weeklyNoise = noiseViewModel.getWeeklyData(noiseViewModel.getWeeklyData(18).getWeekNo()).getWeeklyNoise();
 
                         Log.i("SENSOR DATA", "" + weeklyNoise.toString());
                         fillWithNewData();
@@ -231,9 +230,9 @@ public class NoiseFragment extends Fragment {
 
                         break;
 
-                    case "Week" :
+                    case "Week 19":
                         dayEnum.clear();
-                       weeklyNoise = noiseViewModel.getWeeklyData(date.getWeekOfWeekyear()-1).getWeeklyNoise();
+                        weeklyNoise = noiseViewModel.getWeeklyData(19).getWeeklyNoise();
 
 
                         fillWithNewData();
@@ -243,9 +242,9 @@ public class NoiseFragment extends Fragment {
                         setLinechart(0);
                         break;
 
-                    case "Week 24":
+                    case "Week 20":
                         dayEnum.clear();
-                       weeklyNoise = noiseViewModel.getWeeklyData(date.getWeekOfWeekyear()-2).getWeeklyNoise();
+                        weeklyNoise = noiseViewModel.getWeeklyData(20).getWeeklyNoise();
 
                         fillWithNewData();
                         fillDayEnum();
@@ -255,9 +254,9 @@ public class NoiseFragment extends Fragment {
                         SetBarchart(0);
                         break;
 
-                    case "Week 25":
+                    case "Week 21":
                         dayEnum.clear();
-                      weeklyNoise = noiseViewModel.getWeeklyData(date.getWeekOfWeekyear()-3).getWeeklyNoise();
+                        weeklyNoise = noiseViewModel.getWeeklyData(21).getWeeklyNoise();
 
 
                         fillWithNewData();
@@ -268,23 +267,17 @@ public class NoiseFragment extends Fragment {
                         SetBarchart(0);
                         break;
 
-                    case "Week 26":
+                    case "Week 22":
                         dayEnum.clear();
-                     weeklyNoise = noiseViewModel.getWeeklyData(date.getWeekOfWeekyear()-4).getWeeklyNoise();
+                        weeklyNoise = noiseViewModel.getWeeklyData(22).getWeeklyNoise();
 
                         fillWithNewData();
                         fillDayEnum();
 
                         setLinechart(0);
                         SetBarchart(0);
-                        break;
-                    case "Week 27":
-                       weeklyNoise = noiseViewModel.getWeeklyData(date.getWeekOfWeekyear()-5).getWeeklyNoise();
-
-
                         break;
                 }
-
             }
 
             @Override

@@ -40,6 +40,7 @@ import java.util.List;
 
 import sep4x2.android.R;
 import sep4x2.android.SharedSensors.Temperature;
+import sep4x2.android.SharedSensors.WeeklyConverter;
 
 
 public class TemperatureFragment extends Fragment {
@@ -73,7 +74,7 @@ public class TemperatureFragment extends Fragment {
 
     //Spinner
     private Spinner spinnerweek;
-    private static final String[] paths = {"Week 22", "Week 23", "Week 24", "Week 25", "Week 26", "Week 27"};
+    private static final String[] paths = {"Week 18", "Week 19", "Week 20", "Week 21", "Week 22"};
 
 
     private Spinner spinnerchange;
@@ -92,9 +93,18 @@ public class TemperatureFragment extends Fragment {
         final TextView textView = root.findViewById(R.id.text_send);
 
 
-        //Bad solution
+        /*//UPDATES THE DB WITH LAST FEW WEEKS (using hardcoded data cos db)
+        temperatureViewModel.updateWeeklyData(18);
+        temperatureViewModel.updateWeeklyData(19);
+        temperatureViewModel.updateWeeklyData(20);
+        temperatureViewModel.updateWeeklyData(21);
+        temperatureViewModel.updateWeeklyData(22);*/
 
+
+        //Bad solution
         weeklyTemp = temperatureViewModel.getWeeklyData(18).getWeeklyTemperature();
+
+
 
         //LineChart-------------------------------------------------------------------------------------------------------------------------------------------------
         lineChart = root.findViewById(R.id.LineCharttemp);
@@ -246,16 +256,16 @@ public class TemperatureFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedClass = parent.getItemAtPosition(position).toString();
                 switch (selectedClass) {
-                    case "Week 22":
+                    case "Week 18":
                         // assigning div item list defined in XML to the div Spinner
                         dayEnum.clear();
 
-
                         weeklyTemp = temperatureViewModel.getWeeklyData(18).getWeeklyTemperature();
+
                         FillWithNewData();
                         fillDayEnum();
 
-                        Log.i("SENSOR DATA", "" + weeklyTemp.toString());
+                        Log.i("SENSOR DATA WEEK", "" + weeklyTemp.toString());
 
                         setLinechart(0);
                         SetBarchart(0);
@@ -263,25 +273,28 @@ public class TemperatureFragment extends Fragment {
 
                         break;
 
-                    case "Week 23":
+                    case "Week 19":
                         dayEnum.clear();
                         Toast.makeText(getContext(), "2", Toast.LENGTH_SHORT).show();
 
-
-                        fillDayEnum();
-
                         weeklyTemp = temperatureViewModel.getWeeklyData(19).getWeeklyTemperature();
 
+                        FillWithNewData();
+                        fillDayEnum();
+
+                        Log.i("SENSOR DATA WEEK", "" + weeklyTemp.toString());
+
                         SetBarchart(0);
                         setLinechart(0);
                         break;
 
-                    case "Week 24":
+                    case "Week 20":
                         dayEnum.clear();
                         Toast.makeText(getContext(), "3", Toast.LENGTH_SHORT).show();
-                        weeklyTemp = temperatureViewModel.getWeeklyData(04).getWeeklyTemperature();
 
+                        weeklyTemp = temperatureViewModel.getWeeklyData(20).getWeeklyTemperature();
 
+                        FillWithNewData();
                         fillDayEnum();
 
                         setLinechart(0);
@@ -289,12 +302,12 @@ public class TemperatureFragment extends Fragment {
                         SetBarchart(0);
                         break;
 
-                    case "Week 25":
+                    case "Week 21":
                         dayEnum.clear();
                         Toast.makeText(getContext(), "4", Toast.LENGTH_SHORT).show();
-                        weeklyTemp = temperatureViewModel.getWeeklyData(27).getWeeklyTemperature();
+                        weeklyTemp = temperatureViewModel.getWeeklyData(21).getWeeklyTemperature();
 
-
+                        FillWithNewData();
                         fillDayEnum();
 
                         setLinechart(0);
@@ -302,22 +315,16 @@ public class TemperatureFragment extends Fragment {
                         SetBarchart(0);
                         break;
 
-                    case "Week 26":
+                    case "Week 22":
                         dayEnum.clear();
                         Toast.makeText(getContext(), "5", Toast.LENGTH_SHORT).show();
-                        weeklyTemp = temperatureViewModel.getWeeklyData(25).getWeeklyTemperature();
+                        weeklyTemp = temperatureViewModel.getWeeklyData(22).getWeeklyTemperature();
 
-
+                        FillWithNewData();
                         fillDayEnum();
 
                         setLinechart(0);
                         SetBarchart(0);
-                        break;
-                    case "Week 27":
-                        Toast.makeText(getContext(), "6, with no data", Toast.LENGTH_SHORT).show();
-                        weeklyTemp = temperatureViewModel.getWeeklyData(date.getWeekOfWeekyear() - 5).getWeeklyTemperature();
-
-
                         break;
                 }
             }

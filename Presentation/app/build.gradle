@@ -53,5 +53,6 @@ dependencies {
     annotationProcessor 'androidx.room:room-compiler:2.2.5'
     implementation 'joda-time:joda-time:2.10.6'
     implementation 'com.google.firebase:firebase-messaging-directboot:20.2.0'
-
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
+    debugImplementation 'androidx.fragment:fragment-testing:1.2.4'
 }

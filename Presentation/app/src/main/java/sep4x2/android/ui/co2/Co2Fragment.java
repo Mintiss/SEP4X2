@@ -74,7 +74,7 @@ public class Co2Fragment extends Fragment {
 
     //Spinner
     private Spinner spinnerweek;
-    private static final String[] paths = {"Week 22", "Week 23", "Week 24", "Week 25", "Week 26", "Week 27"};
+    private static final String[] paths = {"Week 18", "Week 19", "Week 20", "Week 21", "Week 22"};
 
     private Spinner spinnerchange;
     private static final String[] changepath = {"Today", "Week"};
@@ -227,9 +227,10 @@ public class Co2Fragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedClass = parent.getItemAtPosition(position).toString();
                 switch (selectedClass) {
-                    case "Week 22":
+                    case "Week 18":
                         // assigning div item list defined in XML to the div Spinner
                         dayEnum.clear();
+
                         weeklyCo2 = co2ViewModel.getWeeklyData(18).getWeeklyCO2();
 
                         Log.i("SENSOR DATA", "" + weeklyCo2.toString());
@@ -242,11 +243,13 @@ public class Co2Fragment extends Fragment {
 
                         break;
 
-                    case "Week 23":
+                    case "Week 19":
                         dayEnum.clear();
-                           weeklyCo2 = co2ViewModel.getWeeklyData(19).getWeeklyCO2();
+
                         Toast.makeText(getContext(), "2", Toast.LENGTH_SHORT).show();
 
+                        weeklyCo2 = co2ViewModel.getWeeklyData(19).getWeeklyCO2();
+
                         fillWithNewData();
                         fillDayEnum();
 
@@ -254,9 +257,10 @@ public class Co2Fragment extends Fragment {
                         setLinechart(0);
                         break;
 
-                    case "Week 24":
+                    case "Week 20":
                         dayEnum.clear();
-                        //    weeklyCo2 = co2ViewModel.getWeeklyData(date.getWeekOfWeekyear()-2).getWeeklyCO2();
+
+                        weeklyCo2 = co2ViewModel.getWeeklyData(20).getWeeklyCO2();
 
                         fillWithNewData();
                         fillDayEnum();
@@ -266,10 +270,10 @@ public class Co2Fragment extends Fragment {
                         SetBarchart(0);
                         break;
 
-                    case "Week 25":
+                    case "Week 21":
                         dayEnum.clear();
-                        //     weeklyCo2 = co2ViewModel.getWeeklyData(date.getWeekOfWeekyear()-3).getWeeklyCO2();
 
+                        weeklyCo2 = co2ViewModel.getWeeklyData(21).getWeeklyCO2();
 
                         fillWithNewData();
                         fillDayEnum();
@@ -279,20 +283,16 @@ public class Co2Fragment extends Fragment {
                         SetBarchart(0);
                         break;
 
-                    case "Week 26":
+                    case "Week 22":
                         dayEnum.clear();
-                        //     weeklyCo2 = co2ViewModel.getWeeklyData(date.getWeekOfWeekyear()-4).getWeeklyCO2();
+
+                        weeklyCo2 = co2ViewModel.getWeeklyData(22).getWeeklyCO2();
 
                         fillWithNewData();
                         fillDayEnum();
 
                         setLinechart(0);
                         SetBarchart(0);
-                        break;
-                    case "Week 27":
-                        //       weeklyCo2 = co2ViewModel.getWeeklyData(-5).getWeeklyCO2();
-                        Toast.makeText(getContext(), "6, with no data", Toast.LENGTH_SHORT).show();
-
                         break;
                 }
             }

@@ -36,7 +36,7 @@ public class Co2ViewModel extends AndroidViewModel {
     }
 
     public WeeklyConverter getWeeklyData(int weekNo){
-        return repository.getSpecificWeekSensorsTemperature(weekNo);
+        return repository.getSpecificWeekSensors(weekNo);
     }
 
 }

@@ -34,6 +34,6 @@ public class NoiseViewModel extends AndroidViewModel {
     }
 
     public WeeklyConverter getWeeklyData(int weekNo){
-        return repository.getSpecificWeekSensorsTemperature(weekNo);
+        return repository.getSpecificWeekSensors(weekNo);
     }
 }
