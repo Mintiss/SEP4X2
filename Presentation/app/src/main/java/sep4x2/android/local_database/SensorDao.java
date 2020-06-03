@@ -54,4 +54,7 @@ public interface SensorDao {
 
     @Query("SELECT * FROM Weekly_Statistics_table WHERE weekNo = :weekNo")
     WeeklyConverter getWeeklyData(int weekNo);
+
+    @Query("DELETE FROM Weekly_Statistics_table")
+    public void nukeWeeklyTable();
 }

@@ -44,7 +44,15 @@ public class HomeRepository {
     }
 
     public void updateData() {
-         sensorDataClient.updateSensorData();
+
+        sensorDataClient.updateSensorData();
+
+        //Will not be hardcoded weeks when we have real data in db (now. week of year)
+        sensorDataClient.updateThisWeekSensors(18);
+        sensorDataClient.updateThisWeekSensors(19);
+        sensorDataClient.updateThisWeekSensors(20);
+        sensorDataClient.updateThisWeekSensors(21);
+        sensorDataClient.updateThisWeekSensors(22);
     }
 
     private static class getDataAsync extends AsyncTask<Void,Void,LiveData<SensorData>>

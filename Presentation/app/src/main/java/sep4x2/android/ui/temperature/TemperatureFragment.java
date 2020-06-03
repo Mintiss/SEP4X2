@@ -267,8 +267,6 @@ public class TemperatureFragment extends Fragment {
                         FillWithNewData();
                         fillDayEnum();
 
-                        Log.i("SENSOR DATA WEEK", "" + weeklyTemp.toString());
-
                         setLinechart(0);
                         SetBarchart(0);
 
@@ -279,7 +277,7 @@ public class TemperatureFragment extends Fragment {
                         dayEnum.clear();
                         Toast.makeText(getContext(), "2", Toast.LENGTH_SHORT).show();
 
-                        weeklyTemp = temperatureViewModel.getWeeklyData(19).getWeeklyTemperature();
+                        weeklyTemp=temperatureViewModel.getWeeklyData(19).getWeeklyTemperature();
 
                         FillWithNewData();
                         fillDayEnum();
