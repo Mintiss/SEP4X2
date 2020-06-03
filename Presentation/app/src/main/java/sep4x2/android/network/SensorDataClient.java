@@ -5,17 +5,14 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import androidx.lifecycle.LiveData;
-
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeConstants;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -65,7 +62,6 @@ public class SensorDataClient extends Application{
             public void onResponse(Call<SensorResponse> call, Response<SensorResponse> response) {
                 if (response.code() == 200) {
                     sensorData=(new SensorData(response.body()));
-                    new NukeData(sensorDao).execute();
                     new InsertSensorDataAsync(sensorDao).execute(sensorData);
                     Log.i("SENSOR DATA",""+response.body().getMetricsID());
                 }
