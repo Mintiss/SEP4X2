@@ -74,7 +74,7 @@ public class HumidityFragment extends Fragment {
 
     //Spinner
     private Spinner spinnerweek;
-    private static final String[] paths = {"Week 22", "Week 23", "Week 24", "Week 25", "Week 26", "Week 27"};
+    private static final String[] paths = {"Week 18", "Week 19", "Week 20", "Week 21", "Week 22"};
 
     private Spinner spinnerchange;
     private static final String[] changepath = {"Today", "Week"};
@@ -225,7 +225,7 @@ public class HumidityFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedClass = parent.getItemAtPosition(position).toString();
                 switch (selectedClass) {
-                    case "Week 22":
+                    case "Week 18":
                         // assigning div item list defined in XML to the div Spinner
                         dayEnum.clear();
 
@@ -243,10 +243,10 @@ public class HumidityFragment extends Fragment {
 
                         break;
 
-                    case "Week 23":
+                    case "Week 19":
                         dayEnum.clear();
 
-                        weeklyHumidity = humidityViewModel.getWeeklyData(date.getWeekOfWeekyear() - 1).getWeeklyHumidity();
+                        weeklyHumidity = humidityViewModel.getWeeklyData(19).getWeeklyHumidity();
 
                         fillWithHumiditydays();
                         fillDayEnum();
@@ -255,22 +255,9 @@ public class HumidityFragment extends Fragment {
                         setLinechart(0);
                         break;
 
-                    case "Week 24":
+                    case "Week 20":
                         dayEnum.clear();
-                        weeklyHumidity = humidityViewModel.getWeeklyData(date.getWeekOfWeekyear() - 2).getWeeklyHumidity();
-
-                        fillWithHumiditydays();
-                        fillDayEnum();
-
-                        setLinechart(0);
-
-                        SetBarchart(0);
-                        break;
-
-                    case "Week 25":
-                        dayEnum.clear();
-                        weeklyHumidity = humidityViewModel.getWeeklyData(date.getWeekOfWeekyear() - 3).getWeeklyHumidity();
-
+                        weeklyHumidity = humidityViewModel.getWeeklyData(20).getWeeklyHumidity();
 
                         fillWithHumiditydays();
                         fillDayEnum();
@@ -280,20 +267,28 @@ public class HumidityFragment extends Fragment {
                         SetBarchart(0);
                         break;
 
-                    case "Week 26":
+                    case "Week 21":
+                        dayEnum.clear();
+                        weeklyHumidity = humidityViewModel.getWeeklyData(21).getWeeklyHumidity();
+
+
+                        fillWithHumiditydays();
+                        fillDayEnum();
+
+                        setLinechart(0);
+
+                        SetBarchart(0);
+                        break;
+
+                    case "Week 22":
                         dayEnum.clear();
 
-                        weeklyHumidity = humidityViewModel.getWeeklyData(date.getWeekOfWeekyear() - 4).getWeeklyHumidity();
+                        weeklyHumidity = humidityViewModel.getWeeklyData(22).getWeeklyHumidity();
                         fillWithHumiditydays();
                         fillDayEnum();
 
                         setLinechart(0);
                         SetBarchart(0);
-                        break;
-                    case "Week 27":
-
-                        weeklyHumidity = humidityViewModel.getWeeklyData(date.getWeekOfWeekyear() - 5).getWeeklyHumidity();
-                        fillWithHumiditydays();
                         break;
                 }
             }

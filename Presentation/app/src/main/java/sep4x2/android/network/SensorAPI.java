@@ -13,7 +13,7 @@ public interface SensorAPI {
    @GET("api/metrics")
    Call<SensorResponse> getSensorData();
 
-   @GET("api/statistics")
+   @GET("api/statistics/weekly")
    Call<WeeklyResponse> getWeeklySensorData(@Query(value = "start",encoded = true) String start,
                                             @Query(value = "end",encoded = true)String end);
 

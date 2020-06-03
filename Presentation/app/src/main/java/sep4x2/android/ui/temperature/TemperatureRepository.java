@@ -7,6 +7,7 @@ import android.util.Log;
 
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalTime;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -56,8 +57,7 @@ public class TemperatureRepository {
         return null;
     }
 
-    public WeeklyConverter getSpecificWeekSensorsTemperature(int weekNo){
-
+    public WeeklyConverter getSpecificWeekSensors(int weekNo){
         try {
             return new getWeeklyDataAsync(sensorDao).execute(weekNo).get();
         } catch (Exception e){
@@ -76,33 +76,31 @@ public class TemperatureRepository {
             SensorAPI sensorAPI = ServiceGenerator.getSensorAPI();
             Call<WeeklyResponse> call = sensorAPI.getWeeklySensorData(startDate,endDate);
 
-        call.enqueue(new Callback<WeeklyResponse>()
-        {
-            @Override
-            public void onResponse(Call<WeeklyResponse> call, Response<WeeklyResponse> response) {
-                if (response.code() == 200) {
-                    weeklyStatisticsAllData=(new WeeklyStatisticsAllData(response.body()));
-                    new InsertWeeklySensorDataAsync(sensorDao).execute(weeklyStatisticsAllData);
+            call.enqueue(new Callback<WeeklyResponse>()
+            {
+                @Override
+                public void onResponse(Call<WeeklyResponse> call, Response<WeeklyResponse> response) {
+                    if (response.code() == 200) {
+                        weeklyStatisticsAllData=(new WeeklyStatisticsAllData(response.body()));
+                        new InsertWeeklySensorDataAsync(sensorDao).execute(weeklyStatisticsAllData);
 
-                    Log.i("THIS WEEK",""+response.body().getRoomID());
+                        Log.i("THIS WEEK",""+response.body().getRoomID());
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<WeeklyResponse> call, Throwable t) {
-                Log.i("API GET WEEKLY SENSOR", "Call failed");
+                @Override
+                public void onFailure(Call<WeeklyResponse> call, Throwable t) {
+                    Log.i("API GET WEEKLY SENSOR", "Call failed");
+                }
+            });
+            try{
+                return new getWeeklyDataAsync(sensorDao).execute(weekNo).get();
+            } catch (Exception e1){
+                Log.i("API GET WEEKLY SENSOR", "NO WEEKS FOUND FOR USER");
             }
-        });
-        try{
-            return new getWeeklyDataAsync(sensorDao).execute(weekNo).get();
-        } catch (Exception e1){
-            Log.i("API GET WEEKLY SENSOR", "NO WEEKS FOUND FOR USER");
+            return null;
         }
-        return null;
     }
-    }
-
-
 
     private static class getDataAsync extends AsyncTask<Void,Void,List<Temperature>>
     {
@@ -123,13 +121,14 @@ public class TemperatureRepository {
     {
         private SensorDao sensorDao;
 
+
         private getWeeklyDataAsync(SensorDao sensorDao){
             this.sensorDao=sensorDao;
         }
 
         @Override
         protected WeeklyConverter doInBackground(Integer... integers) {
-                return sensorDao.getWeeklyData(integers[0]);
+                 return sensorDao.getWeeklyData(integers[0]);
         }
     }
 

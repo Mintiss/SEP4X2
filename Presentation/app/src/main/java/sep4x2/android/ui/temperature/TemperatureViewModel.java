@@ -22,7 +22,8 @@ public class TemperatureViewModel extends AndroidViewModel {
         return repository.getTemperatureData();
     }
 
-    public WeeklyConverter getWeeklyData(int weekNo){
-        return repository.getSpecificWeekSensorsTemperature(weekNo);
+    public WeeklyConverter getWeeklyData(int weekNo)
+    {
+        return repository.getSpecificWeekSensors(weekNo);
     }
 }

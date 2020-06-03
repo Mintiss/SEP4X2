@@ -10,11 +10,11 @@ import sep4x2.android.network.GETResponses.WeeklyResponse;
 @Entity(tableName = "Weekly_Statistics_table")
 public class WeeklyStatisticsAllData {
 
-    @PrimaryKey(autoGenerate = true)
     private int roomID;
     private String metrics;
     private String startDate;
     private String endDate;
+    @PrimaryKey
     private int weekNo;
     private int year;
 
