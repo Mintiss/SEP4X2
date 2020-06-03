@@ -41,9 +41,6 @@ public class SensorDataClient extends Application{
 
         LocalDatabase database = LocalDatabase.getInstance(application);
         sensorDao = database.sensorDao();
-
-        updateSensorData();
-        updateThisWeekSensors();
     }
 
     public static synchronized SensorDataClient getInstance(Application application) {
@@ -65,7 +62,6 @@ public class SensorDataClient extends Application{
             public void onResponse(Call<SensorResponse> call, Response<SensorResponse> response) {
                 if (response.code() == 200) {
                     sensorData=(new SensorData(response.body()));
-                    new NukeData(sensorDao).execute();
                     new InsertSensorDataAsync(sensorDao).execute(sensorData);
                     Log.i("SENSOR DATA",""+response.body().getMetricsID());
                 }
@@ -89,21 +85,19 @@ public class SensorDataClient extends Application{
         return null;
     }
 
-    public void updateThisWeekSensors() {
-        LocalDate now = new LocalDate();
-        LocalDate monday = (now.withDayOfWeek(DateTimeConstants.MONDAY));
-        LocalDate sunday = (now.withDayOfWeek(DateTimeConstants.SUNDAY));
+    public void updateThisWeekSensors(int weekNo) {
+        DateTime weekStartDate=new DateTime().withWeekOfWeekyear(weekNo).withTime(new LocalTime(0,0,0)).minusDays(2);
+        DateTime weekEndDate=new DateTime().withWeekOfWeekyear(weekNo+1).withTime(new LocalTime(23,59,59)).minusDays(3);
 
-        DateTime mondayAtMidnight = monday.toDateTimeAtStartOfDay();
-        DateTime sundayAtEndOfDay = sunday.toDateTime(new LocalTime(23, 59, 59));
+        String pattern=("yyyy-MM-dd HH:mm:ss");
 
-        String pattern = ("yyyy-MM-dd HH:mm:ss");
+        Log.i("WEEKLY SENSOR", "CALLED IN HOME");
 
-        String startDate = mondayAtMidnight.toString(pattern);
-        String endDate = sundayAtEndOfDay.toString(pattern);
+        String startDate = weekStartDate.toString(pattern);
+        String endDate = weekEndDate.toString(pattern);
 
         SensorAPI sensorAPI = ServiceGenerator.getSensorAPI();
-        Call<WeeklyResponse> call = sensorAPI.getWeeklySensorData("2020-04-27 00:00:00", "2020-05-03 23:59:59");
+        Call<WeeklyResponse> call = sensorAPI.getWeeklySensorData(startDate,endDate);
 
         call.enqueue(new Callback<WeeklyResponse>() {
             @Override
@@ -113,7 +107,7 @@ public class SensorDataClient extends Application{
                     new InsertWeeklySensorDataAsync(sensorDao).execute(weeklyStatisticsAllData);
                     Log.i("WEEKLY SENSOR", "ON INIT"+weeklyStatisticsAllData.getWeekNo());
                 }
-                if (response.code() == 400){
+                else {
                     Log.i("WEEKLY SENSOR", call.request().url().toString());
                 }
             }
@@ -177,6 +171,21 @@ public class SensorDataClient extends Application{
         @Override
         protected Void doInBackground(Void... voids) {
             sensorDao.nukeTable();
+            return null;
+        }
+    }
+
+    private static class NukeDataWeekly extends AsyncTask<Void,Void,Void>
+    {
+        private SensorDao sensorDao;
+
+        private NukeDataWeekly(SensorDao sensorDao){
+            this.sensorDao=sensorDao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            sensorDao.nukeWeeklyTable();
             return null;
         }
     }
