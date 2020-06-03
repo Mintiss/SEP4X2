@@ -424,13 +424,13 @@ public class HumidityFragment extends Fragment {
 
     private void fillWithHumiditydays() {
         humidityDayArray.clear();
-        humidityDayArray.add(new HumidityTemporaryValues("monday", weeklyHumidity.get(0)));
-        humidityDayArray.add(new HumidityTemporaryValues("tuesday", weeklyHumidity.get(1)));
-        humidityDayArray.add(new HumidityTemporaryValues("wednesday", weeklyHumidity.get(2)));
-        humidityDayArray.add(new HumidityTemporaryValues("thursday", weeklyHumidity.get(3)));
-        humidityDayArray.add(new HumidityTemporaryValues("friday", weeklyHumidity.get(4)));
-        humidityDayArray.add(new HumidityTemporaryValues("saturday", weeklyHumidity.get(5)));
-        humidityDayArray.add(new HumidityTemporaryValues("sunday", weeklyHumidity.get(6)));
+        humidityDayArray.add(new HumidityTemporaryValues("mon", weeklyHumidity.get(0)));
+        humidityDayArray.add(new HumidityTemporaryValues("tue", weeklyHumidity.get(1)));
+        humidityDayArray.add(new HumidityTemporaryValues("wed", weeklyHumidity.get(2)));
+        humidityDayArray.add(new HumidityTemporaryValues("thu", weeklyHumidity.get(3)));
+        humidityDayArray.add(new HumidityTemporaryValues("fri", weeklyHumidity.get(4)));
+        humidityDayArray.add(new HumidityTemporaryValues("sat", weeklyHumidity.get(5)));
+        humidityDayArray.add(new HumidityTemporaryValues("sun", weeklyHumidity.get(6)));
     }
 
 

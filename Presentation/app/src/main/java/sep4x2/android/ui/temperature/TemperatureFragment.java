@@ -476,13 +476,13 @@ public class TemperatureFragment extends Fragment {
 
     private void FillWithNewData() {
         temperatureDayArrayList.clear();
-        temperatureDayArrayList.add(new TemperatureTemporaryValues("monday", weeklyTemp.get(0)));
-        temperatureDayArrayList.add(new TemperatureTemporaryValues("tuesday", weeklyTemp.get(1)));
-        temperatureDayArrayList.add(new TemperatureTemporaryValues("wednesday", weeklyTemp.get(2)));
-        temperatureDayArrayList.add(new TemperatureTemporaryValues("thursday", weeklyTemp.get(3)));
-        temperatureDayArrayList.add(new TemperatureTemporaryValues("friday", weeklyTemp.get(4)));
-        temperatureDayArrayList.add(new TemperatureTemporaryValues("saturday", weeklyTemp.get(5)));
-        temperatureDayArrayList.add(new TemperatureTemporaryValues("sunday", weeklyTemp.get(6)));
+        temperatureDayArrayList.add(new TemperatureTemporaryValues("mon", weeklyTemp.get(0)));
+        temperatureDayArrayList.add(new TemperatureTemporaryValues("tue", weeklyTemp.get(1)));
+        temperatureDayArrayList.add(new TemperatureTemporaryValues("wed", weeklyTemp.get(2)));
+        temperatureDayArrayList.add(new TemperatureTemporaryValues("thu", weeklyTemp.get(3)));
+        temperatureDayArrayList.add(new TemperatureTemporaryValues("fri", weeklyTemp.get(4)));
+        temperatureDayArrayList.add(new TemperatureTemporaryValues("sat", weeklyTemp.get(5)));
+        temperatureDayArrayList.add(new TemperatureTemporaryValues("sun", weeklyTemp.get(6)));
     }
 
 

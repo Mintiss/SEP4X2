@@ -432,13 +432,13 @@ public class Co2Fragment extends Fragment {
 
     private void fillWithNewData() {
         co2DayArray.clear();
-        co2DayArray.add(new CO2TemporaryValues("monday", weeklyCo2.get(0)));
-        co2DayArray.add(new CO2TemporaryValues("tuesday", weeklyCo2.get(1)));
-        co2DayArray.add(new CO2TemporaryValues("wednesday", weeklyCo2.get(2)));
-        co2DayArray.add(new CO2TemporaryValues("thursday", weeklyCo2.get(3)));
-        co2DayArray.add(new CO2TemporaryValues("friday", weeklyCo2.get(4)));
-        co2DayArray.add(new CO2TemporaryValues("saturday", weeklyCo2.get(5)));
-        co2DayArray.add(new CO2TemporaryValues("sunday", weeklyCo2.get(6)));
+        co2DayArray.add(new CO2TemporaryValues("mon", weeklyCo2.get(0)));
+        co2DayArray.add(new CO2TemporaryValues("tue", weeklyCo2.get(1)));
+        co2DayArray.add(new CO2TemporaryValues("wed", weeklyCo2.get(2)));
+        co2DayArray.add(new CO2TemporaryValues("thu", weeklyCo2.get(3)));
+        co2DayArray.add(new CO2TemporaryValues("fri", weeklyCo2.get(4)));
+        co2DayArray.add(new CO2TemporaryValues("sat", weeklyCo2.get(5)));
+        co2DayArray.add(new CO2TemporaryValues("sun", weeklyCo2.get(6)));
     }
 
 

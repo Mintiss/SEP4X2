@@ -420,12 +420,12 @@ public class NoiseFragment extends Fragment {
 
     private void fillWithNewData() {
         NoiseDayArrayList.clear();
-        NoiseDayArrayList.add(new NoiseTemporaryValues("monday", weeklyNoise.get(0)));
-        NoiseDayArrayList.add(new NoiseTemporaryValues("wednesday", weeklyNoise.get(1)));
-        NoiseDayArrayList.add(new NoiseTemporaryValues("thursday", weeklyNoise.get(2)));
-        NoiseDayArrayList.add(new NoiseTemporaryValues("friday", weeklyNoise.get(3)));
-        NoiseDayArrayList.add(new NoiseTemporaryValues("saturday", weeklyNoise.get(4)));
-        NoiseDayArrayList.add(new NoiseTemporaryValues("sunday", weeklyNoise.get(5)));
+        NoiseDayArrayList.add(new NoiseTemporaryValues("mon", weeklyNoise.get(0)));
+        NoiseDayArrayList.add(new NoiseTemporaryValues("wed", weeklyNoise.get(1)));
+        NoiseDayArrayList.add(new NoiseTemporaryValues("thu", weeklyNoise.get(2)));
+        NoiseDayArrayList.add(new NoiseTemporaryValues("fri", weeklyNoise.get(3)));
+        NoiseDayArrayList.add(new NoiseTemporaryValues("sat", weeklyNoise.get(4)));
+        NoiseDayArrayList.add(new NoiseTemporaryValues("sun", weeklyNoise.get(5)));
     }
 
 
