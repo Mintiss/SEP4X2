@@ -348,6 +348,9 @@ public class Co2Fragment extends Fragment {
         y.setLabelCount(5);
         y.setAxisMinValue(0);
 
+        XAxis xAxis = lineChart.getXAxis();
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(labelsname));
+
         lineChart.getAxisRight().setDrawGridLines(false);
         lineChart.getAxisLeft().setDrawGridLines(true);
         lineChart.getXAxis().setDrawGridLines(true);
