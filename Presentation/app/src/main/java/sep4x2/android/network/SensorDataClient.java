@@ -65,7 +65,7 @@ public class SensorDataClient extends Application{
             public void onResponse(Call<SensorResponse> call, Response<SensorResponse> response) {
                 if (response.code() == 200) {
                     sensorData=(new SensorData(response.body()));
-                    new NukeData(sensorDao).execute();
+                    //new NukeData(sensorDao).execute();
                     new InsertSensorDataAsync(sensorDao).execute(sensorData);
                     Log.i("SENSOR DATA",""+response.body().getMetricsID());
                 }
