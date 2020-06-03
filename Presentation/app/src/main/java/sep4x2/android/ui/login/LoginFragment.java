@@ -2,6 +2,7 @@ package sep4x2.android.ui.login;
 
 import androidx.lifecycle.ViewModelProviders;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -89,6 +91,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()) {
                                 Toast.makeText(getContext(), "Logged in Successfully", Toast.LENGTH_SHORT).show();
+                                InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                                 NavDirections action;
                                 action = LoginFragmentDirections.actionNavLoginToNavHome();
                                 Navigation.findNavController(v).navigate(action);
