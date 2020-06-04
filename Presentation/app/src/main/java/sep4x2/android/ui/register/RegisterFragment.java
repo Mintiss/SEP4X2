@@ -90,7 +90,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                     break;
                 }
                 else if(password.length() < 8){
-                    Toast.makeText(getContext(), "Can not have empty fields", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Minimum password length is 8 characters.", Toast.LENGTH_SHORT).show();
                     break;
                 }
                 else {
