@@ -384,6 +384,10 @@ public class TemperatureFragment extends Fragment {
         y.setLabelCount(5);
         y.setAxisMinValue(-25);
 
+        XAxis xAxis = lineChart.getXAxis();
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(labelsname));
+
+
         LineData data = new LineData(dataSets);
         lineChart.setData(data);
         lineChart.setNoDataText("No data");
@@ -394,6 +398,9 @@ public class TemperatureFragment extends Fragment {
 
         lineChart.getAxisRight().setDrawLabels(false);
         lineChart.setDrawBorders(true);
+
+
+
 
 
 

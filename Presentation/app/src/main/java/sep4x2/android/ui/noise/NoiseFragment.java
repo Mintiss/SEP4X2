@@ -331,6 +331,9 @@ public class NoiseFragment extends Fragment {
         y.setLabelCount(5);
         y.setAxisMinValue(0);
 
+        XAxis xAxis = lineChart.getXAxis();
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(labelsname));
+
         LineData data = new LineData(dataSets);
         lineChart.setData(data);
 
