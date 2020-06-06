@@ -1,17 +1,19 @@
 package sep4x2.android.ui.register;
 
-import androidx.lifecycle.ViewModel;
+import android.app.Application;
 
-public class RegisterViewModel extends ViewModel {
+import androidx.lifecycle.AndroidViewModel;
+
+public class RegisterViewModel extends AndroidViewModel {
 
     private RegisterRepository repository;
 
-
-    public RegisterViewModel() {
+    public RegisterViewModel(Application application) {
+        super(application);
+        repository = RegisterRepository.getInstance(application);
     }
 
     public void postUserToDatabase(String id, String productId, String token){
-        repository.postUserToDatabase(id, productId, token);
-
+        repository.postUserToAPI(id, productId, token);
     }
 }

@@ -49,9 +49,9 @@ public class SensorDataClient extends Application{
 
     //new NukeData(sensorDao).execute();
 
-    public void updateSensorData() {
+    public void updateSensorData(String productID) {
         SensorAPI sensorAPI = ServiceGenerator.getSensorAPI();
-        Call<SensorResponse> call = sensorAPI.getSensorData();
+        Call<SensorResponse> call = sensorAPI.getSensorData(productID);
 
         call.enqueue(new Callback<SensorResponse>()
         {
@@ -62,33 +62,14 @@ public class SensorDataClient extends Application{
                     new InsertSensorDataAsync(sensorDao).execute(sensorData);
                     Log.i("SENSOR DATA",""+response.body().getMetricsID());
                 }
+                else
+                    Log.i("SENSOR DATA", call.request().url().toString());
             }
 
             @Override
             public void onFailure(Call<SensorResponse> call, Throwable t) {
                 Log.i("API GET SENSOR", "Call failed");
         }
-        });
-    }
-
-    public void createAccount(String userid, String productid, String token) {
-        UserAPI userAPI = ServiceGenerator.getUserAPI();
-        Call<UserPost> call = userAPI.createAccount(userid, productid, token);
-
-        call.enqueue(new Callback<UserPost>()
-        {
-            @Override
-            public void onResponse(Call<UserPost> call, Response<UserPost> response) {
-                if (response.code() == 200) {
-
-                    Log.i("CREATE USER",""+response.toString());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UserPost> call, Throwable t) {
-                Log.i("API POST USER", "Call failed");
-            }
         });
     }
 
@@ -103,7 +84,7 @@ public class SensorDataClient extends Application{
         return null;
     }
 
-    public void updateThisWeekSensors(int weekNo) {
+    public void updateThisWeekSensors(int weekNo,String productID) {
         DateTime weekStartDate=new DateTime().withWeekOfWeekyear(weekNo).withTime(new LocalTime(0,0,0)).minusDays(2);
         DateTime weekEndDate=new DateTime().withWeekOfWeekyear(weekNo+1).withTime(new LocalTime(23,59,59)).minusDays(3);
 
@@ -115,7 +96,7 @@ public class SensorDataClient extends Application{
         String endDate = weekEndDate.toString(pattern);
 
         SensorAPI sensorAPI = ServiceGenerator.getSensorAPI();
-        Call<WeeklyResponse> call = sensorAPI.getWeeklySensorData(startDate,endDate);
+        Call<WeeklyResponse> call = sensorAPI.getWeeklySensorData(startDate,endDate,productID);
 
         call.enqueue(new Callback<WeeklyResponse>() {
             @Override

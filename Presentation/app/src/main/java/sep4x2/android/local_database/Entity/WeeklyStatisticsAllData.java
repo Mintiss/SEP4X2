@@ -10,7 +10,7 @@ import sep4x2.android.network.GETResponses.WeeklyResponse;
 @Entity(tableName = "Weekly_Statistics_table")
 public class WeeklyStatisticsAllData {
 
-    private int roomID;
+    private int productID;
     private String metrics;
     private String startDate;
     private String endDate;
@@ -18,9 +18,9 @@ public class WeeklyStatisticsAllData {
     private int weekNo;
     private int year;
 
-    public WeeklyStatisticsAllData(int roomID, String metrics, String startDate, String endDate, int weekNo, int year) {
+    public WeeklyStatisticsAllData(int productID, String metrics, String startDate, String endDate, int weekNo, int year) {
         this.metrics = metrics;
-        this.roomID = roomID;
+        this.productID = productID;
         this.startDate = startDate;
         this.endDate = endDate;
         this.weekNo = weekNo;
@@ -31,7 +31,7 @@ public class WeeklyStatisticsAllData {
     {
         Gson gson= new Gson();
 
-        this.roomID=response.getRoomID();
+        this.productID=response.getRoomID();
         this.metrics=gson.toJson(response.getMetrics());
         this.startDate=response.getStartDate();
         this.endDate=response.getEndDate();
@@ -39,16 +39,16 @@ public class WeeklyStatisticsAllData {
         this.year=response.getYear();
     }
 
-    public int getRoomID() {
-        return roomID;
+    public int getProductID() {
+        return productID;
     }
 
     public String getMetrics() {
         return metrics;
     }
 
-    public void setRoomID(int roomID) {
-        this.roomID = roomID;
+    public void setProductID(int roomID) {
+        this.productID = roomID;
     }
 
     public void setMetrics(String metrics) {

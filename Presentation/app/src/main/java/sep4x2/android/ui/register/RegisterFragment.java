@@ -54,6 +54,10 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
+        mViewModel =
+                ViewModelProviders.of(this).get(RegisterViewModel.class);
+
         view = inflater.inflate(R.layout.fragment_register, container, false);
         registerButton = view.findViewById(R.id.register_registerButton);
         backButton = view.findViewById(R.id.register_backButton);
@@ -117,10 +121,11 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                                                     return;
                                                 }
                                                 token = task.getResult().getToken();
+
+                                                mViewModel.postUserToDatabase(userID, productId, token);
+                                                Log.i("CREATE USER",""+token);
                                             }
                                         });
-
-                                mViewModel.postUserToDatabase(userID, productId, token);
 
                                 DocumentReference documentReference = firestore.collection("users").document(userID);
                                 Map<String, Object> user = new HashMap<>();

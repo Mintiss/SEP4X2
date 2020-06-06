@@ -5,7 +5,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 
 public class WeeklyResponse {
-    private int roomID;
+    private int productID;
     private ArrayList<ArrayList<Double>> metrics;
     private String startDate;
     private String endDate;
@@ -13,7 +13,7 @@ public class WeeklyResponse {
     private int year;
 
     public WeeklyResponse(int roomID, ArrayList<ArrayList<Double>> metrics, String startDate, String endDate, int weekNo, int year) {
-        this.roomID = roomID;
+        this.productID = roomID;
         this.metrics = metrics;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -22,7 +22,7 @@ public class WeeklyResponse {
     }
 
     public int getRoomID() {
-        return roomID;
+        return productID;
     }
 
     public ArrayList<ArrayList<Double>> getMetrics() {

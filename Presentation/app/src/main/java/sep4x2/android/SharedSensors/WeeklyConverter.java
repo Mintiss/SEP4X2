@@ -7,7 +7,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 
 public class WeeklyConverter {
-    private int roomID;
+    private int productID;
     private String metrics;
     private String startDate;
     private String endDate;
@@ -17,10 +17,10 @@ public class WeeklyConverter {
     @Ignore
     private ArrayList<ArrayList<Double>> listOfMetrics;
 
-    public WeeklyConverter(int roomID, String metrics, String startDate, String endDate, int weekNo, int year) {
+    public WeeklyConverter(int productID, String metrics, String startDate, String endDate, int weekNo, int year) {
         Gson gson=new Gson();
 
-        this.roomID = roomID;
+        this.productID = productID;
         this.metrics = metrics;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -73,12 +73,12 @@ public class WeeklyConverter {
 
 
 
-    public int getRoomID() {
-        return roomID;
+    public int getProductID() {
+        return productID;
     }
 
-    public void setRoomID(int roomID) {
-        this.roomID = roomID;
+    public void setProductID(int roomID) {
+        this.productID = roomID;
     }
 
     public String getMetrics() {

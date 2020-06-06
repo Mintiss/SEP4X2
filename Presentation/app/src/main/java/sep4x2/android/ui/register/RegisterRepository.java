@@ -1,17 +1,53 @@
 package sep4x2.android.ui.register;
 
-import sep4x2.android.network.SensorDataClient;
+import android.app.Application;
+import android.util.Log;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import sep4x2.android.network.ServiceGenerator;
 import sep4x2.android.network.UserAPI;
+import sep4x2.android.network.POST.UserPost;
+
 
 public class RegisterRepository {
 
-    private SensorDataClient client;
+    private static RegisterRepository instance;
 
-    public RegisterRepository(SensorDataClient client) {
-        this.client = client;
+    public RegisterRepository(Application application) {
     }
 
-    public void postUserToDatabase(String id, String productId, String token) {
-        client.createAccount(id, productId, token);
+    public static synchronized RegisterRepository getInstance(Application application) {
+        if (instance == null) {
+            instance = new RegisterRepository(application);
+        }
+        return instance;
     }
+
+    public void postUserToAPI(String userid, String productid, String token) {
+
+        UserAPI userAPI = ServiceGenerator.getUserAPI();
+        Call<UserPost> call = userAPI.createAccount(userid, productid, token);
+
+        call.enqueue(new Callback<UserPost>()
+        {
+            @Override
+            public void onResponse(Call<UserPost> call, Response<UserPost> response) {
+                if (response.code() == 500) {
+                    Log.i("CREATE USER",""+response.toString());
+                }
+                else {
+                    Log.i("FAIL CREATE USER",""+call.request().url().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserPost> call, Throwable t) {
+                Log.i("API POST USER", "Call failed");
+            }
+        });
+    }
+
+
 }

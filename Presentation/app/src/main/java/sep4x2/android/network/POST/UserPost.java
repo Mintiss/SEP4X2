@@ -1,9 +1,8 @@
-package sep4x2.android.network;
+package sep4x2.android.network.POST;
 
 public class UserPost {
 
     private String userid, productid, token;
-
 
     public UserPost(String userid, String productid, String token) {
         this.userid = userid;

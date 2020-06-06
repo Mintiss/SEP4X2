@@ -110,6 +110,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()){
+                                profileViewModel.deleteUser(firebaseAuth.getUid());
                                 firestore.collection("users").document(firebaseAuth.getUid()).delete();
                                 user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
