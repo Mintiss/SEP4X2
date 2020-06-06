@@ -12,6 +12,8 @@ public class ServiceGenerator {
 
     private static SensorAPI sensorAPI = retrofit.create(SensorAPI.class);
 
+    private static UserAPI userAPI = retrofit.create(UserAPI.class);
+
     //private static UserAPI userAPI = retrofit.create(UserAPI.class);
 
     //API for sensors
@@ -19,5 +21,5 @@ public class ServiceGenerator {
     public  static SensorAPI getSensorAPI() {return  sensorAPI;}
 
     //API for User
-    //public static UserAPI getUserAPI() {return userAPI;}
+    public static UserAPI getUserAPI() {return userAPI;}
 }

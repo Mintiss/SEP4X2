@@ -110,6 +110,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()){
+                                firestore.collection("users").document(firebaseAuth.getUid()).delete();
                                 user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
@@ -121,6 +122,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                                     }
                                 });
                             }
+                            else
+                                Toast.makeText(getContext(),task.getException().toString(), Toast.LENGTH_SHORT).show();
                         }
                     });
                     break;

@@ -66,8 +66,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             action = LoginFragmentDirections.actionNavLoginToNavHome();
             Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(action);
             Toast.makeText(getContext(), "Logged in Automatically", Toast.LENGTH_SHORT).show();
-
-
         }
 
         return view;

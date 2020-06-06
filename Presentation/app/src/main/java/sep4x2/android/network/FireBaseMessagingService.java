@@ -33,7 +33,7 @@ public class FireBaseMessagingService extends FirebaseMessagingService {
         sensorDataClient = SensorDataClient.getInstance(getApplication());
         sensorDataClient.updateSensorData();
 
-        if ((sensorDataClient.getDataForPoke().get(sensorDataClient.getDataForPoke().size() - 1) != null) || (sensorDataClient.getDataForPoke().get(sensorDataClient.getDataForPoke().size() - 2) != null)) {
+        if ((sensorDataClient.getDataForPoke().get(sensorDataClient.getDataForPoke().size() - 1) != null) && (sensorDataClient.getDataForPoke().get(sensorDataClient.getDataForPoke().size() - 2) != null)) {
 
             SensorData latestData = sensorDataClient.getDataForPoke().get(sensorDataClient.getDataForPoke().size() - 1);
             SensorData previousData = sensorDataClient.getDataForPoke().get(sensorDataClient.getDataForPoke().size() - 2);
@@ -44,9 +44,12 @@ public class FireBaseMessagingService extends FirebaseMessagingService {
             boolean somethingIsWrong = false;
 
 
-            if ((latestData.getTemperature() >= previousData.getTemperature() + 1) || (latestData.getTemperature() <= previousData.getTemperature() - 10)) {
+            if ((latestData.getTemperature() >= previousData.getTemperature() + 10) ||
+                    (latestData.getTemperature() <= previousData.getTemperature() - 10)) {
                 contentTitle = "Huge jump in temperature!";
-                contentText = "Current temperature is " + latestData.getTemperature() + "C, previously recorded temperature was " + previousData.getTemperature() + "C";
+                contentText = "Current temperature is " + latestData.getTemperature() +
+                        "C, previously recorded temperature was " +
+                        previousData.getTemperature() + "C";
                 iconId = R.drawable.ic_brightness_7_black_24dp;
                 somethingIsWrong = true;
             }
@@ -72,7 +75,8 @@ public class FireBaseMessagingService extends FirebaseMessagingService {
             if(somethingIsWrong){
                 NotificationManager notificationManager =
                         (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                NotificationChannel notificationChannel = new NotificationChannel("123", "SEP4X2 Channel", NotificationManager.IMPORTANCE_DEFAULT);
+                NotificationChannel notificationChannel =
+                        new NotificationChannel("123", "SEP4X2 Channel", NotificationManager.IMPORTANCE_DEFAULT);
                 notificationChannel.enableLights(true);
                 notificationChannel.setLightColor(Color.RED);
                 notificationChannel.enableVibration(true);

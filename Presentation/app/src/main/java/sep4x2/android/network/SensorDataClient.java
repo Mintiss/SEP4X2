@@ -71,6 +71,27 @@ public class SensorDataClient extends Application{
         });
     }
 
+    public void createAccount(String userid, String productid, String token) {
+        UserAPI userAPI = ServiceGenerator.getUserAPI();
+        Call<UserPost> call = userAPI.createAccount(userid, productid, token);
+
+        call.enqueue(new Callback<UserPost>()
+        {
+            @Override
+            public void onResponse(Call<UserPost> call, Response<UserPost> response) {
+                if (response.code() == 200) {
+
+                    Log.i("CREATE USER",""+response.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserPost> call, Throwable t) {
+                Log.i("API POST USER", "Call failed");
+            }
+        });
+    }
+
     public List<SensorData> getDataForPoke(){
         try {
             return new getDataForPoke(sensorDao).execute().get();

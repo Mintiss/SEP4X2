@@ -11,6 +11,7 @@ import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,12 +26,16 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import sep4x2.android.R;
 import sep4x2.android.ui.login.LoginFragmentDirections;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class RegisterFragment extends Fragment implements View.OnClickListener{
 
@@ -40,7 +45,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
     private RegisterViewModel mViewModel;
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firestore;
-    private String userID;
+    private String userID, token;
 
     public static RegisterFragment newInstance() {
         return new RegisterFragment();
@@ -86,7 +91,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                     break;
                 }
                 else if (TextUtils.isEmpty(firstName) || TextUtils.isEmpty(lastName) || TextUtils.isEmpty(productId) || TextUtils.isEmpty(email)) {
-                    Toast.makeText(getContext(), "Can not have empty fields", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Can not have empty fieslds", Toast.LENGTH_SHORT).show();
                     break;
                 }
                 else if(password.length() < 8){
@@ -101,6 +106,22 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                             {
                                 Toast.makeText(getContext(), "User Created!", Toast.LENGTH_SHORT).show();
                                 userID = firebaseAuth.getCurrentUser().getUid();
+
+
+                                FirebaseInstanceId.getInstance().getInstanceId()
+                                        .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                                                if (!task.isSuccessful()) {
+                                                    Log.w(TAG, "getting device token failed", task.getException());
+                                                    return;
+                                                }
+                                                token = task.getResult().getToken();
+                                            }
+                                        });
+
+                                mViewModel.postUserToDatabase(userID, productId, token);
+
                                 DocumentReference documentReference = firestore.collection("users").document(userID);
                                 Map<String, Object> user = new HashMap<>();
                                 user.put("email", email);
