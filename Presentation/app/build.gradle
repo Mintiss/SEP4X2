@@ -24,6 +24,9 @@ android {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
     }
+    testOptions{
+        animationsDisabled = true
+    }
 }
 repositories {
     maven { url "https://jitpack.io" }
