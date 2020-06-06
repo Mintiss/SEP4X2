@@ -22,7 +22,10 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
+import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
@@ -30,84 +33,71 @@ import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class RegisterTest {
+public class ProfileTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void registerTest() {
-        ViewInteraction appCompatButton = onView(
-                allOf(withId(R.id.login_registerButton), withText("register"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.FrameLayout")),
-                                        0),
-                                4)));
-        appCompatButton.perform(scrollTo(), click());
-
+    public void profileTest() {
         ViewInteraction appCompatEditText = onView(
-                allOf(withId(R.id.register_email),
+                allOf(withId(R.id.login_email),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.FrameLayout")),
                                         0),
                                 0)));
-        appCompatEditText.perform(scrollTo(), replaceText("kresimir@gmail.com"), closeSoftKeyboard());
+        appCompatEditText.perform(scrollTo(), replaceText("admin@gmail.com"), closeSoftKeyboard());
 
         ViewInteraction appCompatEditText2 = onView(
-                allOf(withId(R.id.register_first_name),
+                allOf(withId(R.id.login_password),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.FrameLayout")),
                                         0),
                                 1)));
-        appCompatEditText2.perform(scrollTo(), replaceText("kr"), closeSoftKeyboard());
+        appCompatEditText2.perform(scrollTo(), replaceText("123456789"), closeSoftKeyboard());
 
-        ViewInteraction appCompatEditText3 = onView(
-                allOf(withId(R.id.register_last_name),
+        ViewInteraction appCompatButton = onView(
+                allOf(withId(R.id.login_loginButton), withText("Login"),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.FrameLayout")),
                                         0),
                                 2)));
-        appCompatEditText3.perform(scrollTo(), replaceText("br"), closeSoftKeyboard());
+        appCompatButton.perform(scrollTo(), click());
 
-        ViewInteraction appCompatEditText4 = onView(
-                allOf(withId(R.id.register_product_id),
+        ViewInteraction appCompatImageButton = onView(
+                allOf(withContentDescription("Otvaranje ladice za navigaciju"),
                         childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.FrameLayout")),
-                                        0),
-                                3)));
-        appCompatEditText4.perform(scrollTo(), replaceText("123654"), closeSoftKeyboard());
+                                allOf(withId(R.id.toolbar),
+                                        childAtPosition(
+                                                withId(R.id.app_bar),
+                                                0)),
+                                1),
+                        isDisplayed()));
+        appCompatImageButton.perform(click());
 
-        ViewInteraction appCompatEditText5 = onView(
-                allOf(withId(R.id.register_password),
-                        childAtPosition(
+        ViewInteraction navigationMenuItemView = onView(
+                allOf(childAtPosition(
+                        allOf(withId(R.id.design_navigation_view),
                                 childAtPosition(
-                                        withClassName(is("android.widget.FrameLayout")),
-                                        0),
-                                4)));
-        appCompatEditText5.perform(scrollTo(), replaceText("87654321"), closeSoftKeyboard());
+                                        withId(R.id.nav_view),
+                                        0)),
+                        10),
+                        isDisplayed()));
+        navigationMenuItemView.perform(click());
 
-        ViewInteraction appCompatEditText6 = onView(
-                allOf(withId(R.id.register_passwordConfirm),
+        ViewInteraction textView = onView(
+                allOf(withText("Profile"),
                         childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.FrameLayout")),
-                                        0),
-                                5)));
-        appCompatEditText6.perform(scrollTo(), replaceText("87654321"), closeSoftKeyboard());
-
-        ViewInteraction appCompatButton2 = onView(
-                allOf(withId(R.id.register_registerButton), withText("Register"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.FrameLayout")),
-                                        0),
-                                6)));
-        appCompatButton2.perform(scrollTo(), click());
+                                allOf(withId(R.id.toolbar),
+                                        childAtPosition(
+                                                withId(R.id.app_bar),
+                                                0)),
+                                1),
+                        isDisplayed()));
+        textView.check(matches(withText("Profile")));
     }
 
     private static Matcher<View> childAtPosition(

@@ -133,9 +133,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                                 action = RegisterFragmentDirections.actionNavRegisterToNavHome();
                                 Navigation.findNavController(v).navigate(action);
                             }
-                            else{
-                                Toast.makeText(getContext(), "Error:" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                            }
                         }
                     });
                     break;
