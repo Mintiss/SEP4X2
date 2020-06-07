@@ -88,9 +88,9 @@ public class HumidityFragment extends Fragment {
 
         final View root = inflater.inflate(R.layout.fragment_humidity, container, false);
 
-        //Bad solution
+        // solution
 
-        weeklyHumidity = humidityViewModel.getWeeklyData(18).getWeeklyHumidity();
+       weeklyHumidity = humidityViewModel.getWeeklyData(18).getWeeklyHumidity();
 
 //LineChart-------------------------------------------------------------------------------------------------------------------------------------------------
         lineChart = root.findViewById(R.id.LineChartHum);
@@ -314,11 +314,11 @@ public class HumidityFragment extends Fragment {
         LineDataSet set2;
 
         if (number == 1) {
-            set1 = new LineDataSet(hourEnum, "Data hours");
+            set1 = new LineDataSet(hourEnum, "Humidity");
 
 
         } else {
-            set1 = new LineDataSet(dayEnum, "Data day");
+            set1 = new LineDataSet(dayEnum, "Humidity");
 
         }
         set1.setFillAlpha(250);
@@ -335,12 +335,14 @@ public class HumidityFragment extends Fragment {
 
 
         Description description = new Description();
-        description.setText("%");
+        description.setText("x-axis=Hours, y-axis=%");
         lineChart.setDescription(description);
+
 
         YAxis y = lineChart.getAxisLeft();
         y.setLabelCount(5);
         y.setAxisMinValue(0);
+
 
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setValueFormatter(new IndexAxisValueFormatter(labelsname));
@@ -351,6 +353,7 @@ public class HumidityFragment extends Fragment {
 
         LineData data = new LineData(dataSets);
         lineChart.setData(data);
+        lineChart.setNoDataText("No data");
 
         lineChart.getAxisRight().setDrawLabels(false);
         lineChart.setDrawBorders(true);
@@ -381,11 +384,11 @@ public class HumidityFragment extends Fragment {
             }
         }
 
-        BarDataSet barDataSet = new BarDataSet(barEntries, "Humidity in percentage");
+        BarDataSet barDataSet = new BarDataSet(barEntries, "Humidity");
         barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
 
         Description description = new Description();
-        description.setText("%");
+        description.setText("x-axis=Hours, y-axis=%");
         barChart.setDescription(description);
 
         BarData barData = new BarData(barDataSet);

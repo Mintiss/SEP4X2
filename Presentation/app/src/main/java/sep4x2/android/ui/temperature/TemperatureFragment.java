@@ -354,11 +354,11 @@ public class TemperatureFragment extends Fragment {
 
 
         if (number == 1) {
-            set1 = new LineDataSet(hourEnum, "Data hours");
+            set1 = new LineDataSet(hourEnum, "Temperature");
 
 
         } else {
-            set1 = new LineDataSet(dayEnum, "Data day");
+            set1 = new LineDataSet(dayEnum, "Temperature");
 
         }
         set1.setFillAlpha(250);
@@ -377,7 +377,7 @@ public class TemperatureFragment extends Fragment {
         dataSets.add(set1);
 
         Description description = new Description();
-        description.setText("°C");
+        description.setText("x-axis=Hours, y-axis=°C");
         lineChart.setDescription(description);
 
         YAxis y = lineChart.getAxisLeft();
@@ -431,11 +431,11 @@ public class TemperatureFragment extends Fragment {
             }
         }
 
-        BarDataSet barDataSet = new BarDataSet(barEntries, "Temperature in Celsius");
+        BarDataSet barDataSet = new BarDataSet(barEntries, "Temperature");
         barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
 
         Description description = new Description();
-        description.setText("°C");
+        description.setText("x-axis=Hours, y-axis=°C");
         barChart.setDescription(description);
 
         BarData barData = new BarData(barDataSet);

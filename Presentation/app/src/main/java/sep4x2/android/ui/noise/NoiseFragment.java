@@ -300,14 +300,14 @@ public class NoiseFragment extends Fragment {
         lineChart.setScaleEnabled(false);
 
         LineDataSet set1;
-        LineDataSet set2;
+
 
         if (number == 1) {
-            set1 = new LineDataSet(hourEnum, "Data hours");
+            set1 = new LineDataSet(hourEnum, "Noise");
 
 
         } else {
-            set1 = new LineDataSet(dayEnum, "Data day");
+            set1 = new LineDataSet(dayEnum, "Noise");
 
         }
         set1.setFillAlpha(250);
@@ -324,7 +324,7 @@ public class NoiseFragment extends Fragment {
         dataSets.add(set1);
 
         Description description = new Description();
-        description.setText("dBA");
+        description.setText("x-axis=Hours, y-axis=dBA");
         lineChart.setDescription(description);
 
         YAxis y = lineChart.getAxisLeft();
@@ -334,8 +334,13 @@ public class NoiseFragment extends Fragment {
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setValueFormatter(new IndexAxisValueFormatter(labelsname));
 
+
+
+
+
         LineData data = new LineData(dataSets);
         lineChart.setData(data);
+        lineChart.setNoDataText("No data");
 
         lineChart.getAxisRight().setDrawGridLines(false);
         lineChart.getAxisLeft().setDrawGridLines(true);
@@ -370,11 +375,11 @@ public class NoiseFragment extends Fragment {
             }
         }
 
-        BarDataSet barDataSet = new BarDataSet(barEntries, "Noise in decibels");
+        BarDataSet barDataSet = new BarDataSet(barEntries, "Noise");
         barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
 
         Description description = new Description();
-        description.setText("dBA");
+        description.setText("x-axis=Hours, y-axis=dBA");
         barChart.setDescription(description);
 
         BarData barData = new BarData(barDataSet);
@@ -396,6 +401,8 @@ public class NoiseFragment extends Fragment {
         xAxis.setLabelRotationAngle(270);
 
         barChart.animateY(400);
+
+
 
         barChart.getAxisRight().setDrawLabels(false);
         barChart.setDrawBorders(true);
@@ -424,11 +431,12 @@ public class NoiseFragment extends Fragment {
     private void fillWithNewData() {
         NoiseDayArrayList.clear();
         NoiseDayArrayList.add(new NoiseTemporaryValues("mon", weeklyNoise.get(0)));
-        NoiseDayArrayList.add(new NoiseTemporaryValues("wed", weeklyNoise.get(1)));
-        NoiseDayArrayList.add(new NoiseTemporaryValues("thu", weeklyNoise.get(2)));
-        NoiseDayArrayList.add(new NoiseTemporaryValues("fri", weeklyNoise.get(3)));
-        NoiseDayArrayList.add(new NoiseTemporaryValues("sat", weeklyNoise.get(4)));
-        NoiseDayArrayList.add(new NoiseTemporaryValues("sun", weeklyNoise.get(5)));
+        NoiseDayArrayList.add(new NoiseTemporaryValues("tue", weeklyNoise.get(1)));
+        NoiseDayArrayList.add(new NoiseTemporaryValues("wed", weeklyNoise.get(2)));
+        NoiseDayArrayList.add(new NoiseTemporaryValues("thu", weeklyNoise.get(3)));
+        NoiseDayArrayList.add(new NoiseTemporaryValues("fri", weeklyNoise.get(4)));
+        NoiseDayArrayList.add(new NoiseTemporaryValues("sat", weeklyNoise.get(5)));
+        NoiseDayArrayList.add(new NoiseTemporaryValues("sun", weeklyNoise.get(6)));
     }
 
 

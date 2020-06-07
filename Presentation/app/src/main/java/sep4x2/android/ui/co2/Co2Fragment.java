@@ -319,12 +319,12 @@ public class Co2Fragment extends Fragment {
 
 
         if (number == 1) {
-            set1 = new LineDataSet(hourEnum, "Data hours");
+            set1 = new LineDataSet(hourEnum, "CO2");
 
 
         } else {
 
-            set1 = new LineDataSet(dayEnum, "Data day");
+            set1 = new LineDataSet(dayEnum, "CO2");
 
         }
         set1.setFillAlpha(250);
@@ -341,7 +341,7 @@ public class Co2Fragment extends Fragment {
 
 
         Description description = new Description();
-        description.setText("ppm");
+        description.setText("x-axis=Hours, y-axis=ppm");
         lineChart.setDescription(description);
 
         YAxis y = lineChart.getAxisLeft();
@@ -357,6 +357,7 @@ public class Co2Fragment extends Fragment {
 
         LineData data = new LineData(dataSets);
         lineChart.setData(data);
+        lineChart.setNoDataText("No data");
 
         lineChart.getAxisRight().setDrawLabels(false);
         lineChart.setDrawBorders(true);
@@ -388,11 +389,11 @@ public class Co2Fragment extends Fragment {
             }
         }
 
-        BarDataSet barDataSet = new BarDataSet(barEntries, "CO2 in ppm(parts in million)");
+        BarDataSet barDataSet = new BarDataSet(barEntries, "CO2");
         barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
 
         Description description = new Description();
-        description.setText("ppm");
+        description.setText("x-axis=Hours, y-axis=ppm");
         barChart.setDescription(description);
 
         BarData barData = new BarData(barDataSet);
