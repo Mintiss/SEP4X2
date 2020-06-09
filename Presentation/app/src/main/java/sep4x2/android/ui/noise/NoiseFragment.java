@@ -84,7 +84,7 @@ public class NoiseFragment extends Fragment {
         final TextView textView = root.findViewById(R.id.text_noise);
 
 
-        //Bad solution
+        //Solution
         weeklyNoise = noiseViewModel.getWeeklyData(18).getWeeklyNoise();
 
         //LineChart-------------------------------------------------------------------------------------------------------------------------------------------------

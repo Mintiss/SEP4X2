@@ -88,7 +88,7 @@ public class HumidityFragment extends Fragment {
 
         final View root = inflater.inflate(R.layout.fragment_humidity, container, false);
 
-        //Bad solution
+        //Solution
 
         weeklyHumidity = humidityViewModel.getWeeklyData(18).getWeeklyHumidity();
 
