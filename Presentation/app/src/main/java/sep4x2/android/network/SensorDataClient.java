@@ -61,6 +61,7 @@ public class SensorDataClient extends Application{
                     sensorData=(new SensorData(response.body()));
                     new InsertSensorDataAsync(sensorDao).execute(sensorData);
                     Log.i("SENSOR DATA",""+response.body().getMetricsID());
+                    Log.i("SENSOR DATA",""+response.body().toString());
                 }
                 else
                     Log.i("SENSOR DATA", call.request().url().toString());

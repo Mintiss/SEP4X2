@@ -19,9 +19,6 @@ public class HomeViewModel extends AndroidViewModel {
     private MutableLiveData<String> mText;
     private HomeRepository homeRepository;
     private MutableLiveData<SensorData> data;
-    private double previousTemperature, previousHumidity, previousNoise, previousCo2;
-
-
 
     public HomeViewModel(Application application) {
         super(application);
@@ -29,13 +26,6 @@ public class HomeViewModel extends AndroidViewModel {
         mText.setValue("This is the Home fragment");
 
         homeRepository = HomeRepository.getInstance(application);
-
-        //query the db for the second to last data
-        previousTemperature = 0;
-        previousHumidity = 0;
-        previousCo2 = 0;
-        previousNoise = 0;
-
     }
 
     public LiveData<SensorData> getData() {

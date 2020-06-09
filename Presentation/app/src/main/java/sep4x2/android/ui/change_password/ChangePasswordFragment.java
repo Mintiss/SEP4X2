@@ -39,7 +39,6 @@ import sep4x2.android.ui.register.RegisterFragmentDirections;
 public class ChangePasswordFragment extends Fragment implements View.OnClickListener {
 
     private View view;
-    private ChangePasswordViewModel mViewModel;
     private Button backButton, changePasswordButton;
     private EditText oldPassword, password, confirmPassword;
     private FirebaseAuth firebaseAuth;

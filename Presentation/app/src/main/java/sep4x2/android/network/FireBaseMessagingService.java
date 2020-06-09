@@ -21,17 +21,11 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-import java.util.Map;
 import java.util.Random;
-
-
 import javax.annotation.Nullable;
-
-import sep4x2.android.MainActivity;
 import sep4x2.android.R;
 import sep4x2.android.local_database.Entity.SensorData;
 
-import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class FireBaseMessagingService extends FirebaseMessagingService {
 
