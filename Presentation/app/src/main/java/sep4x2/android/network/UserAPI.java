@@ -11,9 +11,6 @@ import sep4x2.android.network.POST.UserPost;
 
 public interface UserAPI {
 
-    @GET("api/user/login?{email}&{password}")
-    Call<LoginResponse> getLoginInformation(@Path("email") String email, @Path("password") String password);
-
     @POST("api/user/createAccount")
     Call<UserPost> createAccount(@Query(value = "userid",encoded = true) String userid,
                                  @Query(value = "productid",encoded = true)String productid,

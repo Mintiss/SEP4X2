@@ -95,7 +95,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                     break;
                 }
                 else if (TextUtils.isEmpty(firstName) || TextUtils.isEmpty(lastName) || TextUtils.isEmpty(productId) || TextUtils.isEmpty(email)) {
-                    Toast.makeText(getContext(), "Can not have empty fieslds", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Can not have empty fields", Toast.LENGTH_SHORT).show();
                     break;
                 }
                 else if(password.length() < 8){
@@ -110,8 +110,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                             {
                                 Toast.makeText(getContext(), "User Created!", Toast.LENGTH_SHORT).show();
                                 userID = firebaseAuth.getCurrentUser().getUid();
-
-
                                 FirebaseInstanceId.getInstance().getInstanceId()
                                         .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
                                             @Override

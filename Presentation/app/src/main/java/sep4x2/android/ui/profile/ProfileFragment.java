@@ -105,7 +105,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.profile_confirm_delete:
                 try {
-                    AuthCredential authCredential = EmailAuthProvider.getCredential(email.getText().toString(), confirmPassword.getText().toString());
+                    AuthCredential authCredential = EmailAuthProvider.getCredential(email.getText().toString(),
+                            confirmPassword.getText().toString());
                     user.reauthenticate(authCredential).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {

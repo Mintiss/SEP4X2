@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import sep4x2.android.SharedSensors.CO2;
 import sep4x2.android.SharedSensors.WeeklyConverter;
-import sep4x2.android.local_database.Entity.WeeklyStatisticsAllData;
 import sep4x2.android.local_database.LocalDatabase;
 import sep4x2.android.local_database.SensorDao;
 
