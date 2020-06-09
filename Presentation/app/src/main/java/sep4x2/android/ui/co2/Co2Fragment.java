@@ -90,7 +90,7 @@ public class Co2Fragment extends Fragment {
 
         final View root = inflater.inflate(R.layout.fragment_co2, container, false);
 
-        //Bad solution
+        //Solution
 
         weeklyCo2 = co2ViewModel.getWeeklyData(18).getWeeklyCO2();
         Toast.makeText(getContext(), "1", Toast.LENGTH_SHORT).show();

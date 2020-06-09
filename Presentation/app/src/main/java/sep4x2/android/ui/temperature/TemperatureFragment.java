@@ -103,7 +103,7 @@ public class TemperatureFragment extends Fragment {
         temperatureViewModel.updateWeeklyData(22);*/
 
 
-        //Bad solution
+        // solution
         weeklyTemp = temperatureViewModel.getWeeklyData(18).getWeeklyTemperature();
 
 
